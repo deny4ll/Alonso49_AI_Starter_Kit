@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../../prisma/prisma.service';
 import { COACH_SYSTEM_PROMPT, ALONSO49_METHODOLOGY } from './coach-prompt';
+import { COACH_TOOLS } from './tools/tool-definitions';
+import { CoachTools } from './tools/tool-implementations';
 
 interface Message {
   role: 'system' | 'user' | 'assistant';
@@ -21,12 +23,14 @@ interface CoachContext {
 export class AiCoachService {
   private openaiApiKey: string;
   private openaiApiUrl = 'https://api.openai.com/v1/chat/completions';
+  private tools: CoachTools;
 
   constructor(
     private prisma: PrismaService,
     private config: ConfigService,
   ) {
     this.openaiApiKey = this.config.get('OPENAI_API_KEY');
+    this.tools = new CoachTools(prisma);
   }
 
   async chat(userId: string, message: string, context?: CoachContext) {
@@ -51,13 +55,15 @@ export class AiCoachService {
       },
     ];
 
-    const response = await this.callOpenAI(messages);
+    // Call OpenAI with tools enabled
+    const { response, toolCalls } = await this.callOpenAI(messages, userId);
     
     await this.saveConversation(userId, message, response, context);
 
     return {
       message: response,
       context: systemContext,
+      toolsUsed: toolCalls?.length || 0,
     };
   }
 
@@ -380,36 +386,135 @@ ${profile?.todayObjective || 'Not defined'}
     return age;
   }
 
-  private async callOpenAI(messages: Message[]): Promise<string> {
+  private async callOpenAI(messages: Message[], userId: string): Promise<{ response: string; toolCalls: any[] }> {
     if (!this.openaiApiKey) {
-      return this.getMockResponse(messages);
+      return {
+        response: this.getMockResponse(messages),
+        toolCalls: [],
+      };
     }
 
     try {
-      const response = await fetch(this.openaiApiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${this.openaiApiKey}`,
-        },
-        body: JSON.stringify({
-          model: 'gpt-4-turbo-preview',
-          messages,
-          temperature: 0.7,
-          max_tokens: 2000,
-        }),
-      });
+      const allToolCalls = [];
+      let currentMessages = [...messages];
+      let iterations = 0;
+      const MAX_ITERATIONS = 5; // Prevent infinite loops
 
-      if (!response.ok) {
-        throw new Error(`OpenAI API error: ${response.statusText}`);
+      while (iterations < MAX_ITERATIONS) {
+        const response = await fetch(this.openaiApiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${this.openaiApiKey}`,
+          },
+          body: JSON.stringify({
+            model: 'gpt-4-turbo-preview',
+            messages: currentMessages,
+            tools: COACH_TOOLS,
+            tool_choice: 'auto',
+            temperature: 0.7,
+            max_tokens: 2000,
+          }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`OpenAI API error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        const assistantMessage = data.choices[0].message;
+
+        // Add assistant response to conversation
+        currentMessages.push(assistantMessage);
+
+        // Check if AI wants to call tools
+        if (assistantMessage.tool_calls && assistantMessage.tool_calls.length > 0) {
+          // Execute all tool calls
+          for (const toolCall of assistantMessage.tool_calls) {
+            const functionName = toolCall.function.name;
+            const functionArgs = JSON.parse(toolCall.function.arguments);
+
+            console.log(`[AI Coach] Calling tool: ${functionName}`, functionArgs);
+
+            let toolResult;
+            try {
+              // Execute the tool
+              toolResult = await this.executeTool(functionName, functionArgs, userId);
+              allToolCalls.push({ name: functionName, args: functionArgs, result: toolResult });
+            } catch (error) {
+              toolResult = {
+                success: false,
+                message: `Error executing ${functionName}: ${error.message}`,
+              };
+            }
+
+            // Add tool result to conversation
+            currentMessages.push({
+              role: 'tool',
+              tool_call_id: toolCall.id,
+              content: JSON.stringify(toolResult),
+            } as any);
+          }
+
+          iterations++;
+          continue; // Loop again to let AI process tool results
+        }
+
+        // No more tool calls, return final response
+        return {
+          response: assistantMessage.content,
+          toolCalls: allToolCalls,
+        };
       }
 
-      const data = await response.json();
-      return data.choices[0].message.content;
+      // Max iterations reached
+      return {
+        response: currentMessages[currentMessages.length - 1].content || 'Unable to generate response',
+        toolCalls: allToolCalls,
+      };
+
     } catch (error) {
       console.error('Error calling OpenAI:', error);
-      return this.getMockResponse(messages);
+      return {
+        response: this.getMockResponse(messages),
+        toolCalls: [],
+      };
     }
+  }
+
+  private async executeTool(functionName: string, args: any, userId: string): Promise<any> {
+    // Map function names to CoachTools methods
+    const toolMap = {
+      searchLessons: (a, u) => this.tools.searchLessons(a, u),
+      searchExercises: (a, u) => this.tools.searchExercises(a, u),
+      searchVideos: (a, u) => this.tools.searchVideos(a, u),
+      searchCoachNotes: (a, u) => this.tools.searchCoachNotes(a, u),
+      searchBoatSetup: (a, u) => this.tools.searchBoatSetup(a, u),
+      searchWeather: (a, u) => this.tools.searchWeather(a, u),
+      searchTrainingReports: (a, u) => this.tools.searchTrainingReports(a, u),
+      searchPerformanceReports: (a, u) => this.tools.searchPerformanceReports(a, u),
+      searchGPS: (a, u) => this.tools.searchGPS(a, u),
+      searchVideoAnalysis: (a, u) => this.tools.searchVideoAnalysis(a, u),
+      searchCompetitionHistory: (a, u) => this.tools.searchCompetitionHistory(a, u),
+      searchKnowledgeBase: (a, u) => this.tools.searchKnowledgeBase(a, u),
+      generateTrainingPlan: (a, u) => this.tools.generateTrainingPlan(a, u),
+      generateBriefing: (a, u) => this.tools.generateBriefing(a, u),
+      generateDebriefing: (a, u) => this.tools.generateDebriefing(a, u),
+      createGoal: (a, u) => this.tools.createGoal(a, u),
+      scheduleTraining: (a, u) => this.tools.scheduleTraining(a, u),
+      comparePerformance: (a, u) => this.tools.comparePerformance(a, u),
+      recommendBoatSetup: (a, u) => this.tools.recommendBoatSetup(a, u),
+      recommendExercises: (a, u) => this.tools.recommendExercises(a, u),
+      recommendVideos: (a, u) => this.tools.recommendVideos(a, u),
+      recommendLessons: (a, u) => this.tools.recommendLessons(a, u),
+    };
+
+    const toolFunction = toolMap[functionName];
+    if (!toolFunction) {
+      throw new Error(`Unknown tool: ${functionName}`);
+    }
+
+    return toolFunction(args, userId);
   }
 
   private getMockResponse(messages: Message[]): string {
