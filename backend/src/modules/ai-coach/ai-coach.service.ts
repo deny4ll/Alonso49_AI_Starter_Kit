@@ -241,30 +241,143 @@ Include specific exercises, drills, and measurable objectives.
       include: {
         athleteProfile: true,
         coachProfile: true,
+        sessions: {
+          take: 1,
+          orderBy: { createdAt: 'desc' as const },
+          include: {
+            analytics: true,
+            feedback: {
+              take: 1,
+              orderBy: { createdAt: 'desc' as const },
+              include: {
+                coach: true,
+              },
+            },
+          },
+        },
+        uploadedVideos: {
+          take: 3,
+          orderBy: { createdAt: 'desc' as const },
+        },
       },
     });
 
-    let systemContext = `
-Athlete Information:
-- Name: ${user.firstName} ${user.lastName}
-- Email: ${user.email}
-- Role: ${user.role}
-- Member since: ${user.createdAt.toLocaleDateString()}
+    if (!user) {
+      return 'User not found';
+    }
+
+    const userData = user as any;
+    const lastSession = userData.sessions?.[0];
+    const lastFeedback = lastSession?.feedback?.[0];
+    const recentVideos = userData.uploadedVideos || [];
+    const profile = userData.athleteProfile;
+
+    let systemContext = `You are coaching the following athlete.
+
+**Athlete**
+${user.firstName} ${user.lastName}
+
+**Age**
+${profile?.birthDate ? this.calculateAge(profile.birthDate) : 'Not specified'}
+
+**Country**
+${profile?.nationality || 'Not specified'}
+
+**Crew Position**
+${profile?.position || 'Not specified'}
+
+**Experience**
+${profile?.experienceLevel || 'Not specified'}
+
+**Boat**
+49er (Olympic Class)
+
+**Coach**
+${profile?.assignedCoach || 'Not assigned'}
+
+**Current Season Goal**
+${profile?.seasonGoal || 'Not defined'}
+
+**Current Microcycle**
+${profile?.currentMicrocycle || 'Not defined'}
+
+**Current Week Objectives**
+${profile?.weeklyObjectives || 'Not defined'}
+
+**Current KPIs**
+${profile?.kpis ? JSON.stringify(profile.kpis) : 'Not defined'}
+
+**Last Training**
+${lastSession ? `
+- Session: ${lastSession.title}
+- Date: ${lastSession.scheduledAt ? new Date(lastSession.scheduledAt).toLocaleDateString() : new Date(lastSession.createdAt).toLocaleDateString()}
+- Location: ${lastSession.location || 'Not specified'}
+- Wind: ${lastSession.windSpeed || 'N/A'} knots ${lastSession.windDirection || ''}
+- Waves: ${lastSession.waveHeight || 'N/A'} m
+- Status: ${lastSession.status}
+${lastSession.analytics ? `
+- Performance Score: ${lastSession.analytics.performanceScore || 'N/A'}/100
+- Average Speed: ${lastSession.analytics.averageSpeed || 'N/A'} knots
+- Max Speed: ${lastSession.analytics.maxSpeed || 'N/A'} knots
+- Total Distance: ${lastSession.analytics.totalDistance || 'N/A'} nm
+- Tacks: ${lastSession.analytics.tackCount || 0}
+- Gybes: ${lastSession.analytics.gybeCount || 0}
+- Tacking Efficiency: ${lastSession.analytics.tackingEfficiency || 'N/A'}%
+` : ''}` : 'No recent training sessions'}
+
+**Latest Coach Feedback**
+${lastFeedback ? `
+From: ${lastFeedback.coach.firstName} ${lastFeedback.coach.lastName}
+Date: ${new Date(lastFeedback.createdAt).toLocaleDateString()}
+Content: ${lastFeedback.content}
+` : 'No recent feedback'}
+
+**Recent Videos**
+${recentVideos.length > 0 ? recentVideos.map(v => `
+- ${v.title} (${new Date(v.createdAt).toLocaleDateString()})
+  ${v.description || 'No description'}
+`).join('\n') : 'No recent videos uploaded'}
+
+**Current Weather**
+${context?.weatherData ? JSON.stringify(context.weatherData, null, 2) : 'Weather data not available'}
+
+**Upcoming Regatta**
+${profile?.nextEvent || 'No upcoming events scheduled'}
+
+**Current Boat Setup**
+${profile?.boatSetup || 'Standard setup - not customized'}
+
+**Today's Focus**
+${profile?.todayObjective || 'Not defined'}
+
+---
+
+**IMPORTANT INSTRUCTIONS:**
+- Use this information during the conversation
+- Never ask again for information already available above
+- If you need more details, ask specific questions
+- Always reference the data provided when making recommendations
+- Respect the Current Week Objectives and Today's Focus in your coaching
 `;
 
     if (context?.athleteData) {
-      systemContext += `\nAdditional Athlete Data:\n${JSON.stringify(context.athleteData, null, 2)}`;
-    }
-
-    if (context?.weatherData) {
-      systemContext += `\nWeather Conditions:\n${JSON.stringify(context.weatherData, null, 2)}`;
-    }
-
-    if (context?.performanceData) {
-      systemContext += `\nPerformance Data:\n${JSON.stringify(context.performanceData, null, 2)}`;
+      systemContext += `\n\n**Additional Context**\n${JSON.stringify(context.athleteData, null, 2)}`;
     }
 
     return systemContext;
+  }
+
+  private calculateAge(birthDate: Date): number {
+    const today = new Date();
+    const birth = new Date(birthDate);
+    let age = today.getFullYear() - birth.getFullYear();
+    const monthDiff = today.getMonth() - birth.getMonth();
+    
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate())) {
+      age--;
+    }
+    
+    return age;
   }
 
   private async callOpenAI(messages: Message[]): Promise<string> {
@@ -353,7 +466,7 @@ We will measure improvement through:
         changes: {
           userMessage,
           aiResponse,
-          context,
+          context: context ? JSON.parse(JSON.stringify(context)) : null,
         },
       },
     });

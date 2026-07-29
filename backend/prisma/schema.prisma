@@ -52,7 +52,7 @@ model User {
   sessions        Session[]
   teamMemberships TeamMember[]
   courseEnrollments CourseEnrollment[]
-  feedback        Feedback[]
+  givenFeedback   Feedback[]
   auditLogs       AuditLog[]
 
   @@index([email])
@@ -61,16 +61,41 @@ model User {
 }
 
 model AthleteProfile {
-  id          String   @id @default(uuid())
-  userId      String   @unique
-  user        User     @relation(fields: [userId], references: [id])
-  weight      Float?
-  height      Float?
-  sailNumber  String?
-  teamId      String?
-  team        Team?    @relation(fields: [teamId], references: [id])
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id])
+  
+  // Physical attributes
+  weight           Float?
+  height           Float?
+  birthDate        DateTime?
+  
+  // Sailing info
+  sailNumber       String?
+  position         String?  // Helm, Crew, etc.
+  experienceLevel  String?  // Beginner, Intermediate, Advanced, Elite
+  nationality      String?
+  
+  // Team & Coaching
+  teamId           String?
+  team             Team?    @relation(fields: [teamId], references: [id])
+  assignedCoach    String?
+  
+  // Training Planning
+  seasonGoal       String?
+  currentMicrocycle String?
+  weeklyObjectives String?
+  todayObjective   String?
+  kpis             Json?
+  
+  // Competition
+  nextEvent        String?
+  
+  // Equipment
+  boatSetup        String?
+  
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
   @@map("athlete_profiles")
 }
@@ -207,13 +232,13 @@ model Feedback {
   rating      Int?
   sessionId   String
   session     Session  @relation(fields: [sessionId], references: [id])
-  createdById String
-  createdBy   User     @relation(fields: [createdById], references: [id])
+  coachId     String
+  coach       User     @relation(fields: [coachId], references: [id])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@index([sessionId])
-  @@index([createdById])
+  @@index([coachId])
   @@map("feedback")
 }
 
