@@ -28,11 +28,14 @@ export default function RegisterPage() {
     try {
       const response = await authApi.register(formData)
       const { user, accessToken } = response.data
+      
       setAuth(user, accessToken)
-      window.location.href = '/dashboard'
+      
+      await new Promise(resolve => setTimeout(resolve, 100))
+      
+      router.push('/dashboard')
     } catch (err: any) {
       setError(err.response?.data?.message || 'Error al registrarse')
-    } finally {
       setLoading(false)
     }
   }

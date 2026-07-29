@@ -23,11 +23,14 @@ export default function LoginPage() {
     try {
       const response = await authApi.login(email, password)
       const { user, accessToken } = response.data
+      
       setAuth(user, accessToken)
-      window.location.href = '/dashboard'
+      
+      await new Promise(resolve => setTimeout(resolve, 100))
+      
+      router.push('/dashboard')
     } catch (err: any) {
       setError(err.response?.data?.message || 'Error al iniciar sesión')
-    } finally {
       setLoading(false)
     }
   }

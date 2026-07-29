@@ -11,13 +11,19 @@ import { api } from '@/lib/api'
 
 export default function DashboardPage() {
   const router = useRouter()
-  const { user, token } = useAuthStore()
+  const { user, token, isHydrated, initAuth } = useAuthStore()
 
   useEffect(() => {
-    if (!token) {
+    if (!isHydrated) {
+      initAuth()
+    }
+  }, [isHydrated, initAuth])
+
+  useEffect(() => {
+    if (isHydrated && !token) {
       router.push('/login')
     }
-  }, [token, router])
+  }, [isHydrated, token, router])
 
   const { data: stats } = useQuery({
     queryKey: ['user-stats'],
@@ -46,7 +52,20 @@ export default function DashboardPage() {
     enabled: !!token,
   })
 
-  if (!user) return null
+  if (!isHydrated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Cargando...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!token || !user) {
+    return null
+  }
 
   return (
     <DashboardLayout>
