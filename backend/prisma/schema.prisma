@@ -1,0 +1,306 @@
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+enum UserRole {
+  ATHLETE
+  COACH
+  ACADEMY
+  ADMIN
+}
+
+enum SessionStatus {
+  DRAFT
+  SCHEDULED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+}
+
+enum VideoStatus {
+  UPLOADING
+  PROCESSING
+  READY
+  FAILED
+}
+
+model User {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  passwordHash  String
+  firstName     String
+  lastName      String
+  role          UserRole
+  avatar        String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  deletedAt     DateTime?
+
+  athleteProfile  AthleteProfile?
+  coachProfile    CoachProfile?
+  academyProfile  AcademyProfile?
+  
+  uploadedVideos  Video[]
+  sessions        Session[]
+  teamMemberships TeamMember[]
+  courseEnrollments CourseEnrollment[]
+  feedback        Feedback[]
+  auditLogs       AuditLog[]
+
+  @@index([email])
+  @@index([role])
+  @@map("users")
+}
+
+model AthleteProfile {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  weight      Float?
+  height      Float?
+  sailNumber  String?
+  teamId      String?
+  team        Team?    @relation(fields: [teamId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("athlete_profiles")
+}
+
+model CoachProfile {
+  id              String   @id @default(uuid())
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id])
+  certification   String?
+  yearsExperience Int?
+  specialties     String[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  teams           Team[]
+  assignedSessions Session[]
+
+  @@map("coach_profiles")
+}
+
+model AcademyProfile {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id])
+  name        String
+  country     String?
+  website     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  teams       Team[]
+  courses     Course[]
+
+  @@map("academy_profiles")
+}
+
+model Team {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  coachId     String?
+  coach       CoachProfile? @relation(fields: [coachId], references: [id])
+  academyId   String?
+  academy     AcademyProfile? @relation(fields: [academyId], references: [id])
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+
+  members     TeamMember[]
+  athletes    AthleteProfile[]
+  sessions    Session[]
+
+  @@index([coachId])
+  @@index([academyId])
+  @@map("teams")
+}
+
+model TeamMember {
+  id        String   @id @default(uuid())
+  teamId    String
+  team      Team     @relation(fields: [teamId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  role      String   @default("member")
+  joinedAt  DateTime @default(now())
+
+  @@unique([teamId, userId])
+  @@map("team_members")
+}
+
+model Session {
+  id          String        @id @default(uuid())
+  title       String
+  description String?
+  status      SessionStatus @default(DRAFT)
+  scheduledAt DateTime?
+  startedAt   DateTime?
+  completedAt DateTime?
+  location    String?
+  weatherConditions Json?
+  windSpeed   Float?
+  windDirection String?
+  waveHeight  Float?
+  createdById String
+  createdBy   User          @relation(fields: [createdById], references: [id])
+  teamId      String?
+  team        Team?         @relation(fields: [teamId], references: [id])
+  coachId     String?
+  coach       CoachProfile? @relation(fields: [coachId], references: [id])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  deletedAt   DateTime?
+
+  videos      Video[]
+  feedback    Feedback[]
+  analytics   SessionAnalytics?
+
+  @@index([createdById])
+  @@index([teamId])
+  @@index([status])
+  @@map("sessions")
+}
+
+model Video {
+  id          String      @id @default(uuid())
+  title       String
+  description String?
+  url         String
+  thumbnailUrl String?
+  duration    Int?
+  size        Int?
+  format      String?
+  status      VideoStatus @default(UPLOADING)
+  uploadedById String
+  uploadedBy  User        @relation(fields: [uploadedById], references: [id])
+  sessionId   String?
+  session     Session?    @relation(fields: [sessionId], references: [id])
+  metadata    Json?
+  embedding   Unsupported("vector(1536)")?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  deletedAt   DateTime?
+
+  @@index([uploadedById])
+  @@index([sessionId])
+  @@index([status])
+  @@map("videos")
+}
+
+model Feedback {
+  id          String   @id @default(uuid())
+  content     String
+  rating      Int?
+  sessionId   String
+  session     Session  @relation(fields: [sessionId], references: [id])
+  createdById String
+  createdBy   User     @relation(fields: [createdById], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([sessionId])
+  @@index([createdById])
+  @@map("feedback")
+}
+
+model SessionAnalytics {
+  id                String   @id @default(uuid())
+  sessionId         String   @unique
+  session           Session  @relation(fields: [sessionId], references: [id])
+  totalDistance     Float?
+  averageSpeed      Float?
+  maxSpeed          Float?
+  tackingEfficiency Float?
+  gybeCount         Int?
+  tackCount         Int?
+  performanceScore  Float?
+  insights          Json?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@map("session_analytics")
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  price       Float    @default(0)
+  currency    String   @default("USD")
+  isPublished Boolean  @default(false)
+  academyId   String?
+  academy     AcademyProfile? @relation(fields: [academyId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deletedAt   DateTime?
+
+  modules     CourseModule[]
+  enrollments CourseEnrollment[]
+
+  @@index([academyId])
+  @@index([isPublished])
+  @@map("courses")
+}
+
+model CourseModule {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  content     String?
+  order       Int
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([courseId])
+  @@map("course_modules")
+}
+
+model CourseEnrollment {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  courseId    String
+  course      Course   @relation(fields: [courseId], references: [id])
+  progress    Float    @default(0)
+  completedAt DateTime?
+  enrolledAt  DateTime @default(now())
+
+  @@unique([userId, courseId])
+  @@index([userId])
+  @@index([courseId])
+  @@map("course_enrollments")
+}
+
+model AuditLog {
+  id          String   @id @default(uuid())
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id])
+  action      String
+  entity      String
+  entityId    String?
+  changes     Json?
+  ipAddress   String?
+  userAgent   String?
+  createdAt   DateTime @default(now())
+
+  @@index([userId])
+  @@index([entity])
+  @@index([createdAt])
+  @@map("audit_logs")
+}

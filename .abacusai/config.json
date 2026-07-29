@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit && mkdir -p backend frontend infrastructure/docker in…)",
+      "Bash(cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit/backend && mkdir -p prisma src/modules/{auth,users,vi…)"
+    ]
+  }
+}
