@@ -12,7 +12,8 @@ import {
   Users, 
   BookOpen, 
   TrendingUp,
-  LogOut
+  LogOut,
+  Bot
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -22,6 +23,7 @@ interface DashboardLayoutProps {
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'AI Coach', href: '/ai-coach', icon: Bot },
   { name: 'Videos', href: '/videos', icon: Video },
   { name: 'Sesiones', href: '/sessions', icon: Calendar },
   { name: 'Equipos', href: '/teams', icon: Users },

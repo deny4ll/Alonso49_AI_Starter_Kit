@@ -8,6 +8,7 @@ import { SessionsModule } from './modules/sessions/sessions.module';
 import { TeamsModule } from './modules/teams/teams.module';
 import { CoursesModule } from './modules/courses/courses.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
+import { AiCoachModule } from './modules/ai-coach/ai-coach.module';
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { AnalyticsModule } from './modules/analytics/analytics.module';
     TeamsModule,
     CoursesModule,
     AnalyticsModule,
+    AiCoachModule,
   ],
 })
 export class AppModule {}

@@ -67,3 +67,14 @@ export const coursesApi = {
   create: (data: any) => api.post('/courses', data),
   enroll: (id: string) => api.post(`/courses/${id}/enroll`),
 }
+
+export const aiCoachApi = {
+  chat: (message: string, context?: any) => api.post('/ai-coach/chat', { message, ...context }),
+  analyzeVideo: (videoId: string, specificQuestion?: string) => 
+    api.post('/ai-coach/analyze-video', { videoId, specificQuestion }),
+  analyzeSession: (sessionId: string) => 
+    api.post('/ai-coach/analyze-session', { sessionId }),
+  getTrainingPlan: (goals?: string) => 
+    api.post('/ai-coach/training-plan', { goals }),
+  getHistory: () => api.get('/ai-coach/history'),
+}
