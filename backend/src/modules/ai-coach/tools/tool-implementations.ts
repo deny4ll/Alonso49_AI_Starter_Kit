@@ -364,7 +364,7 @@ export class CoachTools {
 
     return {
       success: true,
-      data: sessions.map((s) => ({
+      data: sessions.map((s: any) => ({
         id: s.id,
         title: s.title,
         description: s.description,
@@ -452,7 +452,7 @@ export class CoachTools {
       success: true,
       data: {
         statistics: stats,
-        sessions: analytics.map((a) => ({
+        sessions: analytics.map((a: any) => ({
           sessionTitle: a.session.title,
           date: a.session.scheduledAt,
           performanceScore: a.performanceScore,
