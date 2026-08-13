@@ -5,18 +5,48 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import { videosApi } from '@/lib/api'
-import { Plus, Play, Trash2 } from 'lucide-react'
+import { videosApi, tagsApi } from '@/lib/api'
+import { Plus, Play, Trash2, FileText, Search } from 'lucide-react'
+
+interface Tag {
+  id: string
+  key: string
+  label: string
+  children?: Tag[]
+}
 
 export default function VideosPage() {
   const [showModal, setShowModal] = useState(false)
+  const [contentType, setContentType] = useState<'VIDEO' | 'REPORT'>('VIDEO')
+  const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
+  const [search, setSearch] = useState('')
+  const [areaFilter, setAreaFilter] = useState('')
   const queryClient = useQueryClient()
 
-  const { data: videos, isLoading } = useQuery({
-    queryKey: ['videos'],
+  const { data: sections } = useQuery({
+    queryKey: ['tags'],
     queryFn: async () => {
-      const res = await videosApi.getAll()
+      const res = await tagsApi.getAll()
+      return res.data as Tag[]
+    },
+  })
+
+  const { data: videos, isLoading } = useQuery({
+    queryKey: ['videos', search, areaFilter],
+    queryFn: async () => {
+      const res = await videosApi.getAll({
+        q: search || undefined,
+        tagKey: areaFilter || undefined,
+      })
       return res.data
+    },
+  })
+
+  const { data: loadDistribution } = useQuery({
+    queryKey: ['videos-load-distribution'],
+    queryFn: async () => {
+      const res = await videosApi.getLoadDistribution()
+      return res.data as { total: number; sections: { key: string; label: string; percentage: number }[] }
     },
   })
 
@@ -27,7 +57,11 @@ export default function VideosPage() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['videos'] })
+      queryClient.invalidateQueries({ queryKey: ['videos-load-distribution'] })
+      queryClient.invalidateQueries({ queryKey: ['progress-summary'] })
       setShowModal(false)
+      setSelectedTagIds([])
+      setContentType('VIDEO')
     },
   })
 
@@ -37,50 +71,131 @@ export default function VideosPage() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['videos'] })
+      queryClient.invalidateQueries({ queryKey: ['videos-load-distribution'] })
     },
   })
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
+    const url = formData.get('url') as string
     createMutation.mutate({
+      type: contentType,
       title: formData.get('title'),
       description: formData.get('description'),
-      url: formData.get('url'),
+      feedback: formData.get('feedback') || undefined,
+      url: contentType === 'VIDEO' ? url : undefined,
       status: 'READY',
+      tagIds: selectedTagIds,
     })
+  }
+
+  const toggleTag = (id: string) => {
+    setSelectedTagIds((prev) => (prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]))
   }
 
   return (
     <DashboardLayout>
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Videos</h1>
-          <p className="text-gray-600">Gestiona tus videos de entrenamiento</p>
+          <h1 className="text-3xl font-bold mb-2">Videos e Informes</h1>
+          <p className="text-gray-600">Organizados por área de trabajo (Metodología Alonso49)</p>
         </div>
         <Button onClick={() => setShowModal(true)}>
           <Plus className="h-4 w-4 mr-2" />
-          Subir Video
+          Subir Video / Informe
         </Button>
       </div>
 
+      {loadDistribution && loadDistribution.total > 0 && (
+        <Card className="mb-6" title="Distribución de carga por área">
+          <div className="space-y-2">
+            {loadDistribution.sections
+              .filter((s) => s.percentage > 0)
+              .map((s) => (
+                <div key={s.key} className="flex items-center gap-3">
+                  <span className="text-sm text-gray-700 w-48 shrink-0">{s.label}</span>
+                  <div className="h-2 flex-1 bg-gray-100 rounded-full overflow-hidden">
+                    <div className="h-full bg-blue-600 rounded-full" style={{ width: `${s.percentage}%` }} />
+                  </div>
+                  <span className="text-xs text-gray-500 w-12 text-right">{s.percentage}%</span>
+                </div>
+              ))}
+            {loadDistribution.sections.every((s) => s.percentage === 0) && (
+              <p className="text-sm text-gray-500">Todavía no hay contenido etiquetado por área.</p>
+            )}
+          </div>
+        </Card>
+      )}
+
+      <Card className="mb-6">
+        <div className="flex flex-col sm:flex-row gap-3">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Buscar por título, descripción o feedback..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
+          <select
+            value={areaFilter}
+            onChange={(e) => setAreaFilter(e.target.value)}
+            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:w-64"
+          >
+            <option value="">Todas las áreas</option>
+            {sections?.map((section) => (
+              <optgroup key={section.id} label={section.label}>
+                <option value={section.key}>{section.label} (toda la sección)</option>
+                {section.children?.map((child) => (
+                  <option key={child.id} value={child.key}>
+                    {child.label}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+          </select>
+        </div>
+      </Card>
+
       {isLoading ? (
         <div className="text-center py-12">
-          <p className="text-gray-500">Cargando videos...</p>
+          <p className="text-gray-500">Cargando...</p>
         </div>
       ) : videos && videos.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {videos.map((video: any) => (
             <Card key={video.id}>
               <div className="aspect-video bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
-                <Play className="h-12 w-12 text-gray-400" />
+                {video.type === 'REPORT' ? (
+                  <FileText className="h-12 w-12 text-gray-400" />
+                ) : (
+                  <Play className="h-12 w-12 text-gray-400" />
+                )}
+              </div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="text-xs px-2 py-0.5 bg-gray-100 text-gray-700 rounded">
+                  {video.type === 'REPORT' ? 'Informe' : 'Video'}
+                </span>
               </div>
               <h3 className="font-semibold mb-2">{video.title}</h3>
-              <p className="text-sm text-gray-600 mb-4">{video.description}</p>
+              <p className="text-sm text-gray-600 mb-2">{video.description}</p>
+              {video.feedback && (
+                <p className="text-sm text-blue-700 bg-blue-50 rounded p-2 mb-2">{video.feedback}</p>
+              )}
+              {video.tags?.length > 0 && (
+                <div className="flex flex-wrap gap-1 mb-3">
+                  {video.tags.map((vt: any) => (
+                    <span key={vt.tagId} className="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full">
+                      {vt.tag.label}
+                    </span>
+                  ))}
+                </div>
+              )}
               <div className="flex items-center justify-between">
-                <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded">
-                  {video.status}
-                </span>
+                <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded">{video.status}</span>
                 <button
                   onClick={() => deleteMutation.mutate(video.id)}
                   className="p-2 text-red-600 hover:bg-red-50 rounded"
@@ -95,24 +210,42 @@ export default function VideosPage() {
         <Card>
           <div className="text-center py-12">
             <Play className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 mb-4">No hay videos aún</p>
+            <p className="text-gray-500 mb-4">No hay videos ni informes que coincidan</p>
             <Button onClick={() => setShowModal(true)}>
               <Plus className="h-4 w-4 mr-2" />
-              Subir tu primer video
+              Subir contenido
             </Button>
           </div>
         </Card>
       )}
 
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-            <h2 className="text-2xl font-bold mb-4">Subir Video</h2>
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto">
+            <h2 className="text-2xl font-bold mb-4">Subir Video o Informe</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Título
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Tipo</label>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setContentType('VIDEO')}
+                    className={`flex-1 px-3 py-2 rounded-lg border ${contentType === 'VIDEO' ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-gray-300 text-gray-600'}`}
+                  >
+                    Video
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setContentType('REPORT')}
+                    className={`flex-1 px-3 py-2 rounded-lg border ${contentType === 'REPORT' ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-gray-300 text-gray-600'}`}
+                  >
+                    Informe (sin video)
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Título</label>
                 <input
                   name="title"
                   type="text"
@@ -121,36 +254,70 @@ export default function VideosPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Descripción
-                </label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Descripción</label>
                 <textarea
                   name="description"
-                  rows={3}
+                  rows={2}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
+              {contentType === 'VIDEO' && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">URL del video</label>
+                  <input
+                    name="url"
+                    type="url"
+                    required={contentType === 'VIDEO'}
+                    placeholder="https://..."
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+              )}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  URL del video
+                  Feedback (qué estuvo bien / qué mejorar)
                 </label>
-                <input
-                  name="url"
-                  type="url"
-                  required
-                  placeholder="https://..."
+                <textarea
+                  name="feedback"
+                  rows={2}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Áreas / etiquetas (Metodología Alonso49)
+                </label>
+                <div className="max-h-56 overflow-y-auto border border-gray-200 rounded-lg p-3 space-y-3">
+                  {sections?.map((section) => (
+                    <div key={section.id}>
+                      <p className="text-xs font-semibold text-gray-500 uppercase mb-1">{section.label}</p>
+                      <div className="flex flex-wrap gap-1">
+                        {section.children?.map((child) => (
+                          <button
+                            type="button"
+                            key={child.id}
+                            onClick={() => toggleTag(child.id)}
+                            className={`text-xs px-2 py-1 rounded-full border ${
+                              selectedTagIds.includes(child.id)
+                                ? 'bg-blue-600 text-white border-blue-600'
+                                : 'border-gray-300 text-gray-600'
+                            }`}
+                          >
+                            {child.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
               <div className="flex gap-3">
                 <Button type="submit" disabled={createMutation.isPending}>
-                  {createMutation.isPending ? 'Subiendo...' : 'Subir Video'}
+                  {createMutation.isPending ? 'Subiendo...' : 'Subir'}
                 </Button>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => setShowModal(false)}
-                >
+                <Button type="button" variant="outline" onClick={() => setShowModal(false)}>
                   Cancelar
                 </Button>
               </div>

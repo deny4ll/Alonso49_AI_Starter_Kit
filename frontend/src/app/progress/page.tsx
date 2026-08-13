@@ -1,0 +1,120 @@
+'use client'
+
+import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { DashboardLayout } from '@/components/layout/DashboardLayout'
+import { Card } from '@/components/ui/Card'
+import { progressApi } from '@/lib/api'
+import { ChevronDown, ChevronRight, Target } from 'lucide-react'
+
+interface Subsection {
+  id: string
+  key: string
+  label: string
+  entries: number
+}
+
+interface Section {
+  id: string
+  key: string
+  label: string
+  entries: number
+  subsections: Subsection[]
+}
+
+export default function ProgressPage() {
+  const [expanded, setExpanded] = useState<Set<string>>(new Set())
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['progress-summary'],
+    queryFn: async () => {
+      const res = await progressApi.getSummary()
+      return res.data as { scope: string; totalEntries: number; sections: Section[] }
+    },
+  })
+
+  const maxEntries = Math.max(1, ...(data?.sections.map((s) => s.entries) || [1]))
+
+  const toggle = (id: string) => {
+    setExpanded((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
+
+  return (
+    <DashboardLayout>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-2">Área de Progreso</h1>
+        <p className="text-gray-600">
+          Progreso acumulado según la Metodología Alonso49
+          {data?.scope === 'team' ? ' — vista de equipo' : ' — vista individual'}
+        </p>
+      </div>
+
+      <Card className="mb-6">
+        <div className="flex items-center gap-3">
+          <div className="p-3 rounded-lg bg-blue-100 text-blue-600">
+            <Target className="h-6 w-6" />
+          </div>
+          <div>
+            <div className="text-3xl font-bold">{data?.totalEntries ?? 0}</div>
+            <div className="text-sm text-gray-600">Videos e informes etiquetados en total</div>
+          </div>
+        </div>
+      </Card>
+
+      {isLoading && <p className="text-gray-500">Cargando progreso...</p>}
+
+      <div className="space-y-3">
+        {data?.sections.map((section) => {
+          const isOpen = expanded.has(section.id)
+          const pct = Math.round((section.entries / maxEntries) * 100)
+          return (
+            <Card key={section.id}>
+              <button
+                className="w-full flex items-center justify-between text-left"
+                onClick={() => toggle(section.id)}
+              >
+                <div className="flex items-center gap-2">
+                  {isOpen ? (
+                    <ChevronDown className="h-4 w-4 text-gray-400" />
+                  ) : (
+                    <ChevronRight className="h-4 w-4 text-gray-400" />
+                  )}
+                  <span className="font-semibold">{section.label}</span>
+                </div>
+                <span className="text-sm text-gray-600">{section.entries} entradas</span>
+              </button>
+
+              <div className="mt-3 h-2 bg-gray-100 rounded-full overflow-hidden">
+                <div className="h-full bg-blue-600 rounded-full" style={{ width: `${pct}%` }} />
+              </div>
+
+              {isOpen && (
+                <div className="mt-4 space-y-2 pl-6 border-l-2 border-gray-100">
+                  {section.subsections.map((sub) => {
+                    const subPct = Math.round((sub.entries / maxEntries) * 100)
+                    return (
+                      <div key={sub.id} className="flex items-center justify-between gap-4">
+                        <span className="text-sm text-gray-700">{sub.label}</span>
+                        <div className="flex items-center gap-2 flex-1 max-w-[200px]">
+                          <div className="h-1.5 flex-1 bg-gray-100 rounded-full overflow-hidden">
+                            <div className="h-full bg-blue-400 rounded-full" style={{ width: `${subPct}%` }} />
+                          </div>
+                          <span className="text-xs text-gray-500 w-6 text-right">{sub.entries}</span>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
+            </Card>
+          )
+        })}
+      </div>
+    </DashboardLayout>
+  )
+}

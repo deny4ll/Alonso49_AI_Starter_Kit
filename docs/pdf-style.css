@@ -1,0 +1,264 @@
+/* Estilos para PDF profesional */
+@page {
+  size: A4;
+  margin: 2.5cm 3cm;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica', 'Arial', sans-serif;
+  font-size: 11pt;
+  line-height: 1.6;
+  color: #333;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  color: #1a365d;
+  font-size: 24pt;
+  font-weight: 700;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border-bottom: 3px solid #3182ce;
+  padding-bottom: 10px;
+  page-break-before: always;
+}
+
+h1:first-of-type {
+  page-break-before: avoid;
+}
+
+h2 {
+  color: #2c5282;
+  font-size: 18pt;
+  font-weight: 600;
+  margin-top: 25px;
+  margin-bottom: 12px;
+  border-bottom: 2px solid #90cdf4;
+  padding-bottom: 8px;
+}
+
+h3 {
+  color: #2d3748;
+  font-size: 14pt;
+  font-weight: 600;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+h4 {
+  color: #4a5568;
+  font-size: 12pt;
+  font-weight: 600;
+  margin-top: 15px;
+  margin-bottom: 8px;
+}
+
+p {
+  margin-bottom: 10px;
+  text-align: justify;
+}
+
+code {
+  background-color: #f7fafc;
+  color: #c7254e;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'Monaco', 'Courier New', monospace;
+  font-size: 9pt;
+}
+
+pre {
+  background-color: #f7fafc;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid #3182ce;
+  padding: 15px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 15px 0;
+  page-break-inside: avoid;
+}
+
+pre code {
+  background-color: transparent;
+  color: #2d3748;
+  padding: 0;
+  font-size: 9pt;
+  line-height: 1.4;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 10pt;
+  page-break-inside: avoid;
+}
+
+table thead {
+  background-color: #3182ce;
+  color: white;
+}
+
+table th {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  border: 1px solid #cbd5e0;
+}
+
+table td {
+  padding: 10px;
+  border: 1px solid #cbd5e0;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #f7fafc;
+}
+
+table tbody tr:hover {
+  background-color: #edf2f7;
+}
+
+ul, ol {
+  margin: 10px 0;
+  padding-left: 30px;
+}
+
+li {
+  margin: 5px 0;
+}
+
+blockquote {
+  border-left: 4px solid #3182ce;
+  padding-left: 20px;
+  margin: 15px 0;
+  color: #4a5568;
+  font-style: italic;
+}
+
+#TOC {
+  background-color: #f7fafc;
+  border: 2px solid #3182ce;
+  padding: 20px;
+  margin: 30px 0;
+  border-radius: 8px;
+  page-break-after: always;
+}
+
+#TOC ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#TOC li {
+  margin: 8px 0;
+}
+
+#TOC a {
+  color: #2c5282;
+  text-decoration: none;
+}
+
+#TOC a:hover {
+  color: #3182ce;
+  text-decoration: underline;
+}
+
+.header {
+  background-color: #1a365d;
+  color: white;
+  padding: 40px 20px;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  page-break-after: always;
+}
+
+.header h1 {
+  color: white;
+  border-bottom: none;
+  margin: 0;
+  padding: 0;
+  page-break-before: avoid;
+}
+
+.header .subtitle {
+  font-size: 14pt;
+  margin-top: 10px;
+  color: #90cdf4;
+}
+
+.header .metadata {
+  font-size: 10pt;
+  margin-top: 20px;
+  color: #cbd5e0;
+}
+
+a {
+  color: #3182ce;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.page-break {
+  page-break-after: always;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 15px auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  page-break-inside: avoid;
+}
+
+strong {
+  color: #2d3748;
+  font-weight: 600;
+}
+
+em {
+  color: #4a5568;
+}
+
+hr {
+  border: none;
+  border-top: 2px solid #e2e8f0;
+  margin: 30px 0;
+}
+
+/* Mejoras para impresión */
+@media print {
+  body {
+    font-size: 10pt;
+  }
+  
+  h1 {
+    font-size: 22pt;
+  }
+  
+  h2 {
+    font-size: 16pt;
+  }
+  
+  h3 {
+    font-size: 13pt;
+  }
+  
+  a {
+    color: #2c5282;
+    text-decoration: none;
+  }
+  
+  pre, table, blockquote {
+    page-break-inside: avoid;
+  }
+}

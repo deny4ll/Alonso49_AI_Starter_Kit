@@ -66,4 +66,46 @@ export class SessionsService {
       data: { deletedAt: new Date() },
     });
   }
+
+  /** Búsqueda con filtros compartida con el buscador ("lupa") del AI Coach. */
+  async search(filters: {
+    q?: string;
+    windMin?: number;
+    windMax?: number;
+    dateFrom?: string;
+    dateTo?: string;
+    location?: string;
+    mine?: boolean;
+    userId?: string;
+  }) {
+    const { q, windMin, windMax, dateFrom, dateTo, location, mine, userId } = filters;
+
+    return this.prisma.session.findMany({
+      where: {
+        deletedAt: null,
+        ...(mine && userId && { createdById: userId }),
+        ...(location && { location: { contains: location, mode: 'insensitive' } }),
+        ...((windMin !== undefined || windMax !== undefined) && {
+          windSpeed: {
+            ...(windMin !== undefined && { gte: windMin }),
+            ...(windMax !== undefined && { lte: windMax }),
+          },
+        }),
+        ...((dateFrom || dateTo) && {
+          scheduledAt: {
+            ...(dateFrom && { gte: new Date(dateFrom) }),
+            ...(dateTo && { lte: new Date(dateTo) }),
+          },
+        }),
+        ...(q && {
+          OR: [
+            { title: { contains: q, mode: 'insensitive' } },
+            { description: { contains: q, mode: 'insensitive' } },
+          ],
+        }),
+      },
+      include: { videos: true },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
 }

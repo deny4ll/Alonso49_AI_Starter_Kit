@@ -1,0 +1,2663 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.10.1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Christian Alonso" />
+  <title>Alonso49 Platform - Documentación Técnica Completa</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="pdf-style.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Alonso49 Platform - Documentación Técnica
+Completa</h1>
+<p class="subtitle">Plataforma de Entrenamiento de Alto Rendimiento para
+Vela Olímpica</p>
+<p class="author">Christian Alonso</p>
+<p class="date">1 Agosto 2026</p>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#tabla-de-contenidos" id="toc-tabla-de-contenidos"><span
+class="toc-section-number">1</span> Tabla de Contenidos</a></li>
+<li><a href="#resumen-ejecutivo" id="toc-resumen-ejecutivo"><span
+class="toc-section-number">2</span> 1. Resumen Ejecutivo</a>
+<ul>
+<li><a href="#descripción-del-proyecto"
+id="toc-descripción-del-proyecto"><span
+class="toc-section-number">2.1</span> 1.1 Descripción del Proyecto</a>
+<ul>
+<li><a href="#objetivos-principales"
+id="toc-objetivos-principales"><span
+class="toc-section-number">2.1.1</span> Objetivos Principales</a></li>
+<li><a href="#tecnologías-utilizadas"
+id="toc-tecnologías-utilizadas"><span
+class="toc-section-number">2.1.2</span> Tecnologías Utilizadas</a></li>
+<li><a href="#características-clave"
+id="toc-características-clave"><span
+class="toc-section-number">2.1.3</span> Características Clave</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#arquitectura-del-sistema"
+id="toc-arquitectura-del-sistema"><span
+class="toc-section-number">3</span> 2. Arquitectura del Sistema</a>
+<ul>
+<li><a href="#diagrama-de-arquitectura-general"
+id="toc-diagrama-de-arquitectura-general"><span
+class="toc-section-number">3.1</span> 2.1 Diagrama de Arquitectura
+General</a></li>
+<li><a href="#flujo-de-datos" id="toc-flujo-de-datos"><span
+class="toc-section-number">3.2</span> 2.2 Flujo de Datos</a>
+<ul>
+<li><a href="#autenticación" id="toc-autenticación"><span
+class="toc-section-number">3.2.1</span> Autenticación</a></li>
+<li><a href="#sesión-de-entrenamiento"
+id="toc-sesión-de-entrenamiento"><span
+class="toc-section-number">3.2.2</span> Sesión de Entrenamiento</a></li>
+<li><a href="#ai-coach-interaction" id="toc-ai-coach-interaction"><span
+class="toc-section-number">3.2.3</span> AI Coach Interaction</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#módulos-del-backend" id="toc-módulos-del-backend"><span
+class="toc-section-number">4</span> 3. Módulos del Backend</a>
+<ul>
+<li><a href="#auth-module" id="toc-auth-module"><span
+class="toc-section-number">4.1</span> 3.1 Auth Module</a>
+<ul>
+<li><a href="#responsabilidades" id="toc-responsabilidades"><span
+class="toc-section-number">4.1.1</span> Responsabilidades</a></li>
+<li><a href="#endpoints" id="toc-endpoints"><span
+class="toc-section-number">4.1.2</span> Endpoints</a></li>
+<li><a href="#dtos" id="toc-dtos"><span
+class="toc-section-number">4.1.3</span> DTOs</a></li>
+</ul></li>
+<li><a href="#users-module" id="toc-users-module"><span
+class="toc-section-number">4.2</span> 3.2 Users Module</a>
+<ul>
+<li><a href="#responsabilidades-1" id="toc-responsabilidades-1"><span
+class="toc-section-number">4.2.1</span> Responsabilidades</a></li>
+<li><a href="#endpoints-1" id="toc-endpoints-1"><span
+class="toc-section-number">4.2.2</span> Endpoints</a></li>
+<li><a href="#modelos-de-perfil" id="toc-modelos-de-perfil"><span
+class="toc-section-number">4.2.3</span> Modelos de Perfil</a></li>
+</ul></li>
+<li><a href="#videos-module" id="toc-videos-module"><span
+class="toc-section-number">4.3</span> 3.3 Videos Module</a>
+<ul>
+<li><a href="#responsabilidades-2" id="toc-responsabilidades-2"><span
+class="toc-section-number">4.3.1</span> Responsabilidades</a></li>
+<li><a href="#endpoints-2" id="toc-endpoints-2"><span
+class="toc-section-number">4.3.2</span> Endpoints</a></li>
+<li><a href="#modelo-video" id="toc-modelo-video"><span
+class="toc-section-number">4.3.3</span> Modelo Video</a></li>
+</ul></li>
+<li><a href="#sessions-module" id="toc-sessions-module"><span
+class="toc-section-number">4.4</span> 3.4 Sessions Module</a>
+<ul>
+<li><a href="#responsabilidades-3" id="toc-responsabilidades-3"><span
+class="toc-section-number">4.4.1</span> Responsabilidades</a></li>
+<li><a href="#endpoints-3" id="toc-endpoints-3"><span
+class="toc-section-number">4.4.2</span> Endpoints</a></li>
+<li><a href="#modelo-session" id="toc-modelo-session"><span
+class="toc-section-number">4.4.3</span> Modelo Session</a></li>
+</ul></li>
+<li><a href="#teams-module" id="toc-teams-module"><span
+class="toc-section-number">4.5</span> 3.5 Teams Module</a>
+<ul>
+<li><a href="#responsabilidades-4" id="toc-responsabilidades-4"><span
+class="toc-section-number">4.5.1</span> Responsabilidades</a></li>
+<li><a href="#endpoints-4" id="toc-endpoints-4"><span
+class="toc-section-number">4.5.2</span> Endpoints</a></li>
+<li><a href="#modelo-team" id="toc-modelo-team"><span
+class="toc-section-number">4.5.3</span> Modelo Team</a></li>
+</ul></li>
+<li><a href="#courses-module" id="toc-courses-module"><span
+class="toc-section-number">4.6</span> 3.6 Courses Module</a>
+<ul>
+<li><a href="#responsabilidades-5" id="toc-responsabilidades-5"><span
+class="toc-section-number">4.6.1</span> Responsabilidades</a></li>
+<li><a href="#endpoints-5" id="toc-endpoints-5"><span
+class="toc-section-number">4.6.2</span> Endpoints</a></li>
+<li><a href="#modelo-course" id="toc-modelo-course"><span
+class="toc-section-number">4.6.3</span> Modelo Course</a></li>
+</ul></li>
+<li><a href="#analytics-module" id="toc-analytics-module"><span
+class="toc-section-number">4.7</span> 3.7 Analytics Module</a>
+<ul>
+<li><a href="#responsabilidades-6" id="toc-responsabilidades-6"><span
+class="toc-section-number">4.7.1</span> Responsabilidades</a></li>
+<li><a href="#endpoints-6" id="toc-endpoints-6"><span
+class="toc-section-number">4.7.2</span> Endpoints</a></li>
+<li><a href="#modelo-sessionanalytics"
+id="toc-modelo-sessionanalytics"><span
+class="toc-section-number">4.7.3</span> Modelo SessionAnalytics</a></li>
+<li><a href="#kpis-calculados" id="toc-kpis-calculados"><span
+class="toc-section-number">4.7.4</span> KPIs Calculados</a></li>
+</ul></li>
+<li><a href="#ai-coach-module" id="toc-ai-coach-module"><span
+class="toc-section-number">4.8</span> 3.8 AI Coach Module</a>
+<ul>
+<li><a href="#responsabilidades-7" id="toc-responsabilidades-7"><span
+class="toc-section-number">4.8.1</span> Responsabilidades</a></li>
+<li><a href="#endpoints-7" id="toc-endpoints-7"><span
+class="toc-section-number">4.8.2</span> Endpoints</a></li>
+<li><a href="#herramientas-disponibles-20"
+id="toc-herramientas-disponibles-20"><span
+class="toc-section-number">4.8.3</span> Herramientas Disponibles
+(20)</a></li>
+<li><a href="#arquitectura-ai-coach"
+id="toc-arquitectura-ai-coach"><span
+class="toc-section-number">4.8.4</span> Arquitectura AI Coach</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#perfiles-de-usuario" id="toc-perfiles-de-usuario"><span
+class="toc-section-number">5</span> 4. Perfiles de Usuario</a>
+<ul>
+<li><a href="#athlete-atleta" id="toc-athlete-atleta"><span
+class="toc-section-number">5.1</span> 4.1 ATHLETE (Atleta)</a>
+<ul>
+<li><a href="#descripción" id="toc-descripción"><span
+class="toc-section-number">5.1.1</span> Descripción</a></li>
+<li><a href="#capacidades" id="toc-capacidades"><span
+class="toc-section-number">5.1.2</span> Capacidades</a></li>
+<li><a href="#flujo-típico" id="toc-flujo-típico"><span
+class="toc-section-number">5.1.3</span> Flujo Típico</a></li>
+</ul></li>
+<li><a href="#coach-entrenador" id="toc-coach-entrenador"><span
+class="toc-section-number">5.2</span> 4.2 COACH (Entrenador)</a>
+<ul>
+<li><a href="#descripción-1" id="toc-descripción-1"><span
+class="toc-section-number">5.2.1</span> Descripción</a></li>
+<li><a href="#capacidades-1" id="toc-capacidades-1"><span
+class="toc-section-number">5.2.2</span> Capacidades</a></li>
+<li><a href="#flujo-típico-1" id="toc-flujo-típico-1"><span
+class="toc-section-number">5.2.3</span> Flujo Típico</a></li>
+</ul></li>
+<li><a href="#academy-academia" id="toc-academy-academia"><span
+class="toc-section-number">5.3</span> 4.3 ACADEMY (Academia)</a>
+<ul>
+<li><a href="#descripción-2" id="toc-descripción-2"><span
+class="toc-section-number">5.3.1</span> Descripción</a></li>
+<li><a href="#capacidades-2" id="toc-capacidades-2"><span
+class="toc-section-number">5.3.2</span> Capacidades</a></li>
+<li><a href="#monetización" id="toc-monetización"><span
+class="toc-section-number">5.3.3</span> Monetización</a></li>
+<li><a href="#flujo-típico-2" id="toc-flujo-típico-2"><span
+class="toc-section-number">5.3.4</span> Flujo Típico</a></li>
+</ul></li>
+<li><a href="#admin-administrador" id="toc-admin-administrador"><span
+class="toc-section-number">5.4</span> 4.4 ADMIN (Administrador)</a>
+<ul>
+<li><a href="#descripción-3" id="toc-descripción-3"><span
+class="toc-section-number">5.4.1</span> Descripción</a></li>
+<li><a href="#capacidades-3" id="toc-capacidades-3"><span
+class="toc-section-number">5.4.2</span> Capacidades</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#funcionalidades-principales"
+id="toc-funcionalidades-principales"><span
+class="toc-section-number">6</span> 5. Funcionalidades Principales</a>
+<ul>
+<li><a href="#sistema-de-autenticación"
+id="toc-sistema-de-autenticación"><span
+class="toc-section-number">6.1</span> 5.1 Sistema de Autenticación</a>
+<ul>
+<li><a href="#características" id="toc-características"><span
+class="toc-section-number">6.1.1</span> Características</a></li>
+<li><a href="#seguridad" id="toc-seguridad"><span
+class="toc-section-number">6.1.2</span> Seguridad</a></li>
+</ul></li>
+<li><a href="#gestión-de-videos" id="toc-gestión-de-videos"><span
+class="toc-section-number">6.2</span> 5.2 Gestión de Videos</a>
+<ul>
+<li><a href="#upload-flow" id="toc-upload-flow"><span
+class="toc-section-number">6.2.1</span> Upload Flow</a></li>
+<li><a href="#características-1" id="toc-características-1"><span
+class="toc-section-number">6.2.2</span> Características</a></li>
+</ul></li>
+<li><a href="#analytics-automáticos"
+id="toc-analytics-automáticos"><span
+class="toc-section-number">6.3</span> 5.3 Analytics Automáticos</a>
+<ul>
+<li><a href="#cálculo-de-métricas" id="toc-cálculo-de-métricas"><span
+class="toc-section-number">6.3.1</span> Cálculo de Métricas</a></li>
+</ul></li>
+<li><a href="#closed-loop-coaching" id="toc-closed-loop-coaching"><span
+class="toc-section-number">6.4</span> 5.4 Closed Loop Coaching</a>
+<ul>
+<li><a href="#ciclo-completo" id="toc-ciclo-completo"><span
+class="toc-section-number">6.4.1</span> Ciclo Completo</a></li>
+</ul></li>
+<li><a href="#ai-coach---ejemplos-de-uso"
+id="toc-ai-coach---ejemplos-de-uso"><span
+class="toc-section-number">6.5</span> 5.5 AI Coach - Ejemplos de Uso</a>
+<ul>
+<li><a href="#caso-1-análisis-de-rendimiento"
+id="toc-caso-1-análisis-de-rendimiento"><span
+class="toc-section-number">6.5.1</span> Caso 1: Análisis de
+Rendimiento</a></li>
+<li><a href="#caso-2-planificación-de-entrenamiento"
+id="toc-caso-2-planificación-de-entrenamiento"><span
+class="toc-section-number">6.5.2</span> Caso 2: Planificación de
+Entrenamiento</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#base-de-datos" id="toc-base-de-datos"><span
+class="toc-section-number">7</span> 6. Base de Datos</a>
+<ul>
+<li><a href="#esquema-general" id="toc-esquema-general"><span
+class="toc-section-number">7.1</span> 6.1 Esquema General</a>
+<ul>
+<li><a href="#tablas-principales-15"
+id="toc-tablas-principales-15"><span
+class="toc-section-number">7.1.1</span> Tablas Principales (15)</a></li>
+</ul></li>
+<li><a href="#relaciones-clave" id="toc-relaciones-clave"><span
+class="toc-section-number">7.2</span> 6.2 Relaciones Clave</a></li>
+<li><a href="#características-especiales"
+id="toc-características-especiales"><span
+class="toc-section-number">7.3</span> 6.3 Características Especiales</a>
+<ul>
+<li><a href="#soft-delete" id="toc-soft-delete"><span
+class="toc-section-number">7.3.1</span> Soft Delete</a></li>
+<li><a href="#audit-logs" id="toc-audit-logs"><span
+class="toc-section-number">7.3.2</span> Audit Logs</a></li>
+<li><a href="#pgvector-integration" id="toc-pgvector-integration"><span
+class="toc-section-number">7.3.3</span> pgvector Integration</a></li>
+<li><a href="#índices-optimizados" id="toc-índices-optimizados"><span
+class="toc-section-number">7.3.4</span> Índices Optimizados</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#api-rest" id="toc-api-rest"><span
+class="toc-section-number">8</span> 7. API REST</a>
+<ul>
+<li><a href="#estructura-general" id="toc-estructura-general"><span
+class="toc-section-number">8.1</span> 7.1 Estructura General</a>
+<ul>
+<li><a href="#base-url" id="toc-base-url"><span
+class="toc-section-number">8.1.1</span> Base URL</a></li>
+<li><a href="#headers-requeridos" id="toc-headers-requeridos"><span
+class="toc-section-number">8.1.2</span> Headers Requeridos</a></li>
+<li><a href="#respuestas-estándar" id="toc-respuestas-estándar"><span
+class="toc-section-number">8.1.3</span> Respuestas Estándar</a></li>
+</ul></li>
+<li><a href="#endpoints-por-módulo" id="toc-endpoints-por-módulo"><span
+class="toc-section-number">8.2</span> 7.2 Endpoints por Módulo</a>
+<ul>
+<li><a href="#auth" id="toc-auth"><span
+class="toc-section-number">8.2.1</span> Auth</a></li>
+<li><a href="#users" id="toc-users"><span
+class="toc-section-number">8.2.2</span> Users</a></li>
+<li><a href="#videos" id="toc-videos"><span
+class="toc-section-number">8.2.3</span> Videos</a></li>
+<li><a href="#sessions" id="toc-sessions"><span
+class="toc-section-number">8.2.4</span> Sessions</a></li>
+<li><a href="#teams" id="toc-teams"><span
+class="toc-section-number">8.2.5</span> Teams</a></li>
+<li><a href="#courses" id="toc-courses"><span
+class="toc-section-number">8.2.6</span> Courses</a></li>
+<li><a href="#analytics" id="toc-analytics"><span
+class="toc-section-number">8.2.7</span> Analytics</a></li>
+<li><a href="#ai-coach" id="toc-ai-coach"><span
+class="toc-section-number">8.2.8</span> AI Coach</a></li>
+</ul></li>
+<li><a href="#ejemplos-de-requests" id="toc-ejemplos-de-requests"><span
+class="toc-section-number">8.3</span> 7.3 Ejemplos de Requests</a>
+<ul>
+<li><a href="#crear-sesión" id="toc-crear-sesión"><span
+class="toc-section-number">8.3.1</span> Crear Sesión</a></li>
+<li><a href="#subir-video" id="toc-subir-video"><span
+class="toc-section-number">8.3.2</span> Subir Video</a></li>
+<li><a href="#chat-con-ai-coach" id="toc-chat-con-ai-coach"><span
+class="toc-section-number">8.3.3</span> Chat con AI Coach</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#frontend---interfaz-de-usuario"
+id="toc-frontend---interfaz-de-usuario"><span
+class="toc-section-number">9</span> 8. Frontend - Interfaz de
+Usuario</a>
+<ul>
+<li><a href="#tecnologías" id="toc-tecnologías"><span
+class="toc-section-number">9.1</span> 8.1 Tecnologías</a></li>
+<li><a href="#páginas-principales" id="toc-páginas-principales"><span
+class="toc-section-number">9.2</span> 8.2 Páginas Principales</a>
+<ul>
+<li><a href="#landing-page" id="toc-landing-page"><span
+class="toc-section-number">9.2.1</span> 1. Landing Page
+(<code>/</code>)</a></li>
+<li><a href="#login-login" id="toc-login-login"><span
+class="toc-section-number">9.2.2</span> 2. Login
+(<code>/login</code>)</a></li>
+<li><a href="#register-register" id="toc-register-register"><span
+class="toc-section-number">9.2.3</span> 3. Register
+(<code>/register</code>)</a></li>
+<li><a href="#dashboard-dashboard" id="toc-dashboard-dashboard"><span
+class="toc-section-number">9.2.4</span> 4. Dashboard
+(<code>/dashboard</code>)</a></li>
+<li><a href="#videos-videos" id="toc-videos-videos"><span
+class="toc-section-number">9.2.5</span> 5. Videos
+(<code>/videos</code>)</a></li>
+<li><a href="#sessions-sessions" id="toc-sessions-sessions"><span
+class="toc-section-number">9.2.6</span> 6. Sessions
+(<code>/sessions</code>)</a></li>
+<li><a href="#session-detail-sessionsid"
+id="toc-session-detail-sessionsid"><span
+class="toc-section-number">9.2.7</span> 7. Session Detail
+(<code>/sessions/:id</code>)</a></li>
+<li><a href="#teams-teams" id="toc-teams-teams"><span
+class="toc-section-number">9.2.8</span> 8. Teams
+(<code>/teams</code>)</a></li>
+<li><a href="#courses-courses" id="toc-courses-courses"><span
+class="toc-section-number">9.2.9</span> 9. Courses
+(<code>/courses</code>)</a></li>
+<li><a href="#ai-coach-ai-coach" id="toc-ai-coach-ai-coach"><span
+class="toc-section-number">9.2.10</span> 10. AI Coach
+(<code>/ai-coach</code>)</a></li>
+<li><a href="#analytics-analytics" id="toc-analytics-analytics"><span
+class="toc-section-number">9.2.11</span> 11. Analytics
+(<code>/analytics</code>)</a></li>
+</ul></li>
+<li><a href="#componentes-reutilizables"
+id="toc-componentes-reutilizables"><span
+class="toc-section-number">9.3</span> 8.3 Componentes Reutilizables</a>
+<ul>
+<li><a href="#navigation" id="toc-navigation"><span
+class="toc-section-number">9.3.1</span> Navigation</a></li>
+<li><a href="#data-display" id="toc-data-display"><span
+class="toc-section-number">9.3.2</span> Data Display</a></li>
+<li><a href="#forms" id="toc-forms"><span
+class="toc-section-number">9.3.3</span> Forms</a></li>
+<li><a href="#feedback" id="toc-feedback"><span
+class="toc-section-number">9.3.4</span> Feedback</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#guía-de-uso" id="toc-guía-de-uso"><span
+class="toc-section-number">10</span> 9. Guía de Uso</a>
+<ul>
+<li><a href="#para-atletas" id="toc-para-atletas"><span
+class="toc-section-number">10.1</span> 9.1 Para Atletas</a>
+<ul>
+<li><a href="#primer-uso" id="toc-primer-uso"><span
+class="toc-section-number">10.1.1</span> Primer Uso</a></li>
+<li><a href="#flujo-de-entrenamiento"
+id="toc-flujo-de-entrenamiento"><span
+class="toc-section-number">10.1.2</span> Flujo de Entrenamiento</a></li>
+</ul></li>
+<li><a href="#para-coaches" id="toc-para-coaches"><span
+class="toc-section-number">10.2</span> 9.2 Para Coaches</a>
+<ul>
+<li><a href="#setup-inicial" id="toc-setup-inicial"><span
+class="toc-section-number">10.2.1</span> Setup Inicial</a></li>
+<li><a href="#flujo-de-coaching" id="toc-flujo-de-coaching"><span
+class="toc-section-number">10.2.2</span> Flujo de Coaching</a></li>
+</ul></li>
+<li><a href="#para-academias" id="toc-para-academias"><span
+class="toc-section-number">10.3</span> 9.3 Para Academias</a>
+<ul>
+<li><a href="#configuración" id="toc-configuración"><span
+class="toc-section-number">10.3.1</span> Configuración</a></li>
+<li><a href="#monetización-1" id="toc-monetización-1"><span
+class="toc-section-number">10.3.2</span> Monetización</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#seguridad-1" id="toc-seguridad-1"><span
+class="toc-section-number">11</span> 10. Seguridad</a>
+<ul>
+<li><a href="#autenticación-1" id="toc-autenticación-1"><span
+class="toc-section-number">11.1</span> 10.1 Autenticación</a>
+<ul>
+<li><a href="#jwt-tokens" id="toc-jwt-tokens"><span
+class="toc-section-number">11.1.1</span> JWT Tokens</a></li>
+<li><a href="#password-security" id="toc-password-security"><span
+class="toc-section-number">11.1.2</span> Password Security</a></li>
+</ul></li>
+<li><a href="#autorización" id="toc-autorización"><span
+class="toc-section-number">11.2</span> 10.2 Autorización</a>
+<ul>
+<li><a href="#role-based-access-control-rbac"
+id="toc-role-based-access-control-rbac"><span
+class="toc-section-number">11.2.1</span> Role-Based Access Control
+(RBAC)</a></li>
+<li><a href="#resource-ownership" id="toc-resource-ownership"><span
+class="toc-section-number">11.2.2</span> Resource Ownership</a></li>
+</ul></li>
+<li><a href="#validación-de-datos" id="toc-validación-de-datos"><span
+class="toc-section-number">11.3</span> 10.3 Validación de Datos</a>
+<ul>
+<li><a href="#dtos-con-class-validator"
+id="toc-dtos-con-class-validator"><span
+class="toc-section-number">11.3.1</span> DTOs con Class
+Validator</a></li>
+</ul></li>
+<li><a href="#rate-limiting" id="toc-rate-limiting"><span
+class="toc-section-number">11.4</span> 10.4 Rate Limiting</a></li>
+<li><a href="#sql-injection-prevention"
+id="toc-sql-injection-prevention"><span
+class="toc-section-number">11.5</span> 10.5 SQL Injection
+Prevention</a></li>
+<li><a href="#xss-prevention" id="toc-xss-prevention"><span
+class="toc-section-number">11.6</span> 10.6 XSS Prevention</a></li>
+<li><a href="#cors-configuration" id="toc-cors-configuration"><span
+class="toc-section-number">11.7</span> 10.7 CORS Configuration</a></li>
+<li><a href="#audit-logging" id="toc-audit-logging"><span
+class="toc-section-number">11.8</span> 10.8 Audit Logging</a></li>
+</ul></li>
+<li><a href="#infraestructura" id="toc-infraestructura"><span
+class="toc-section-number">12</span> 11. Infraestructura</a>
+<ul>
+<li><a href="#docker-compose" id="toc-docker-compose"><span
+class="toc-section-number">12.1</span> 11.1 Docker Compose</a>
+<ul>
+<li><a href="#servicios" id="toc-servicios"><span
+class="toc-section-number">12.1.1</span> Servicios</a></li>
+</ul></li>
+<li><a href="#variables-de-entorno" id="toc-variables-de-entorno"><span
+class="toc-section-number">12.2</span> 11.2 Variables de Entorno</a>
+<ul>
+<li><a href="#backend-.env" id="toc-backend-.env"><span
+class="toc-section-number">12.2.1</span> Backend (.env)</a></li>
+<li><a href="#frontend-.env" id="toc-frontend-.env"><span
+class="toc-section-number">12.2.2</span> Frontend (.env)</a></li>
+</ul></li>
+<li><a href="#despliegue" id="toc-despliegue"><span
+class="toc-section-number">12.3</span> 11.3 Despliegue</a>
+<ul>
+<li><a href="#comandos" id="toc-comandos"><span
+class="toc-section-number">12.3.1</span> Comandos</a></li>
+<li><a href="#health-checks" id="toc-health-checks"><span
+class="toc-section-number">12.3.2</span> Health Checks</a></li>
+</ul></li>
+<li><a href="#backup-y-restauración"
+id="toc-backup-y-restauración"><span
+class="toc-section-number">12.4</span> 11.4 Backup y Restauración</a>
+<ul>
+<li><a href="#backup-de-base-de-datos"
+id="toc-backup-de-base-de-datos"><span
+class="toc-section-number">12.4.1</span> Backup de Base de
+Datos</a></li>
+<li><a href="#backup-de-videos" id="toc-backup-de-videos"><span
+class="toc-section-number">12.4.2</span> Backup de Videos</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#mantenimiento-y-monitoreo"
+id="toc-mantenimiento-y-monitoreo"><span
+class="toc-section-number">13</span> 12. Mantenimiento y Monitoreo</a>
+<ul>
+<li><a href="#métricas-clave" id="toc-métricas-clave"><span
+class="toc-section-number">13.1</span> 12.1 Métricas Clave</a>
+<ul>
+<li><a href="#performance" id="toc-performance"><span
+class="toc-section-number">13.1.1</span> Performance</a></li>
+<li><a href="#base-de-datos-1" id="toc-base-de-datos-1"><span
+class="toc-section-number">13.1.2</span> Base de Datos</a></li>
+<li><a href="#ai-coach-1" id="toc-ai-coach-1"><span
+class="toc-section-number">13.1.3</span> AI Coach</a></li>
+</ul></li>
+<li><a href="#logs" id="toc-logs"><span
+class="toc-section-number">13.2</span> 12.2 Logs</a>
+<ul>
+<li><a href="#estructura-de-logs" id="toc-estructura-de-logs"><span
+class="toc-section-number">13.2.1</span> Estructura de Logs</a></li>
+<li><a href="#niveles-de-log" id="toc-niveles-de-log"><span
+class="toc-section-number">13.2.2</span> Niveles de Log</a></li>
+</ul></li>
+<li><a href="#alertas" id="toc-alertas"><span
+class="toc-section-number">13.3</span> 12.3 Alertas</a>
+<ul>
+<li><a href="#configurar-alertas" id="toc-configurar-alertas"><span
+class="toc-section-number">13.3.1</span> Configurar Alertas</a></li>
+</ul></li>
+<li><a href="#mantenimiento-regular"
+id="toc-mantenimiento-regular"><span
+class="toc-section-number">13.4</span> 12.4 Mantenimiento Regular</a>
+<ul>
+<li><a href="#diario" id="toc-diario"><span
+class="toc-section-number">13.4.1</span> Diario</a></li>
+<li><a href="#semanal" id="toc-semanal"><span
+class="toc-section-number">13.4.2</span> Semanal</a></li>
+<li><a href="#mensual" id="toc-mensual"><span
+class="toc-section-number">13.4.3</span> Mensual</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#anexos" id="toc-anexos"><span
+class="toc-section-number">14</span> 13. Anexos</a>
+<ul>
+<li><a href="#glosario" id="toc-glosario"><span
+class="toc-section-number">14.1</span> 13.1 Glosario</a></li>
+<li><a href="#contacto-y-soporte" id="toc-contacto-y-soporte"><span
+class="toc-section-number">14.2</span> 13.2 Contacto y Soporte</a></li>
+<li><a href="#changelog" id="toc-changelog"><span
+class="toc-section-number">14.3</span> 13.3 Changelog</a>
+<ul>
+<li><a href="#versión-1.0.0-agosto-2026"
+id="toc-versión-1.0.0-agosto-2026"><span
+class="toc-section-number">14.3.1</span> Versión 1.0.0 (Agosto
+2026)</a></li>
+<li><a href="#próximas-features-roadmap"
+id="toc-próximas-features-roadmap"><span
+class="toc-section-number">14.3.2</span> Próximas Features
+(Roadmap)</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+<h1 data-number="1" id="tabla-de-contenidos"><span
+class="header-section-number">1</span> Tabla de Contenidos</h1>
+<ol type="1">
+<li><a href="#resumen-ejecutivo">Resumen Ejecutivo</a></li>
+<li><a href="#arquitectura-del-sistema">Arquitectura del
+Sistema</a></li>
+<li><a href="#módulos-del-backend">Módulos del Backend</a></li>
+<li><a href="#perfiles-de-usuario">Perfiles de Usuario</a></li>
+<li><a href="#funcionalidades-principales">Funcionalidades
+Principales</a></li>
+<li><a href="#ai-high-performance-coach">AI High Performance
+Coach</a></li>
+<li><a href="#base-de-datos">Base de Datos</a></li>
+<li><a href="#api-rest">API REST</a></li>
+<li><a href="#frontend-interfaz-de-usuario">Frontend - Interfaz de
+Usuario</a></li>
+<li><a href="#guía-de-uso">Guía de Uso</a></li>
+<li><a href="#seguridad">Seguridad</a></li>
+<li><a href="#infraestructura">Infraestructura</a></li>
+<li><a href="#mantenimiento-y-monitoreo">Mantenimiento y
+Monitoreo</a></li>
+</ol>
+<h1 data-number="2" id="resumen-ejecutivo"><span
+class="header-section-number">2</span> 1. Resumen Ejecutivo</h1>
+<h2 data-number="2.1" id="descripción-del-proyecto"><span
+class="header-section-number">2.1</span> 1.1 Descripción del
+Proyecto</h2>
+<p><strong>Alonso49</strong> es una plataforma integral de entrenamiento
+de alto rendimiento diseñada específicamente para la clase olímpica de
+vela 49er. La plataforma implementa la <strong>Metodología
+Alonso49</strong> de coaching basado en datos y ciclos cerrados de
+mejora continua.</p>
+<h3 data-number="2.1.1" id="objetivos-principales"><span
+class="header-section-number">2.1.1</span> Objetivos Principales</h3>
+<ul>
+<li>✅ Digitalizar y centralizar el proceso de entrenamiento</li>
+<li>✅ Proporcionar análisis objetivo del rendimiento</li>
+<li>✅ Facilitar comunicación continua entre atletas y coaches</li>
+<li>✅ Implementar coaching inteligente con Inteligencia Artificial</li>
+<li>✅ Gestionar equipos y academias de forma eficiente</li>
+</ul>
+<h3 data-number="2.1.2" id="tecnologías-utilizadas"><span
+class="header-section-number">2.1.2</span> Tecnologías Utilizadas</h3>
+<table>
+<thead>
+<tr>
+<th>Componente</th>
+<th>Tecnología</th>
+<th>Versión</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Backend</strong></td>
+<td>NestJS</td>
+<td>10.3.0</td>
+</tr>
+<tr>
+<td><strong>Frontend</strong></td>
+<td>Next.js</td>
+<td>14.x</td>
+</tr>
+<tr>
+<td><strong>Base de Datos</strong></td>
+<td>PostgreSQL + pgvector</td>
+<td>16</td>
+</tr>
+<tr>
+<td><strong>AI</strong></td>
+<td>OpenAI GPT-4 Turbo</td>
+<td>Latest</td>
+</tr>
+<tr>
+<td><strong>ORM</strong></td>
+<td>Prisma</td>
+<td>5.8.0</td>
+</tr>
+<tr>
+<td><strong>Autenticación</strong></td>
+<td>JWT</td>
+<td>-</td>
+</tr>
+<tr>
+<td><strong>Contenedores</strong></td>
+<td>Docker Compose</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="2.1.3" id="características-clave"><span
+class="header-section-number">2.1.3</span> Características Clave</h3>
+<ol type="1">
+<li><strong>Sistema de Roles Avanzado</strong> (RBAC)
+<ul>
+<li>Atletas, Coaches, Academias, Administradores</li>
+</ul></li>
+<li><strong>AI High Performance Coach</strong>
+<ul>
+<li>20 herramientas de consulta y acción</li>
+<li>Integración con OpenAI GPT-4 Turbo</li>
+<li>Coaching basado en datos reales</li>
+</ul></li>
+<li><strong>Gestión Completa de Sesiones</strong>
+<ul>
+<li>Planificación, ejecución, análisis</li>
+<li>Analytics automáticos</li>
+<li>Feedback en tiempo real</li>
+</ul></li>
+<li><strong>Video Management</strong>
+<ul>
+<li>Subida y almacenamiento de videos</li>
+<li>Análisis técnico asistido por IA</li>
+<li>Timestamps y anotaciones</li>
+</ul></li>
+<li><strong>Closed Loop Coaching</strong>
+<ul>
+<li>Planificar → Ejecutar → Analizar → Retroalimentar → Ajustar</li>
+</ul></li>
+</ol>
+<h1 data-number="3" id="arquitectura-del-sistema"><span
+class="header-section-number">3</span> 2. Arquitectura del Sistema</h1>
+<h2 data-number="3.1" id="diagrama-de-arquitectura-general"><span
+class="header-section-number">3.1</span> 2.1 Diagrama de Arquitectura
+General</h2>
+<pre><code>┌─────────────────────────────────────────────────────────────┐
+│                    FRONTEND (Next.js 14)                    │
+│                                                              │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
+│  │ Landing  │  │  Login   │  │Dashboard │  │ AI Coach │   │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘   │
+│                                                              │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
+│  │  Videos  │  │ Sessions │  │  Teams   │  │ Courses  │   │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘   │
+└────────────────────┬─────────────────────────────────────────┘
+                     │ HTTP/REST
+                     │
+┌────────────────────▼─────────────────────────────────────────┐
+│                   BACKEND (NestJS)                           │
+│                                                              │
+│  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐ ┌─────────┐  │
+│  │  Auth  │ │ Users  │ │ Videos │ │Sessions│ │  Teams  │  │
+│  └────────┘ └────────┘ └────────┘ └────────┘ └─────────┘  │
+│                                                              │
+│  ┌────────┐ ┌────────┐ ┌────────────────────────────────┐  │
+│  │Courses │ │Analytics│ │    AI Coach (20 tools)        │  │
+│  └────────┘ └────────┘ └────────────────────────────────┘  │
+└────────────────────┬─────────────────────────────────────────┘
+                     │
+        ┌────────────┴──────────────┐
+        │                           │
+        ▼                           ▼
+┌───────────────┐          ┌─────────────────┐
+│  PostgreSQL   │          │  OpenAI API     │
+│  + pgvector   │          │  GPT-4 Turbo    │
+│               │          │                 │
+│  - Users      │          │  Function       │
+│  - Sessions   │          │  Calling        │
+│  - Analytics  │          └─────────────────┘
+│  - Videos     │
+│  - Feedback   │
+└───────────────┘</code></pre>
+<h2 data-number="3.2" id="flujo-de-datos"><span
+class="header-section-number">3.2</span> 2.2 Flujo de Datos</h2>
+<h3 data-number="3.2.1" id="autenticación"><span
+class="header-section-number">3.2.1</span> Autenticación</h3>
+<pre><code>1. Usuario → Frontend (email/password)
+2. Frontend → Backend /api/auth/login
+3. Backend → Valida credenciales → Genera JWT
+4. JWT → Frontend → Almacena en localStorage
+5. Todas las requests subsecuentes incluyen JWT en headers</code></pre>
+<h3 data-number="3.2.2" id="sesión-de-entrenamiento"><span
+class="header-section-number">3.2.2</span> Sesión de Entrenamiento</h3>
+<pre><code>1. Atleta crea sesión → POST /api/sessions
+2. Sube video → POST /api/videos
+3. Sistema genera analytics → POST /api/analytics/sessions/:id
+4. Coach revisa → GET /api/sessions/:id
+5. Coach da feedback → POST /api/feedback (vía sessions)
+6. AI Coach analiza → POST /api/ai-coach/analyze-session</code></pre>
+<h3 data-number="3.2.3" id="ai-coach-interaction"><span
+class="header-section-number">3.2.3</span> AI Coach Interaction</h3>
+<pre><code>1. Usuario pregunta → POST /api/ai-coach/chat
+2. Backend construye contexto (perfil + sesiones + feedback)
+3. OpenAI analiza + decide tools a usar
+4. Backend ejecuta tools (queries a DB)
+5. Resultados → OpenAI
+6. OpenAI genera respuesta fundamentada
+7. Respuesta → Usuario</code></pre>
+<h1 data-number="4" id="módulos-del-backend"><span
+class="header-section-number">4</span> 3. Módulos del Backend</h1>
+<h2 data-number="4.1" id="auth-module"><span
+class="header-section-number">4.1</span> 3.1 Auth Module</h2>
+<h3 data-number="4.1.1" id="responsabilidades"><span
+class="header-section-number">4.1.1</span> Responsabilidades</h3>
+<ul>
+<li>Registro de usuarios</li>
+<li>Login y logout</li>
+<li>Generación y validación de JWT tokens</li>
+<li>Guards de autenticación</li>
+<li>Decoradores de roles</li>
+</ul>
+<h3 data-number="4.1.2" id="endpoints"><span
+class="header-section-number">4.1.2</span> Endpoints</h3>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Ruta</th>
+<th>Descripción</th>
+<th>Auth</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>POST</td>
+<td><code>/api/auth/register</code></td>
+<td>Registrar nuevo usuario</td>
+<td>No</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/auth/login</code></td>
+<td>Iniciar sesión</td>
+<td>No</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/auth/me</code></td>
+<td>Obtener usuario actual</td>
+<td>Sí</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="4.1.3" id="dtos"><span
+class="header-section-number">4.1.3</span> DTOs</h3>
+<p><strong>RegisterDto</strong></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  email<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>          <span class="co">// Email único</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  password<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>       <span class="co">// Mínimo 8 caracteres</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  firstName<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>      <span class="co">// Nombre</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  lastName<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>       <span class="co">// Apellido</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  role<span class="op">:</span> UserRole<span class="op">;</span>         <span class="co">// ATHLETE | COACH | ACADEMY | ADMIN</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>LoginDto</strong></p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  email<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  password<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>Response</strong></p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  access_token<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>   <span class="co">// JWT token</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  user<span class="op">:</span> {</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    id<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    email<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    firstName<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    lastName<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    role<span class="op">:</span> UserRole<span class="op">;</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 data-number="4.2" id="users-module"><span
+class="header-section-number">4.2</span> 3.2 Users Module</h2>
+<h3 data-number="4.2.1" id="responsabilidades-1"><span
+class="header-section-number">4.2.1</span> Responsabilidades</h3>
+<ul>
+<li>Gestión de perfiles de usuario</li>
+<li>CRUD de usuarios</li>
+<li>Perfiles específicos por rol (Atleta, Coach, Academia)</li>
+<li>Actualización de información</li>
+</ul>
+<h3 data-number="4.2.2" id="endpoints-1"><span
+class="header-section-number">4.2.2</span> Endpoints</h3>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Ruta</th>
+<th>Descripción</th>
+<th>Roles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/api/users</code></td>
+<td>Listar usuarios</td>
+<td>ADMIN</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/users/:id</code></td>
+<td>Obtener usuario</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td><code>/api/users/:id</code></td>
+<td>Actualizar usuario</td>
+<td>Owner, ADMIN</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><code>/api/users/:id</code></td>
+<td>Eliminar usuario</td>
+<td>ADMIN</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="4.2.3" id="modelos-de-perfil"><span
+class="header-section-number">4.2.3</span> Modelos de Perfil</h3>
+<p><strong>AthleteProfile</strong></p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  birthDate<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  nationality<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  position<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>          <span class="co">// Helm, Crew</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  experienceLevel<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>   <span class="co">// Beginner, Intermediate, Advanced, Elite</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  weight<span class="op">:</span> <span class="dt">number</span><span class="op">;</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  height<span class="op">:</span> <span class="dt">number</span><span class="op">;</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  sailNumber<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  assignedCoach<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  seasonGoal<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  currentMicrocycle<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  weeklyObjectives<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  todayObjective<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  kpis<span class="op">:</span> Json<span class="op">;</span>                <span class="co">// KPIs actuales vs targets</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  nextEvent<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  boatSetup<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  teamId<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>CoachProfile</strong></p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  certification<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  yearsExperience<span class="op">:</span> <span class="dt">number</span><span class="op">;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  specialties<span class="op">:</span> <span class="dt">string</span>[]<span class="op">;</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>AcademyProfile</strong></p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  name<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  country<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  website<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 data-number="4.3" id="videos-module"><span
+class="header-section-number">4.3</span> 3.3 Videos Module</h2>
+<h3 data-number="4.3.1" id="responsabilidades-2"><span
+class="header-section-number">4.3.1</span> Responsabilidades</h3>
+<ul>
+<li>Subida de videos de entrenamiento</li>
+<li>Almacenamiento de metadata</li>
+<li>Asociación con sesiones</li>
+<li>Búsqueda y filtrado</li>
+<li>Soft delete</li>
+</ul>
+<h3 data-number="4.3.2" id="endpoints-2"><span
+class="header-section-number">4.3.2</span> Endpoints</h3>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Ruta</th>
+<th>Descripción</th>
+<th>Roles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>POST</td>
+<td><code>/api/videos</code></td>
+<td>Subir video</td>
+<td>ATHLETE, COACH</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/videos</code></td>
+<td>Listar videos</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/videos/:id</code></td>
+<td>Obtener video</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td><code>/api/videos/:id</code></td>
+<td>Actualizar metadata</td>
+<td>Owner</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><code>/api/videos/:id</code></td>
+<td>Eliminar video</td>
+<td>Owner, ADMIN</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="4.3.3" id="modelo-video"><span
+class="header-section-number">4.3.3</span> Modelo Video</h3>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  id<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  title<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  description<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  url<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>              <span class="co">// URL del video almacenado</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  thumbnailUrl<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  duration<span class="op">:</span> <span class="dt">number</span><span class="op">;</span>         <span class="co">// En segundos</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  size<span class="op">:</span> <span class="dt">number</span><span class="op">;</span>             <span class="co">// En bytes</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  format<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>           <span class="co">// mp4, mov, etc.</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>  status<span class="op">:</span> VideoStatus<span class="op">;</span>      <span class="co">// UPLOADING, PROCESSING, READY, FAILED</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>  uploadedById<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  sessionId<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  metadata<span class="op">:</span> Json<span class="op">;</span>           <span class="co">// Metadata adicional</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>  embedding<span class="op">:</span> vector<span class="op">;</span>        <span class="co">// pgvector para búsqueda semántica</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>  createdAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>  updatedAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>  deletedAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 data-number="4.4" id="sessions-module"><span
+class="header-section-number">4.4</span> 3.4 Sessions Module</h2>
+<h3 data-number="4.4.1" id="responsabilidades-3"><span
+class="header-section-number">4.4.1</span> Responsabilidades</h3>
+<ul>
+<li>Creación y gestión de sesiones de entrenamiento</li>
+<li>Planificación de entrenamientos</li>
+<li>Estados de sesión (DRAFT, SCHEDULED, IN_PROGRESS, COMPLETED,
+CANCELLED)</li>
+<li>Asociación con videos y feedback</li>
+<li>Condiciones meteorológicas</li>
+</ul>
+<h3 data-number="4.4.2" id="endpoints-3"><span
+class="header-section-number">4.4.2</span> Endpoints</h3>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Ruta</th>
+<th>Descripción</th>
+<th>Roles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>POST</td>
+<td><code>/api/sessions</code></td>
+<td>Crear sesión</td>
+<td>ATHLETE, COACH</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/sessions</code></td>
+<td>Listar sesiones</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/sessions/:id</code></td>
+<td>Obtener sesión</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td><code>/api/sessions/:id</code></td>
+<td>Actualizar sesión</td>
+<td>Owner, COACH</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td><code>/api/sessions/:id</code></td>
+<td>Eliminar sesión</td>
+<td>Owner, ADMIN</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="4.4.3" id="modelo-session"><span
+class="header-section-number">4.4.3</span> Modelo Session</h3>
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  id<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  title<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  description<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  status<span class="op">:</span> SessionStatus<span class="op">;</span>    <span class="co">// DRAFT, SCHEDULED, IN_PROGRESS, COMPLETED, CANCELLED</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  scheduledAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  startedAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  completedAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  location<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  weatherConditions<span class="op">:</span> Json<span class="op">;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  windSpeed<span class="op">:</span> <span class="dt">number</span><span class="op">;</span>        <span class="co">// En nudos</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  windDirection<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>    <span class="co">// N, NE, E, SE, S, SW, W, NW</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  waveHeight<span class="op">:</span> <span class="dt">number</span><span class="op">;</span>       <span class="co">// En metros</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  createdById<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  teamId<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  coachId<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>  videos<span class="op">:</span> Video[]<span class="op">;</span></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>  feedback<span class="op">:</span> Feedback[]<span class="op">;</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>  analytics<span class="op">:</span> SessionAnalytics<span class="op">;</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>  createdAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>  updatedAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>  deletedAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 data-number="4.5" id="teams-module"><span
+class="header-section-number">4.5</span> 3.5 Teams Module</h2>
+<h3 data-number="4.5.1" id="responsabilidades-4"><span
+class="header-section-number">4.5.1</span> Responsabilidades</h3>
+<ul>
+<li>Gestión de equipos de entrenamiento</li>
+<li>Asignación de atletas a equipos</li>
+<li>Asignación de coaches</li>
+<li>Membresías de equipo</li>
+</ul>
+<h3 data-number="4.5.2" id="endpoints-4"><span
+class="header-section-number">4.5.2</span> Endpoints</h3>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Ruta</th>
+<th>Descripción</th>
+<th>Roles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>POST</td>
+<td><code>/api/teams</code></td>
+<td>Crear equipo</td>
+<td>COACH, ACADEMY</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/teams</code></td>
+<td>Listar equipos</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/teams/:id</code></td>
+<td>Obtener equipo</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td>PATCH</td>
+<td><code>/api/teams/:id</code></td>
+<td>Actualizar equipo</td>
+<td>COACH, ACADEMY</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/teams/:id/members</code></td>
+<td>Agregar miembro</td>
+<td>COACH, ACADEMY</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="4.5.3" id="modelo-team"><span
+class="header-section-number">4.5.3</span> Modelo Team</h3>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  id<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  name<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  description<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  coachId<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  coach<span class="op">:</span> CoachProfile<span class="op">;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  academyId<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  academy<span class="op">:</span> AcademyProfile<span class="op">;</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  isActive<span class="op">:</span> <span class="dt">boolean</span><span class="op">;</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  members<span class="op">:</span> TeamMember[]<span class="op">;</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  athletes<span class="op">:</span> AthleteProfile[]<span class="op">;</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  sessions<span class="op">:</span> Session[]<span class="op">;</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>  createdAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>  updatedAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  deletedAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 data-number="4.6" id="courses-module"><span
+class="header-section-number">4.6</span> 3.6 Courses Module</h2>
+<h3 data-number="4.6.1" id="responsabilidades-5"><span
+class="header-section-number">4.6.1</span> Responsabilidades</h3>
+<ul>
+<li>Gestión de cursos de la Academia</li>
+<li>Módulos de aprendizaje</li>
+<li>Inscripciones</li>
+<li>Seguimiento de progreso</li>
+<li>Monetización</li>
+</ul>
+<h3 data-number="4.6.2" id="endpoints-5"><span
+class="header-section-number">4.6.2</span> Endpoints</h3>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Ruta</th>
+<th>Descripción</th>
+<th>Roles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>POST</td>
+<td><code>/api/courses</code></td>
+<td>Crear curso</td>
+<td>ACADEMY</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/courses</code></td>
+<td>Listar cursos</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/courses/:id</code></td>
+<td>Obtener curso</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/courses/:id/enroll</code></td>
+<td>Inscribirse</td>
+<td>ATHLETE</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="4.6.3" id="modelo-course"><span
+class="header-section-number">4.6.3</span> Modelo Course</h3>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  id<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  title<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  description<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  price<span class="op">:</span> <span class="dt">number</span><span class="op">;</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  currency<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  isPublished<span class="op">:</span> <span class="dt">boolean</span><span class="op">;</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  academyId<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  academy<span class="op">:</span> AcademyProfile<span class="op">;</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  modules<span class="op">:</span> CourseModule[]<span class="op">;</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  enrollments<span class="op">:</span> CourseEnrollment[]<span class="op">;</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  createdAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  updatedAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>  deletedAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 data-number="4.7" id="analytics-module"><span
+class="header-section-number">4.7</span> 3.7 Analytics Module</h2>
+<h3 data-number="4.7.1" id="responsabilidades-6"><span
+class="header-section-number">4.7.1</span> Responsabilidades</h3>
+<ul>
+<li>Generación de métricas de rendimiento</li>
+<li>Análisis de sesiones</li>
+<li>Cálculo de KPIs</li>
+<li>Estadísticas de progreso</li>
+<li>Reportes</li>
+</ul>
+<h3 data-number="4.7.2" id="endpoints-6"><span
+class="header-section-number">4.7.2</span> Endpoints</h3>
+<table>
+<colgroup>
+<col style="width: 23%" />
+<col style="width: 17%" />
+<col style="width: 38%" />
+<col style="width: 20%" />
+</colgroup>
+<thead>
+<tr>
+<th>Método</th>
+<th>Ruta</th>
+<th>Descripción</th>
+<th>Roles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/api/analytics/sessions/:id</code></td>
+<td>Analytics de sesión</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/analytics/sessions/:id</code></td>
+<td>Crear analytics</td>
+<td>COACH, SYSTEM</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/analytics/users/me/stats</code></td>
+<td>Estadísticas del usuario</td>
+<td>Owner</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="4.7.3" id="modelo-sessionanalytics"><span
+class="header-section-number">4.7.3</span> Modelo SessionAnalytics</h3>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  id<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  sessionId<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  session<span class="op">:</span> Session<span class="op">;</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  totalDistance<span class="op">:</span> <span class="dt">number</span><span class="op">;</span>      <span class="co">// Millas náuticas</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  averageSpeed<span class="op">:</span> <span class="dt">number</span><span class="op">;</span>       <span class="co">// Nudos</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  maxSpeed<span class="op">:</span> <span class="dt">number</span><span class="op">;</span>           <span class="co">// Nudos</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  tackingEfficiency<span class="op">:</span> <span class="dt">number</span><span class="op">;</span>  <span class="co">// Porcentaje</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  gybeCount<span class="op">:</span> <span class="dt">number</span><span class="op">;</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>  tackCount<span class="op">:</span> <span class="dt">number</span><span class="op">;</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>  performanceScore<span class="op">:</span> <span class="dt">number</span><span class="op">;</span>   <span class="co">// 0-100</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  insights<span class="op">:</span> Json<span class="op">;</span>             <span class="co">// { strengths, weaknesses, recommendations }</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  createdAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  updatedAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 data-number="4.7.4" id="kpis-calculados"><span
+class="header-section-number">4.7.4</span> KPIs Calculados</h3>
+<ol type="1">
+<li><strong>Performance Score</strong> (0-100)
+<ul>
+<li>Basado en velocidad promedio, eficiencia, consistencia</li>
+</ul></li>
+<li><strong>Tacking Efficiency</strong> (%)
+<ul>
+<li>Pérdida de velocidad en viradas vs benchmark</li>
+</ul></li>
+<li><strong>Speed Metrics</strong>
+<ul>
+<li>Velocidad promedio por punto de navegación</li>
+<li>VMG (Velocity Made Good)</li>
+</ul></li>
+<li><strong>Maneuver Analysis</strong>
+<ul>
+<li>Cantidad y calidad de viradas/giros</li>
+<li>Timing de maniobras</li>
+</ul></li>
+</ol>
+<h2 data-number="4.8" id="ai-coach-module"><span
+class="header-section-number">4.8</span> 3.8 AI Coach Module</h2>
+<h3 data-number="4.8.1" id="responsabilidades-7"><span
+class="header-section-number">4.8.1</span> Responsabilidades</h3>
+<ul>
+<li>Coaching inteligente basado en GPT-4 Turbo</li>
+<li>20 herramientas de consulta y acción</li>
+<li>Análisis de rendimiento</li>
+<li>Recomendaciones personalizadas</li>
+<li>Generación de planes de entrenamiento</li>
+</ul>
+<h3 data-number="4.8.2" id="endpoints-7"><span
+class="header-section-number">4.8.2</span> Endpoints</h3>
+<table>
+<thead>
+<tr>
+<th>Método</th>
+<th>Ruta</th>
+<th>Descripción</th>
+<th>Roles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>POST</td>
+<td><code>/api/ai-coach/chat</code></td>
+<td>Chat con el coach</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/ai-coach/analyze-video</code></td>
+<td>Analizar video</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/ai-coach/analyze-session</code></td>
+<td>Analizar sesión</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/api/ai-coach/training-plan</code></td>
+<td>Generar plan</td>
+<td>Todos</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/api/ai-coach/history</code></td>
+<td>Historial conversaciones</td>
+<td>Owner</td>
+</tr>
+</tbody>
+</table>
+<h3 data-number="4.8.3" id="herramientas-disponibles-20"><span
+class="header-section-number">4.8.3</span> Herramientas Disponibles
+(20)</h3>
+<p><strong>Search Tools (12)</strong> 1. <code>searchLessons()</code> -
+Buscar lecciones en Academy 2. <code>searchExercises()</code> - Buscar
+drills de metodología 3. <code>searchVideos()</code> - Buscar videos del
+atleta 4. <code>searchCoachNotes()</code> - Buscar feedback de coaches
+5. <code>searchBoatSetup()</code> - Configuraciones de barco 6.
+<code>searchWeather()</code> - Pronósticos meteorológicos 7.
+<code>searchTrainingReports()</code> - Reportes de sesiones 8.
+<code>searchPerformanceReports()</code> - Analytics y métricas 9.
+<code>searchGPS()</code> - Datos GPS tracking 10.
+<code>searchVideoAnalysis()</code> - Análisis ML de videos 11.
+<code>searchCompetitionHistory()</code> - Resultados de regatas 12.
+<code>searchKnowledgeBase()</code> - RAG vector search</p>
+<p><strong>Generate Tools (3)</strong> 13.
+<code>generateTrainingPlan()</code> - Planes personalizados 14.
+<code>generateBriefing()</code> - Briefings pre-sesión 15.
+<code>generateDebriefing()</code> - Debriefings post-sesión</p>
+<p><strong>Action Tools (5)</strong> 16. <code>createGoal()</code> -
+Crear objetivos 17. <code>scheduleTraining()</code> - Programar sesiones
+18. <code>comparePerformance()</code> - Comparar 2 sesiones 19.
+<code>recommendBoatSetup()</code> - Recomendar configuración 20.
+<code>recommendExercises()</code> - Recomendar drills</p>
+<h3 data-number="4.8.4" id="arquitectura-ai-coach"><span
+class="header-section-number">4.8.4</span> Arquitectura AI Coach</h3>
+<pre><code>Usuario → Frontend → Backend AI Coach Service
+                           ↓
+                    Construir Contexto
+                    (perfil + sesiones + feedback + KPIs)
+                           ↓
+                    OpenAI GPT-4 Turbo
+                    + 20 tools disponibles
+                           ↓
+                    AI decide tools a usar
+                           ↓
+                    Backend ejecuta tools
+                    (queries a PostgreSQL)
+                           ↓
+                    Resultados REALES → OpenAI
+                           ↓
+                    Respuesta fundamentada
+                           ↓
+                    Usuario</code></pre>
+<h1 data-number="5" id="perfiles-de-usuario"><span
+class="header-section-number">5</span> 4. Perfiles de Usuario</h1>
+<h2 data-number="5.1" id="athlete-atleta"><span
+class="header-section-number">5.1</span> 4.1 ATHLETE (Atleta)</h2>
+<h3 data-number="5.1.1" id="descripción"><span
+class="header-section-number">5.1.1</span> Descripción</h3>
+<p>Deportistas que utilizan la plataforma para registrar entrenamientos,
+recibir feedback y mejorar su rendimiento.</p>
+<h3 data-number="5.1.2" id="capacidades"><span
+class="header-section-number">5.1.2</span> Capacidades</h3>
+<p><strong>Videos</strong> - ✅ Subir videos de entrenamiento - ✅ Ver
+sus propios videos - ✅ Asociar videos a sesiones - ❌ Ver videos de
+otros atletas (privacidad)</p>
+<p><strong>Sesiones</strong> - ✅ Crear sesiones de entrenamiento - ✅
+Ver sus propias sesiones - ✅ Registrar condiciones meteorológicas - ✅
+Ver analytics de sus sesiones - ❌ Modificar sesiones pasadas
+completadas</p>
+<p><strong>Teams</strong> - ✅ Ver equipos a los que pertenece - ✅ Ver
+compañeros de equipo - ❌ Crear equipos - ❌ Gestionar membresías</p>
+<p><strong>Courses</strong> - ✅ Ver catálogo de cursos - ✅ Inscribirse
+en cursos - ✅ Acceder a contenido de cursos inscritos - ✅ Seguir
+progreso de aprendizaje</p>
+<p><strong>AI Coach</strong> - ✅ Hacer preguntas al coach - ✅ Recibir
+análisis de rendimiento - ✅ Solicitar recomendaciones - ✅ Generar
+planes de entrenamiento</p>
+<p><strong>Analytics</strong> - ✅ Ver sus propias estadísticas - ✅
+Seguir progreso vs objetivos - ✅ Ver tendencias de mejora - ❌ Ver
+estadísticas de otros atletas</p>
+<h3 data-number="5.1.3" id="flujo-típico"><span
+class="header-section-number">5.1.3</span> Flujo Típico</h3>
+<pre><code>1. Login → Dashboard
+2. Crear Nueva Sesión
+3. Registrar condiciones (viento, olas, etc.)
+4. Realizar entrenamiento
+5. Subir videos de la sesión
+6. Revisar analytics generados automáticamente
+7. Recibir feedback del coach
+8. Consultar AI Coach para recomendaciones
+9. Ajustar objetivos y planificación</code></pre>
+<h2 data-number="5.2" id="coach-entrenador"><span
+class="header-section-number">5.2</span> 4.2 COACH (Entrenador)</h2>
+<h3 data-number="5.2.1" id="descripción-1"><span
+class="header-section-number">5.2.1</span> Descripción</h3>
+<p>Entrenadores que supervisan el progreso de atletas, dan feedback y
+gestionan equipos.</p>
+<h3 data-number="5.2.2" id="capacidades-1"><span
+class="header-section-number">5.2.2</span> Capacidades</h3>
+<p><strong>Videos</strong> - ✅ Ver videos de sus atletas - ✅ Analizar
+videos con herramientas - ✅ Dejar comentarios en videos - ✅ Marcar
+timestamps importantes</p>
+<p><strong>Sesiones</strong> - ✅ Crear sesiones para atletas/equipos -
+✅ Revisar sesiones de sus atletas - ✅ Crear analytics de sesiones - ✅
+Dar feedback detallado - ✅ Asignar ejercicios</p>
+<p><strong>Teams</strong> - ✅ Crear y gestionar equipos - ✅
+Agregar/remover atletas - ✅ Planificar sesiones de equipo - ✅ Ver
+estadísticas de equipo</p>
+<p><strong>Feedback</strong> - ✅ Crear feedback para sesiones - ✅
+Rating de rendimiento (1-5) - ✅ Recomendaciones específicas - ✅
+Seguimiento de mejoras</p>
+<p><strong>AI Coach</strong> - ✅ Usar como herramienta de análisis - ✅
+Generar reportes - ✅ Comparar atletas - ✅ Planificar
+entrenamientos</p>
+<p><strong>Analytics</strong> - ✅ Ver estadísticas de todos sus atletas
+- ✅ Comparar rendimientos - ✅ Generar reportes de progreso - ✅
+Identificar áreas de mejora</p>
+<h3 data-number="5.2.3" id="flujo-típico-1"><span
+class="header-section-number">5.2.3</span> Flujo Típico</h3>
+<pre><code>1. Login → Dashboard de Coach
+2. Revisar sesiones recientes de atletas
+3. Ver videos subidos
+4. Analizar con AI Coach
+5. Crear feedback detallado
+6. Asignar ejercicios específicos
+7. Planificar próximas sesiones
+8. Seguir progreso vs objetivos del equipo</code></pre>
+<h2 data-number="5.3" id="academy-academia"><span
+class="header-section-number">5.3</span> 4.3 ACADEMY (Academia)</h2>
+<h3 data-number="5.3.1" id="descripción-2"><span
+class="header-section-number">5.3.1</span> Descripción</h3>
+<p>Instituciones educativas que gestionan múltiples equipos, coaches y
+ofrecen cursos.</p>
+<h3 data-number="5.3.2" id="capacidades-2"><span
+class="header-section-number">5.3.2</span> Capacidades</h3>
+<p><strong>Teams</strong> - ✅ Crear múltiples equipos - ✅ Asignar
+coaches a equipos - ✅ Ver todos los equipos de la academia - ✅
+Gestionar membresías</p>
+<p><strong>Courses</strong> - ✅ Crear cursos - ✅ Crear módulos de
+aprendizaje - ✅ Publicar/despublicar cursos - ✅ Configurar precios -
+✅ Ver inscripciones - ✅ Seguir progreso de estudiantes</p>
+<p><strong>Users</strong> - ✅ Ver atletas y coaches de la academia - ✅
+Invitar nuevos usuarios - ✅ Gestionar permisos</p>
+<p><strong>Analytics</strong> - ✅ Estadísticas globales de la academia
+- ✅ Rendimiento por equipo - ✅ Métricas de cursos - ✅ Reportes de
+ingresos</p>
+<h3 data-number="5.3.3" id="monetización"><span
+class="header-section-number">5.3.3</span> Monetización</h3>
+<ul>
+<li>Cursos de pago</li>
+<li>Suscripciones premium</li>
+<li>Coaching personalizado</li>
+<li>Análisis avanzados</li>
+</ul>
+<h3 data-number="5.3.4" id="flujo-típico-2"><span
+class="header-section-number">5.3.4</span> Flujo Típico</h3>
+<pre><code>1. Login → Dashboard de Academia
+2. Ver resumen de todos los equipos
+3. Revisar métricas globales
+4. Crear nuevo curso
+5. Publicar módulos de aprendizaje
+6. Gestionar inscripciones
+7. Asignar coaches a equipos
+8. Generar reportes de rendimiento</code></pre>
+<h2 data-number="5.4" id="admin-administrador"><span
+class="header-section-number">5.4</span> 4.4 ADMIN (Administrador)</h2>
+<h3 data-number="5.4.1" id="descripción-3"><span
+class="header-section-number">5.4.1</span> Descripción</h3>
+<p>Administradores del sistema con acceso completo a todas las
+funcionalidades.</p>
+<h3 data-number="5.4.2" id="capacidades-3"><span
+class="header-section-number">5.4.2</span> Capacidades</h3>
+<p><strong>Users</strong> - ✅ CRUD completo de usuarios - ✅ Cambiar
+roles - ✅ Activar/desactivar cuentas - ✅ Ver audit logs</p>
+<p><strong>System</strong> - ✅ Acceso a todas las sesiones - ✅ Gestión
+de contenido - ✅ Moderación - ✅ Configuración del sistema</p>
+<p><strong>Analytics</strong> - ✅ Métricas globales de la plataforma -
+✅ Uso por módulo - ✅ Reportes de actividad</p>
+<p><strong>Audit</strong> - ✅ Ver todos los audit logs - ✅ Seguimiento
+de acciones - ✅ Detección de anomalías</p>
+<h1 data-number="6" id="funcionalidades-principales"><span
+class="header-section-number">6</span> 5. Funcionalidades
+Principales</h1>
+<h2 data-number="6.1" id="sistema-de-autenticación"><span
+class="header-section-number">6.1</span> 5.1 Sistema de
+Autenticación</h2>
+<h3 data-number="6.1.1" id="características"><span
+class="header-section-number">6.1.1</span> Características</h3>
+<ul>
+<li>JWT-based authentication</li>
+<li>Tokens con expiración de 7 días</li>
+<li>Refresh tokens</li>
+<li>Logout con invalidación de token</li>
+<li>Password hashing con bcrypt</li>
+</ul>
+<h3 data-number="6.1.2" id="seguridad"><span
+class="header-section-number">6.1.2</span> Seguridad</h3>
+<ul>
+<li>Rate limiting en endpoints de auth</li>
+<li>Validación de emails</li>
+<li>Contraseñas mínimo 8 caracteres</li>
+<li>Prevención de fuerza bruta</li>
+</ul>
+<h2 data-number="6.2" id="gestión-de-videos"><span
+class="header-section-number">6.2</span> 5.2 Gestión de Videos</h2>
+<h3 data-number="6.2.1" id="upload-flow"><span
+class="header-section-number">6.2.1</span> Upload Flow</h3>
+<pre><code>1. Usuario selecciona video → Frontend
+2. Video se sube a almacenamiento (Cloudflare R2)
+3. Metadata se guarda en DB
+4. Status: UPLOADING → PROCESSING
+5. Extracción de thumbnail
+6. Generación de embedding (pgvector)
+7. Status: READY
+8. Usuario notificado</code></pre>
+<h3 data-number="6.2.2" id="características-1"><span
+class="header-section-number">6.2.2</span> Características</h3>
+<ul>
+<li>Formatos soportados: MP4, MOV, AVI</li>
+<li>Tamaño máximo: 500MB</li>
+<li>Streaming adaptativo</li>
+<li>Thumbnails automáticos</li>
+<li>Búsqueda semántica con pgvector</li>
+</ul>
+<h2 data-number="6.3" id="analytics-automáticos"><span
+class="header-section-number">6.3</span> 5.3 Analytics Automáticos</h2>
+<h3 data-number="6.3.1" id="cálculo-de-métricas"><span
+class="header-section-number">6.3.1</span> Cálculo de Métricas</h3>
+<p><strong>Performance Score</strong> (0-100)</p>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>performanceScore <span class="op">=</span> (</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  speedScore <span class="op">*</span> <span class="fl">0.4</span> <span class="op">+</span>        <span class="co">// 40% peso</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  efficiencyScore <span class="op">*</span> <span class="fl">0.3</span> <span class="op">+</span>   <span class="co">// 30% peso</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  consistencyScore <span class="op">*</span> <span class="fl">0.2</span> <span class="op">+</span>  <span class="co">// 20% peso</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  maneuverScore <span class="op">*</span> <span class="fl">0.1</span>       <span class="co">// 10% peso</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><strong>Tacking Efficiency</strong> (%)</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode javascript"><code class="sourceCode javascript"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tackingEfficiency <span class="op">=</span> (</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  (<span class="dv">1</span> <span class="op">-</span> averageSpeedLoss <span class="op">/</span> preVelSpeed) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
+<p><strong>Tendencias</strong> - Mejora vs sesión anterior - Mejora vs
+promedio último mes - Progreso vs objetivos</p>
+<h2 data-number="6.4" id="closed-loop-coaching"><span
+class="header-section-number">6.4</span> 5.4 Closed Loop Coaching</h2>
+<h3 data-number="6.4.1" id="ciclo-completo"><span
+class="header-section-number">6.4.1</span> Ciclo Completo</h3>
+<pre><code>PLANIFICAR
+├─ Definir objetivos
+├─ Crear plan de sesión
+├─ Asignar ejercicios
+└─ Configurar KPIs
+    ↓
+EJECUTAR
+├─ Realizar entrenamiento
+├─ Grabar video
+├─ Registrar datos
+└─ Subir a plataforma
+    ↓
+ANALIZAR
+├─ Revisar video
+├─ Calcular analytics
+├─ Comparar vs benchmark
+└─ Identificar mejoras
+    ↓
+RETROALIMENTAR
+├─ Coach da feedback
+├─ AI Coach analiza
+├─ Discutir resultados
+└─ Definir action items
+    ↓
+AJUSTAR
+├─ Modificar objetivos
+├─ Actualizar plan
+└─ Repetir ciclo</code></pre>
+<h2 data-number="6.5" id="ai-coach---ejemplos-de-uso"><span
+class="header-section-number">6.5</span> 5.5 AI Coach - Ejemplos de
+Uso</h2>
+<h3 data-number="6.5.1" id="caso-1-análisis-de-rendimiento"><span
+class="header-section-number">6.5.1</span> Caso 1: Análisis de
+Rendimiento</h3>
+<p><strong>Usuario pregunta:</strong> &gt; “¿Cómo ha sido mi rendimiento
+en viradas en el último mes?”</p>
+<p><strong>AI Coach ejecuta:</strong> 1.
+<code>searchPerformanceReports({ metric: "tacking efficiency", dateFrom: "2024-07-01" })</code>
+2. <code>searchCoachNotes({ query: "viradas" })</code></p>
+<p><strong>Respuesta:</strong></p>
+<pre><code>## Assessment
+
+Tu eficiencia en viradas ha mejorado 11.6% en el último mes, 
+pasando de 73% a 81.5%.
+
+## Why
+
+Este progreso es resultado de tu trabajo constante en los 
+drills de velocidad. Tus sesiones del 15 y 22 de julio 
+muestran mejoras significativas en timing.
+
+## Recommendation
+
+Estás a solo 8.5 puntos de tu objetivo (90%). Según tu coach 
+María, necesitas trabajar el timing en rachas.
+
+## Training
+
+Te recomiendo el drill &quot;Viradas en Escalera&quot;:
+- 20 viradas en 10 minutos
+- Focus en timing y sincronización
+- Objetivo: &lt;0.8 nudos de pérdida
+
+## Success Criteria
+
+- Eficiencia viradas: &gt;85% (actualmente 81.5%)
+- Consistencia: &lt;5% varianza</code></pre>
+<h3 data-number="6.5.2" id="caso-2-planificación-de-entrenamiento"><span
+class="header-section-number">6.5.2</span> Caso 2: Planificación de
+Entrenamiento</h3>
+<p><strong>Usuario pregunta:</strong> &gt; “Necesito un plan de 4
+semanas para el Europeo”</p>
+<p><strong>AI Coach ejecuta:</strong> 1.
+<code>searchPerformanceReports()</code> - Estado actual 2.
+<code>searchCoachNotes()</code> - Feedback reciente 3.
+<code>generateTrainingPlan({ duration: 4, targetEvent: "Europeo Hyères" })</code></p>
+<p><strong>Respuesta:</strong></p>
+<pre><code># Plan de 4 Semanas - Campeonato Europeo
+
+## Microciclo 1 (Semana 1): Técnica Fundamental
+- Lunes: Viradas en condiciones variables
+- Miércoles: Velocidad en ceñida
+- Viernes: Mark roundings
+- Sábado: Race simulation
+
+## Microciclo 2 (Semana 2): Intensidad
+- ... [plan detallado]
+
+## Microciclo 3 (Semana 3): Pre-competición
+- ... [plan detallado]
+
+## Microciclo 4 (Semana 4): Taper
+- ... [plan detallado]
+
+## KPIs a alcanzar
+- Tacking efficiency: &gt;88%
+- Start line success: &gt;80%
+- Average position: Top 5</code></pre>
+<h1 data-number="7" id="base-de-datos"><span
+class="header-section-number">7</span> 6. Base de Datos</h1>
+<h2 data-number="7.1" id="esquema-general"><span
+class="header-section-number">7.1</span> 6.1 Esquema General</h2>
+<h3 data-number="7.1.1" id="tablas-principales-15"><span
+class="header-section-number">7.1.1</span> Tablas Principales (15)</h3>
+<ol type="1">
+<li><strong>users</strong> - Usuarios del sistema</li>
+<li><strong>athlete_profiles</strong> - Perfiles de atletas</li>
+<li><strong>coach_profiles</strong> - Perfiles de coaches</li>
+<li><strong>academy_profiles</strong> - Perfiles de academias</li>
+<li><strong>teams</strong> - Equipos</li>
+<li><strong>team_members</strong> - Membresías de equipos</li>
+<li><strong>sessions</strong> - Sesiones de entrenamiento</li>
+<li><strong>videos</strong> - Videos subidos</li>
+<li><strong>feedback</strong> - Feedback de coaches</li>
+<li><strong>session_analytics</strong> - Analytics de sesiones</li>
+<li><strong>courses</strong> - Cursos de la academia</li>
+<li><strong>course_modules</strong> - Módulos de cursos</li>
+<li><strong>course_enrollments</strong> - Inscripciones</li>
+<li><strong>audit_logs</strong> - Logs de auditoría</li>
+<li><strong>knowledge_base</strong> (futuro) - Base de conocimiento</li>
+</ol>
+<h2 data-number="7.2" id="relaciones-clave"><span
+class="header-section-number">7.2</span> 6.2 Relaciones Clave</h2>
+<pre><code>User (1) ──────── (0..1) AthleteProfile
+User (1) ──────── (0..1) CoachProfile
+User (1) ──────── (0..1) AcademyProfile
+
+User (1) ──────── (N) Session
+User (1) ──────── (N) Video
+User (1) ──────── (N) Feedback
+
+Session (1) ──── (N) Video
+Session (1) ──── (N) Feedback
+Session (1) ──── (0..1) SessionAnalytics
+
+Team (1) ──────── (N) TeamMember
+Team (1) ──────── (N) Session
+Team (1) ──────── (N) AthleteProfile
+
+Course (1) ────── (N) CourseModule
+Course (1) ────── (N) CourseEnrollment</code></pre>
+<h2 data-number="7.3" id="características-especiales"><span
+class="header-section-number">7.3</span> 6.3 Características
+Especiales</h2>
+<h3 data-number="7.3.1" id="soft-delete"><span
+class="header-section-number">7.3.1</span> Soft Delete</h3>
+<p>Todas las tablas principales tienen <code>deletedAt</code>: - Permite
+recuperación de datos - Auditoría completa - No se pierden
+relaciones</p>
+<h3 data-number="7.3.2" id="audit-logs"><span
+class="header-section-number">7.3.2</span> Audit Logs</h3>
+<p>Todas las acciones críticas se registran:</p>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  userId<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  action<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>         <span class="co">// CREATE_SESSION, UPDATE_PROFILE, etc.</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  entity<span class="op">:</span> <span class="dt">string</span><span class="op">;</span>         <span class="co">// session, video, feedback</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  entityId<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  changes<span class="op">:</span> Json<span class="op">;</span>          <span class="co">// Qué cambió</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  ipAddress<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  userAgent<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  createdAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 data-number="7.3.3" id="pgvector-integration"><span
+class="header-section-number">7.3.3</span> pgvector Integration</h3>
+<p>Búsqueda semántica en: - Videos (embeddings de contenido) - Knowledge
+base (RAG) - Sesiones (búsqueda por descripción)</p>
+<h3 data-number="7.3.4" id="índices-optimizados"><span
+class="header-section-number">7.3.4</span> Índices Optimizados</h3>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode sql"><code class="sourceCode sql"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">-- Users</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_users_email <span class="kw">ON</span> users(email);</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_users_role <span class="kw">ON</span> users(<span class="kw">role</span>);</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co">-- Sessions</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_sessions_created_by <span class="kw">ON</span> sessions(created_by_id);</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_sessions_status <span class="kw">ON</span> sessions(status);</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_sessions_scheduled_at <span class="kw">ON</span> sessions(scheduled_at);</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co">-- Videos</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_videos_session_id <span class="kw">ON</span> videos(session_id);</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_videos_uploaded_by <span class="kw">ON</span> videos(uploaded_by_id);</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="co">-- Feedback</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_feedback_session_id <span class="kw">ON</span> feedback(session_id);</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">INDEX</span> idx_feedback_coach_id <span class="kw">ON</span> feedback(coach_id);</span></code></pre></div>
+<h1 data-number="8" id="api-rest"><span
+class="header-section-number">8</span> 7. API REST</h1>
+<h2 data-number="8.1" id="estructura-general"><span
+class="header-section-number">8.1</span> 7.1 Estructura General</h2>
+<h3 data-number="8.1.1" id="base-url"><span
+class="header-section-number">8.1.1</span> Base URL</h3>
+<pre><code>http://localhost:3001/api</code></pre>
+<h3 data-number="8.1.2" id="headers-requeridos"><span
+class="header-section-number">8.1.2</span> Headers Requeridos</h3>
+<pre><code>Content-Type: application/json
+Authorization: Bearer &lt;JWT_TOKEN&gt;</code></pre>
+<h3 data-number="8.1.3" id="respuestas-estándar"><span
+class="header-section-number">8.1.3</span> Respuestas Estándar</h3>
+<p><strong>Success (200/201)</strong></p>
+<div class="sourceCode" id="cb31"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;statusCode&quot;</span><span class="fu">:</span> <span class="dv">200</span><span class="fu">,</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;data&quot;</span><span class="fu">:</span> <span class="fu">{</span> <span class="er">...</span> <span class="fu">},</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;Success&quot;</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p><strong>Error (4xx/5xx)</strong></p>
+<div class="sourceCode" id="cb32"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;statusCode&quot;</span><span class="fu">:</span> <span class="dv">400</span><span class="fu">,</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;Error description&quot;</span><span class="fu">,</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;error&quot;</span><span class="fu">:</span> <span class="st">&quot;Bad Request&quot;</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h2 data-number="8.2" id="endpoints-por-módulo"><span
+class="header-section-number">8.2</span> 7.2 Endpoints por Módulo</h2>
+<h3 data-number="8.2.1" id="auth"><span
+class="header-section-number">8.2.1</span> Auth</h3>
+<pre class="http"><code>POST /api/auth/register
+POST /api/auth/login
+GET  /api/auth/me</code></pre>
+<h3 data-number="8.2.2" id="users"><span
+class="header-section-number">8.2.2</span> Users</h3>
+<pre class="http"><code>GET    /api/users
+GET    /api/users/:id
+PATCH  /api/users/:id
+DELETE /api/users/:id</code></pre>
+<h3 data-number="8.2.3" id="videos"><span
+class="header-section-number">8.2.3</span> Videos</h3>
+<pre class="http"><code>POST   /api/videos
+GET    /api/videos?sessionId=&amp;limit=
+GET    /api/videos/:id
+PATCH  /api/videos/:id
+DELETE /api/videos/:id</code></pre>
+<h3 data-number="8.2.4" id="sessions"><span
+class="header-section-number">8.2.4</span> Sessions</h3>
+<pre class="http"><code>POST   /api/sessions
+GET    /api/sessions?status=&amp;teamId=
+GET    /api/sessions/:id
+PATCH  /api/sessions/:id
+DELETE /api/sessions/:id</code></pre>
+<h3 data-number="8.2.5" id="teams"><span
+class="header-section-number">8.2.5</span> Teams</h3>
+<pre class="http"><code>POST   /api/teams
+GET    /api/teams
+GET    /api/teams/:id
+PATCH  /api/teams/:id
+POST   /api/teams/:id/members</code></pre>
+<h3 data-number="8.2.6" id="courses"><span
+class="header-section-number">8.2.6</span> Courses</h3>
+<pre class="http"><code>POST   /api/courses
+GET    /api/courses?published=true
+GET    /api/courses/:id
+POST   /api/courses/:id/enroll</code></pre>
+<h3 data-number="8.2.7" id="analytics"><span
+class="header-section-number">8.2.7</span> Analytics</h3>
+<pre class="http"><code>GET    /api/analytics/sessions/:id
+POST   /api/analytics/sessions/:id
+GET    /api/analytics/users/me/stats</code></pre>
+<h3 data-number="8.2.8" id="ai-coach"><span
+class="header-section-number">8.2.8</span> AI Coach</h3>
+<pre class="http"><code>POST   /api/ai-coach/chat
+POST   /api/ai-coach/analyze-video
+POST   /api/ai-coach/analyze-session
+POST   /api/ai-coach/training-plan
+GET    /api/ai-coach/history</code></pre>
+<h2 data-number="8.3" id="ejemplos-de-requests"><span
+class="header-section-number">8.3</span> 7.3 Ejemplos de Requests</h2>
+<h3 data-number="8.3.1" id="crear-sesión"><span
+class="header-section-number">8.3.1</span> Crear Sesión</h3>
+<pre class="http"><code>POST /api/auth/login
+Content-Type: application/json
+
+{
+  &quot;title&quot;: &quot;Sesión de Viradas - Viento Medio&quot;,
+  &quot;description&quot;: &quot;Trabajo en eficiencia de viradas&quot;,
+  &quot;status&quot;: &quot;SCHEDULED&quot;,
+  &quot;scheduledAt&quot;: &quot;2024-08-05T09:00:00Z&quot;,
+  &quot;location&quot;: &quot;Puerto de Valencia&quot;,
+  &quot;windSpeed&quot;: 12,
+  &quot;windDirection&quot;: &quot;NE&quot;,
+  &quot;waveHeight&quot;: 0.5
+}</code></pre>
+<h3 data-number="8.3.2" id="subir-video"><span
+class="header-section-number">8.3.2</span> Subir Video</h3>
+<pre class="http"><code>POST /api/videos
+Content-Type: application/json
+Authorization: Bearer &lt;token&gt;
+
+{
+  &quot;title&quot;: &quot;Viradas - Vista de Proa&quot;,
+  &quot;description&quot;: &quot;Análisis técnico de viradas&quot;,
+  &quot;url&quot;: &quot;https://storage.cloudflare.com/...&quot;,
+  &quot;sessionId&quot;: &quot;uuid-sesion&quot;,
+  &quot;duration&quot;: 180,
+  &quot;format&quot;: &quot;mp4&quot;
+}</code></pre>
+<h3 data-number="8.3.3" id="chat-con-ai-coach"><span
+class="header-section-number">8.3.3</span> Chat con AI Coach</h3>
+<pre class="http"><code>POST /api/ai-coach/chat
+Content-Type: application/json
+Authorization: Bearer &lt;token&gt;
+
+{
+  &quot;message&quot;: &quot;¿Cómo puedo mejorar mi eficiencia en viradas?&quot;
+}</code></pre>
+<h1 data-number="9" id="frontend---interfaz-de-usuario"><span
+class="header-section-number">9</span> 8. Frontend - Interfaz de
+Usuario</h1>
+<h2 data-number="9.1" id="tecnologías"><span
+class="header-section-number">9.1</span> 8.1 Tecnologías</h2>
+<ul>
+<li><strong>Framework:</strong> Next.js 14 (App Router)</li>
+<li><strong>UI Components:</strong> shadcn/ui</li>
+<li><strong>Styling:</strong> TailwindCSS</li>
+<li><strong>State Management:</strong> Zustand</li>
+<li><strong>Server State:</strong> TanStack Query</li>
+<li><strong>HTTP Client:</strong> Axios</li>
+<li><strong>Forms:</strong> React Hook Form + Zod</li>
+</ul>
+<h2 data-number="9.2" id="páginas-principales"><span
+class="header-section-number">9.2</span> 8.2 Páginas Principales</h2>
+<h3 data-number="9.2.1" id="landing-page"><span
+class="header-section-number">9.2.1</span> 1. Landing Page
+(<code>/</code>)</h3>
+<p><strong>Descripción:</strong> Página de inicio pública</p>
+<p><strong>Contenido:</strong> - Hero section con CTA - Características
+principales - Testimonios - Precios - Footer con links</p>
+<p><strong>Screenshot:</strong> <img
+src="screenshots/01-landing-page.png" alt="Landing Page" /></p>
+<hr />
+<h3 data-number="9.2.2" id="login-login"><span
+class="header-section-number">9.2.2</span> 2. Login
+(<code>/login</code>)</h3>
+<p><strong>Descripción:</strong> Página de autenticación</p>
+<p><strong>Campos:</strong> - Email - Password - “Recordarme” checkbox -
+Link a registro</p>
+<p><strong>Validaciones:</strong> - Email válido - Password mínimo 8
+caracteres</p>
+<p><strong>Screenshot:</strong> <img src="screenshots/02-login.png"
+alt="Login" /></p>
+<hr />
+<h3 data-number="9.2.3" id="register-register"><span
+class="header-section-number">9.2.3</span> 3. Register
+(<code>/register</code>)</h3>
+<p><strong>Descripción:</strong> Registro de nuevos usuarios</p>
+<p><strong>Campos:</strong> - Nombre - Apellido - Email - Password -
+Confirmar Password - Rol (dropdown)</p>
+<p><strong>Screenshot:</strong> <img src="screenshots/03-register.png"
+alt="Register" /></p>
+<hr />
+<h3 data-number="9.2.4" id="dashboard-dashboard"><span
+class="header-section-number">9.2.4</span> 4. Dashboard
+(<code>/dashboard</code>)</h3>
+<p><strong>Descripción:</strong> Panel principal del usuario</p>
+<p><strong>Secciones:</strong> - Resumen de actividad reciente - KPIs
+principales - Próximas sesiones - Notificaciones - Quick actions</p>
+<p><strong>Layout:</strong> - Sidebar con navegación - Header con perfil
+y logout - Main content area</p>
+<p><strong>Screenshot:</strong> <img src="screenshots/04-dashboard.png"
+alt="Dashboard" /></p>
+<hr />
+<h3 data-number="9.2.5" id="videos-videos"><span
+class="header-section-number">9.2.5</span> 5. Videos
+(<code>/videos</code>)</h3>
+<p><strong>Descripción:</strong> Galería de videos</p>
+<p><strong>Características:</strong> - Grid de videos con thumbnails -
+Filtros: por sesión, fecha, estado - Search bar - Botón “Upload Video” -
+Vista detalle de video</p>
+<p><strong>Screenshot:</strong> <img src="screenshots/05-videos.png"
+alt="Videos" /></p>
+<hr />
+<h3 data-number="9.2.6" id="sessions-sessions"><span
+class="header-section-number">9.2.6</span> 6. Sessions
+(<code>/sessions</code>)</h3>
+<p><strong>Descripción:</strong> Listado de sesiones</p>
+<p><strong>Tabla con columnas:</strong> - Título - Fecha - Ubicación -
+Condiciones (viento/olas) - Estado - Performance Score - Acciones</p>
+<p><strong>Filtros:</strong> - Por estado - Por fecha - Por equipo</p>
+<p><strong>Screenshot:</strong> <img src="screenshots/06-sessions.png"
+alt="Sessions" /></p>
+<hr />
+<h3 data-number="9.2.7" id="session-detail-sessionsid"><span
+class="header-section-number">9.2.7</span> 7. Session Detail
+(<code>/sessions/:id</code>)</h3>
+<p><strong>Descripción:</strong> Detalle de una sesión</p>
+<p><strong>Tabs:</strong> 1. <strong>Overview</strong> - Información
+general - Condiciones meteorológicas - Duración</p>
+<ol start="2" type="1">
+<li><strong>Videos</strong>
+<ul>
+<li>Videos asociados</li>
+<li>Player integrado</li>
+</ul></li>
+<li><strong>Analytics</strong>
+<ul>
+<li>Métricas de rendimiento</li>
+<li>Gráficos de velocidad</li>
+<li>Comparación vs benchmark</li>
+</ul></li>
+<li><strong>Feedback</strong>
+<ul>
+<li>Comentarios del coach</li>
+<li>Rating</li>
+<li>Recomendaciones</li>
+</ul></li>
+</ol>
+<p><strong>Screenshot:</strong> <img
+src="screenshots/07-session-detail.png" alt="Session Detail" /></p>
+<hr />
+<h3 data-number="9.2.8" id="teams-teams"><span
+class="header-section-number">9.2.8</span> 8. Teams
+(<code>/teams</code>)</h3>
+<p><strong>Descripción:</strong> Gestión de equipos</p>
+<p><strong>Vista Coach/Academy:</strong> - Lista de equipos - Crear
+nuevo equipo - Agregar miembros</p>
+<p><strong>Vista Atleta:</strong> - Equipos a los que pertenece -
+Compañeros de equipo - Sesiones de equipo</p>
+<p><strong>Screenshot:</strong> <img src="screenshots/08-teams.png"
+alt="Teams" /></p>
+<hr />
+<h3 data-number="9.2.9" id="courses-courses"><span
+class="header-section-number">9.2.9</span> 9. Courses
+(<code>/courses</code>)</h3>
+<p><strong>Descripción:</strong> Catálogo de cursos</p>
+<p><strong>Características:</strong> - Grid de cursos - Filtros por
+categoría, precio - Preview de contenido - Botón de inscripción -
+Progreso (si inscrito)</p>
+<p><strong>Screenshot:</strong> <img src="screenshots/09-courses.png"
+alt="Courses" /></p>
+<hr />
+<h3 data-number="9.2.10" id="ai-coach-ai-coach"><span
+class="header-section-number">9.2.10</span> 10. AI Coach
+(<code>/ai-coach</code>)</h3>
+<p><strong>Descripción:</strong> Interface de chat con AI Coach</p>
+<p><strong>Layout:</strong> - Chat messages area - Input box - Quick
+questions (sugerencias) - Tools used indicator - Message history</p>
+<p><strong>Características:</strong> - Real-time messaging - Markdown
+formatting - Code blocks support - Loading states - Error handling</p>
+<p><strong>Screenshot:</strong> <img src="screenshots/10-ai-coach.png"
+alt="AI Coach" /></p>
+<hr />
+<h3 data-number="9.2.11" id="analytics-analytics"><span
+class="header-section-number">9.2.11</span> 11. Analytics
+(<code>/analytics</code>)</h3>
+<p><strong>Descripción:</strong> Dashboard de analytics</p>
+<p><strong>Secciones:</strong> - Performance trends (gráfico de línea) -
+KPIs dashboard - Comparación temporal - Heatmaps de mejora - Export
+reports</p>
+<p><strong>Screenshot:</strong> <img src="screenshots/11-analytics.png"
+alt="Analytics" /></p>
+<hr />
+<h2 data-number="9.3" id="componentes-reutilizables"><span
+class="header-section-number">9.3</span> 8.3 Componentes
+Reutilizables</h2>
+<h3 data-number="9.3.1" id="navigation"><span
+class="header-section-number">9.3.1</span> Navigation</h3>
+<ul>
+<li><strong>Sidebar</strong> - Menú principal</li>
+<li><strong>Header</strong> - Top bar con perfil</li>
+<li><strong>Breadcrumbs</strong> - Navegación contextual</li>
+</ul>
+<h3 data-number="9.3.2" id="data-display"><span
+class="header-section-number">9.3.2</span> Data Display</h3>
+<ul>
+<li><strong>DataTable</strong> - Tablas con sort/filter</li>
+<li><strong>StatCard</strong> - Tarjetas de estadísticas</li>
+<li><strong>Chart</strong> - Gráficos (Chart.js)</li>
+</ul>
+<h3 data-number="9.3.3" id="forms"><span
+class="header-section-number">9.3.3</span> Forms</h3>
+<ul>
+<li><strong>Input</strong> - Campo de texto</li>
+<li><strong>Select</strong> - Dropdown</li>
+<li><strong>DatePicker</strong> - Selector de fecha</li>
+<li><strong>FileUpload</strong> - Subida de archivos</li>
+</ul>
+<h3 data-number="9.3.4" id="feedback"><span
+class="header-section-number">9.3.4</span> Feedback</h3>
+<ul>
+<li><strong>Toast</strong> - Notificaciones</li>
+<li><strong>Modal</strong> - Diálogos</li>
+<li><strong>Alert</strong> - Alertas</li>
+<li><strong>Loading</strong> - Spinners</li>
+</ul>
+<h1 data-number="10" id="guía-de-uso"><span
+class="header-section-number">10</span> 9. Guía de Uso</h1>
+<h2 data-number="10.1" id="para-atletas"><span
+class="header-section-number">10.1</span> 9.1 Para Atletas</h2>
+<h3 data-number="10.1.1" id="primer-uso"><span
+class="header-section-number">10.1.1</span> Primer Uso</h3>
+<ol type="1">
+<li><strong>Registro</strong>
+<ul>
+<li>Ir a <code>/register</code></li>
+<li>Completar formulario</li>
+<li>Seleccionar rol “ATHLETE”</li>
+<li>Confirmar email</li>
+</ul></li>
+<li><strong>Completar Perfil</strong>
+<ul>
+<li>Edad, nacionalidad, posición</li>
+<li>Peso, altura</li>
+<li>Número de vela</li>
+<li>Objetivos de temporada</li>
+</ul></li>
+<li><strong>Primera Sesión</strong>
+<ul>
+<li>Dashboard → “Nueva Sesión”</li>
+<li>Título: “Primera sesión de entrenamiento”</li>
+<li>Programar fecha</li>
+<li>Registrar condiciones</li>
+<li>Guardar</li>
+</ul></li>
+</ol>
+<h3 data-number="10.1.2" id="flujo-de-entrenamiento"><span
+class="header-section-number">10.1.2</span> Flujo de Entrenamiento</h3>
+<ol type="1">
+<li><strong>Antes del entrenamiento</strong>
+<ul>
+<li>Crear sesión en la plataforma</li>
+<li>Revisar objetivos del día</li>
+<li>Consultar weather forecast</li>
+<li>Revisar plan del coach</li>
+</ul></li>
+<li><strong>Durante el entrenamiento</strong>
+<ul>
+<li>Grabar videos (cámara waterproof)</li>
+<li>Seguir ejercicios planificados</li>
+<li>Registrar observaciones mentales</li>
+</ul></li>
+<li><strong>Después del entrenamiento</strong>
+<ul>
+<li>Subir videos a la plataforma</li>
+<li>Asociar videos a la sesión</li>
+<li>Esperar analytics automáticos</li>
+<li>Revisar métricas</li>
+</ul></li>
+<li><strong>Revisión con Coach</strong>
+<ul>
+<li>Recibir feedback</li>
+<li>Discutir resultados</li>
+<li>Consultar AI Coach</li>
+<li>Ajustar plan</li>
+</ul></li>
+</ol>
+<h2 data-number="10.2" id="para-coaches"><span
+class="header-section-number">10.2</span> 9.2 Para Coaches</h2>
+<h3 data-number="10.2.1" id="setup-inicial"><span
+class="header-section-number">10.2.1</span> Setup Inicial</h3>
+<ol type="1">
+<li><strong>Crear Equipo</strong>
+<ul>
+<li>Teams → “Nuevo Equipo”</li>
+<li>Nombre: “Equipo Nacional Junior”</li>
+<li>Descripción</li>
+<li>Guardar</li>
+</ul></li>
+<li><strong>Agregar Atletas</strong>
+<ul>
+<li>Team Detail → “Agregar Miembro”</li>
+<li>Buscar por email</li>
+<li>Asignar rol: “member”</li>
+<li>Confirmar</li>
+</ul></li>
+<li><strong>Planificar Sesiones</strong>
+<ul>
+<li>Sessions → “Nueva Sesión”</li>
+<li>Asignar a equipo</li>
+<li>Definir objetivos</li>
+<li>Programar fecha</li>
+</ul></li>
+</ol>
+<h3 data-number="10.2.2" id="flujo-de-coaching"><span
+class="header-section-number">10.2.2</span> Flujo de Coaching</h3>
+<ol type="1">
+<li><strong>Planificación Semanal</strong>
+<ul>
+<li>Revisar progreso de atletas</li>
+<li>Definir objetivos semanales</li>
+<li>Crear sesiones</li>
+<li>Asignar ejercicios</li>
+</ul></li>
+<li><strong>Revisión de Sesiones</strong>
+<ul>
+<li>Ver sesiones completadas</li>
+<li>Revisar videos</li>
+<li>Analizar con AI Coach</li>
+<li>Identificar mejoras</li>
+</ul></li>
+<li><strong>Dar Feedback</strong>
+<ul>
+<li>Session Detail → Tab “Feedback”</li>
+<li>Escribir observaciones</li>
+<li>Rating (1-5)</li>
+<li>Recomendar ejercicios</li>
+<li>Guardar</li>
+</ul></li>
+<li><strong>Seguimiento</strong>
+<ul>
+<li>Analytics dashboard</li>
+<li>Comparar atletas</li>
+<li>Identificar tendencias</li>
+<li>Ajustar planificación</li>
+</ul></li>
+</ol>
+<h2 data-number="10.3" id="para-academias"><span
+class="header-section-number">10.3</span> 9.3 Para Academias</h2>
+<h3 data-number="10.3.1" id="configuración"><span
+class="header-section-number">10.3.1</span> Configuración</h3>
+<ol type="1">
+<li><strong>Crear Academia</strong>
+<ul>
+<li>Completar perfil</li>
+<li>Nombre, país, website</li>
+<li>Logo</li>
+<li>Descripción</li>
+</ul></li>
+<li><strong>Crear Cursos</strong>
+<ul>
+<li>Courses → “Nuevo Curso”</li>
+<li>Título y descripción</li>
+<li>Precio (si aplica)</li>
+<li>Crear módulos</li>
+</ul></li>
+<li><strong>Gestionar Equipos</strong>
+<ul>
+<li>Crear múltiples equipos</li>
+<li>Asignar coaches</li>
+<li>Monitorear actividad</li>
+</ul></li>
+</ol>
+<h3 data-number="10.3.2" id="monetización-1"><span
+class="header-section-number">10.3.2</span> Monetización</h3>
+<ol type="1">
+<li><strong>Cursos de Pago</strong>
+<ul>
+<li>Configurar precio</li>
+<li>Payment gateway</li>
+<li>Publicar curso</li>
+</ul></li>
+<li><strong>Suscripciones</strong>
+<ul>
+<li>Planes mensuales/anuales</li>
+<li>Features premium</li>
+<li>Facturación automática</li>
+</ul></li>
+</ol>
+<h1 data-number="11" id="seguridad-1"><span
+class="header-section-number">11</span> 10. Seguridad</h1>
+<h2 data-number="11.1" id="autenticación-1"><span
+class="header-section-number">11.1</span> 10.1 Autenticación</h2>
+<h3 data-number="11.1.1" id="jwt-tokens"><span
+class="header-section-number">11.1.1</span> JWT Tokens</h3>
+<ul>
+<li>Algorithm: HS256</li>
+<li>Expiration: 7 días</li>
+<li>Secret: Variable de entorno</li>
+<li>Refresh tokens disponibles</li>
+</ul>
+<h3 data-number="11.1.2" id="password-security"><span
+class="header-section-number">11.1.2</span> Password Security</h3>
+<ul>
+<li>Hashing: bcrypt (10 rounds)</li>
+<li>Mínimo 8 caracteres</li>
+<li>No passwords comunes</li>
+<li>No se almacenan en logs</li>
+</ul>
+<h2 data-number="11.2" id="autorización"><span
+class="header-section-number">11.2</span> 10.2 Autorización</h2>
+<h3 data-number="11.2.1" id="role-based-access-control-rbac"><span
+class="header-section-number">11.2.1</span> Role-Based Access Control
+(RBAC)</h3>
+<div class="sourceCode" id="cb44"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>@<span class="fu">Roles</span>(UserRole<span class="op">.</span><span class="at">COACH</span><span class="op">,</span> UserRole<span class="op">.</span><span class="at">ADMIN</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>@<span class="fu">UseGuards</span>(JwtAuthGuard<span class="op">,</span> RolesGuard)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="fu">updateSession</span>(@<span class="fu">Param</span>(<span class="st">&#39;id&#39;</span>) id<span class="op">:</span> <span class="dt">string</span>) {</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="co">// Solo coaches y admins</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h3 data-number="11.2.2" id="resource-ownership"><span
+class="header-section-number">11.2.2</span> Resource Ownership</h3>
+<div class="sourceCode" id="cb45"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co">// Verificar que el usuario es dueño del recurso</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (session<span class="op">.</span><span class="at">createdById</span> <span class="op">!==</span> user<span class="op">.</span><span class="at">id</span> <span class="op">&amp;&amp;</span> user<span class="op">.</span><span class="at">role</span> <span class="op">!==</span> <span class="st">&#39;ADMIN&#39;</span>) {</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">throw</span> <span class="kw">new</span> <span class="fu">ForbiddenException</span>()<span class="op">;</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 data-number="11.3" id="validación-de-datos"><span
+class="header-section-number">11.3</span> 10.3 Validación de Datos</h2>
+<h3 data-number="11.3.1" id="dtos-con-class-validator"><span
+class="header-section-number">11.3.1</span> DTOs con Class
+Validator</h3>
+<div class="sourceCode" id="cb46"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="im">export</span> <span class="kw">class</span> CreateSessionDto {</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>  @<span class="fu">IsString</span>()</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  @<span class="fu">IsNotEmpty</span>()</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  title<span class="op">:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  @<span class="fu">IsOptional</span>()</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a>  @<span class="fu">IsString</span>()</span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a>  description<span class="op">?:</span> <span class="dt">string</span><span class="op">;</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  @<span class="fu">IsEnum</span>(SessionStatus)</span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>  status<span class="op">:</span> SessionStatus<span class="op">;</span></span>
+<span id="cb46-12"><a href="#cb46-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-13"><a href="#cb46-13" aria-hidden="true" tabindex="-1"></a>  @<span class="fu">IsDate</span>()</span>
+<span id="cb46-14"><a href="#cb46-14" aria-hidden="true" tabindex="-1"></a>  @<span class="fu">Type</span>(() <span class="kw">=&gt;</span> <span class="bu">Date</span>)</span>
+<span id="cb46-15"><a href="#cb46-15" aria-hidden="true" tabindex="-1"></a>  scheduledAt<span class="op">:</span> <span class="bu">Date</span><span class="op">;</span></span>
+<span id="cb46-16"><a href="#cb46-16" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<h2 data-number="11.4" id="rate-limiting"><span
+class="header-section-number">11.4</span> 10.4 Rate Limiting</h2>
+<div class="sourceCode" id="cb47"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co">// 10 requests por minuto en endpoints de auth</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>@<span class="fu">Throttle</span>(<span class="dv">10</span><span class="op">,</span> <span class="dv">60</span>)</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>@<span class="fu">Post</span>(<span class="st">&#39;login&#39;</span>)</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="kw">async</span> <span class="fu">login</span>() { <span class="op">...</span> }</span></code></pre></div>
+<h2 data-number="11.5" id="sql-injection-prevention"><span
+class="header-section-number">11.5</span> 10.5 SQL Injection
+Prevention</h2>
+<ul>
+<li>✅ Prisma ORM con prepared statements</li>
+<li>✅ Validación de inputs</li>
+<li>✅ Type safety con TypeScript</li>
+</ul>
+<h2 data-number="11.6" id="xss-prevention"><span
+class="header-section-number">11.6</span> 10.6 XSS Prevention</h2>
+<ul>
+<li>✅ Content Security Policy headers</li>
+<li>✅ Sanitización de inputs</li>
+<li>✅ HTML encoding en frontend</li>
+</ul>
+<h2 data-number="11.7" id="cors-configuration"><span
+class="header-section-number">11.7</span> 10.7 CORS Configuration</h2>
+<div class="sourceCode" id="cb48"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>app<span class="op">.</span><span class="fu">enableCors</span>({</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  origin<span class="op">:</span> <span class="bu">process</span><span class="op">.</span><span class="at">env</span><span class="op">.</span><span class="at">FRONTEND_URL</span><span class="op">,</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  credentials<span class="op">:</span> <span class="kw">true</span><span class="op">,</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  methods<span class="op">:</span> [<span class="st">&#39;GET&#39;</span><span class="op">,</span> <span class="st">&#39;POST&#39;</span><span class="op">,</span> <span class="st">&#39;PATCH&#39;</span><span class="op">,</span> <span class="st">&#39;DELETE&#39;</span>]<span class="op">,</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<h2 data-number="11.8" id="audit-logging"><span
+class="header-section-number">11.8</span> 10.8 Audit Logging</h2>
+<p>Todas las acciones críticas se registran:</p>
+<div class="sourceCode" id="cb49"><pre
+class="sourceCode typescript"><code class="sourceCode typescript"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="cf">await</span> <span class="kw">this</span><span class="op">.</span><span class="at">auditLog</span><span class="op">.</span><span class="fu">create</span>({</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>  userId<span class="op">:</span> user<span class="op">.</span><span class="at">id</span><span class="op">,</span></span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>  action<span class="op">:</span> <span class="st">&#39;DELETE_VIDEO&#39;</span><span class="op">,</span></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>  entity<span class="op">:</span> <span class="st">&#39;video&#39;</span><span class="op">,</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>  entityId<span class="op">:</span> video<span class="op">.</span><span class="at">id</span><span class="op">,</span></span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>  ipAddress<span class="op">:</span> req<span class="op">.</span><span class="at">ip</span><span class="op">,</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>  userAgent<span class="op">:</span> req<span class="op">.</span><span class="at">headers</span>[<span class="st">&#39;user-agent&#39;</span>]<span class="op">,</span></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>})<span class="op">;</span></span></code></pre></div>
+<h1 data-number="12" id="infraestructura"><span
+class="header-section-number">12</span> 11. Infraestructura</h1>
+<h2 data-number="12.1" id="docker-compose"><span
+class="header-section-number">12.1</span> 11.1 Docker Compose</h2>
+<h3 data-number="12.1.1" id="servicios"><span
+class="header-section-number">12.1.1</span> Servicios</h3>
+<div class="sourceCode" id="cb50"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">services</span><span class="kw">:</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">postgres</span><span class="kw">:</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">image</span><span class="kw">:</span><span class="at"> pgvector/pgvector:pg16</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;5432:5432&quot;</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">POSTGRES_USER</span><span class="kw">:</span><span class="at"> postgres</span></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">POSTGRES_PASSWORD</span><span class="kw">:</span><span class="at"> postgres</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">POSTGRES_DB</span><span class="kw">:</span><span class="at"> alonso49</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">healthcheck</span><span class="kw">:</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">test</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;CMD-SHELL&quot;</span><span class="kw">,</span><span class="at"> </span><span class="st">&quot;pg_isready&quot;</span><span class="kw">]</span></span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">interval</span><span class="kw">:</span><span class="at"> 10s</span></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">timeout</span><span class="kw">:</span><span class="at"> 5s</span></span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">retries</span><span class="kw">:</span><span class="at"> </span><span class="dv">5</span></span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">backend</span><span class="kw">:</span></span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">build</span><span class="kw">:</span><span class="at"> ./backend</span></span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;3001:3001&quot;</span></span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">depends_on</span><span class="kw">:</span></span>
+<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">postgres</span><span class="kw">:</span></span>
+<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">condition</span><span class="kw">:</span><span class="at"> service_healthy</span></span>
+<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">DATABASE_URL</span><span class="kw">:</span><span class="at"> postgresql://postgres:postgres@postgres:5432/alonso49</span></span>
+<span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">JWT_SECRET</span><span class="kw">:</span><span class="at"> ${JWT_SECRET}</span></span>
+<span id="cb50-26"><a href="#cb50-26" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">OPENAI_API_KEY</span><span class="kw">:</span><span class="at"> ${OPENAI_API_KEY}</span></span>
+<span id="cb50-27"><a href="#cb50-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-28"><a href="#cb50-28" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">frontend</span><span class="kw">:</span></span>
+<span id="cb50-29"><a href="#cb50-29" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">build</span><span class="kw">:</span><span class="at"> ./frontend</span></span>
+<span id="cb50-30"><a href="#cb50-30" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">ports</span><span class="kw">:</span></span>
+<span id="cb50-31"><a href="#cb50-31" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;3000:3000&quot;</span></span>
+<span id="cb50-32"><a href="#cb50-32" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">environment</span><span class="kw">:</span></span>
+<span id="cb50-33"><a href="#cb50-33" aria-hidden="true" tabindex="-1"></a><span class="at">      </span><span class="fu">NEXT_PUBLIC_API_URL</span><span class="kw">:</span><span class="at"> http://localhost:3001/api</span></span></code></pre></div>
+<h2 data-number="12.2" id="variables-de-entorno"><span
+class="header-section-number">12.2</span> 11.2 Variables de Entorno</h2>
+<h3 data-number="12.2.1" id="backend-.env"><span
+class="header-section-number">12.2.1</span> Backend (.env)</h3>
+<div class="sourceCode" id="cb51"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="va">DATABASE_URL</span><span class="op">=</span>postgresql://postgres:postgres@postgres:5432/alonso49</span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="va">JWT_SECRET</span><span class="op">=&lt;</span>strong-secret-key<span class="op">&gt;</span></span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="va">JWT_EXPIRATION</span><span class="op">=</span>7d</span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="va">PORT</span><span class="op">=</span>3001</span>
+<span id="cb51-5"><a href="#cb51-5" aria-hidden="true" tabindex="-1"></a><span class="va">NODE_ENV</span><span class="op">=</span>production</span>
+<span id="cb51-6"><a href="#cb51-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-7"><a href="#cb51-7" aria-hidden="true" tabindex="-1"></a><span class="co"># OpenAI</span></span>
+<span id="cb51-8"><a href="#cb51-8" aria-hidden="true" tabindex="-1"></a><span class="va">OPENAI_API_KEY</span><span class="op">=</span>sk-...</span>
+<span id="cb51-9"><a href="#cb51-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb51-10"><a href="#cb51-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Cloudflare R2</span></span>
+<span id="cb51-11"><a href="#cb51-11" aria-hidden="true" tabindex="-1"></a><span class="va">CLOUDFLARE_ACCOUNT_ID</span><span class="op">=</span>...</span>
+<span id="cb51-12"><a href="#cb51-12" aria-hidden="true" tabindex="-1"></a><span class="va">CLOUDFLARE_API_TOKEN</span><span class="op">=</span>...</span></code></pre></div>
+<h3 data-number="12.2.2" id="frontend-.env"><span
+class="header-section-number">12.2.2</span> Frontend (.env)</h3>
+<div class="sourceCode" id="cb52"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="va">NEXT_PUBLIC_API_URL</span><span class="op">=</span>http://localhost:3001/api</span></code></pre></div>
+<h2 data-number="12.3" id="despliegue"><span
+class="header-section-number">12.3</span> 11.3 Despliegue</h2>
+<h3 data-number="12.3.1" id="comandos"><span
+class="header-section-number">12.3.1</span> Comandos</h3>
+<div class="sourceCode" id="cb53"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Desarrollo</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> up <span class="at">-d</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Producción</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> <span class="at">-f</span> docker-compose.prod.yml up <span class="at">-d</span></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Rebuild</span></span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> up <span class="at">-d</span> <span class="at">--build</span></span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Logs</span></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> logs <span class="at">-f</span> backend</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Stop</span></span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> down</span></code></pre></div>
+<h3 data-number="12.3.2" id="health-checks"><span
+class="header-section-number">12.3.2</span> Health Checks</h3>
+<div class="sourceCode" id="cb54"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Backend health</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> http://localhost:3001/api/health</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Database health</span></span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> exec postgres pg_isready</span></code></pre></div>
+<h2 data-number="12.4" id="backup-y-restauración"><span
+class="header-section-number">12.4</span> 11.4 Backup y
+Restauración</h2>
+<h3 data-number="12.4.1" id="backup-de-base-de-datos"><span
+class="header-section-number">12.4.1</span> Backup de Base de Datos</h3>
+<div class="sourceCode" id="cb55"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Backup</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> exec postgres pg_dump <span class="at">-U</span> postgres alonso49 <span class="op">&gt;</span> backup.sql</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Restore</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="ex">docker-compose</span> exec <span class="at">-T</span> postgres psql <span class="at">-U</span> postgres alonso49 <span class="op">&lt;</span> backup.sql</span></code></pre></div>
+<h3 data-number="12.4.2" id="backup-de-videos"><span
+class="header-section-number">12.4.2</span> Backup de Videos</h3>
+<div class="sourceCode" id="cb56"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sincronizar con bucket</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="ex">rclone</span> sync ./storage cloudflare:alonso49-videos</span></code></pre></div>
+<h1 data-number="13" id="mantenimiento-y-monitoreo"><span
+class="header-section-number">13</span> 12. Mantenimiento y
+Monitoreo</h1>
+<h2 data-number="13.1" id="métricas-clave"><span
+class="header-section-number">13.1</span> 12.1 Métricas Clave</h2>
+<h3 data-number="13.1.1" id="performance"><span
+class="header-section-number">13.1.1</span> Performance</h3>
+<ul>
+<li>Response time promedio: &lt;200ms</li>
+<li>Uptime: &gt;99.9%</li>
+<li>Error rate: &lt;1%</li>
+</ul>
+<h3 data-number="13.1.2" id="base-de-datos-1"><span
+class="header-section-number">13.1.2</span> Base de Datos</h3>
+<ul>
+<li>Query time promedio: &lt;50ms</li>
+<li>Conexiones activas: &lt;100</li>
+<li>Tamaño DB: monitoreado</li>
+</ul>
+<h3 data-number="13.1.3" id="ai-coach-1"><span
+class="header-section-number">13.1.3</span> AI Coach</h3>
+<ul>
+<li>OpenAI calls/día: monitoreado</li>
+<li>Costo promedio/conversación: ~$0.05</li>
+<li>Tools execution time: &lt;2s</li>
+</ul>
+<h2 data-number="13.2" id="logs"><span
+class="header-section-number">13.2</span> 12.2 Logs</h2>
+<h3 data-number="13.2.1" id="estructura-de-logs"><span
+class="header-section-number">13.2.1</span> Estructura de Logs</h3>
+<div class="sourceCode" id="cb57"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;timestamp&quot;</span><span class="fu">:</span> <span class="st">&quot;2024-08-01T12:00:00Z&quot;</span><span class="fu">,</span></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;level&quot;</span><span class="fu">:</span> <span class="st">&quot;info&quot;</span><span class="fu">,</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;context&quot;</span><span class="fu">:</span> <span class="st">&quot;SessionsController&quot;</span><span class="fu">,</span></span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;message&quot;</span><span class="fu">:</span> <span class="st">&quot;Session created&quot;</span><span class="fu">,</span></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;userId&quot;</span><span class="fu">:</span> <span class="st">&quot;uuid&quot;</span><span class="fu">,</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;sessionId&quot;</span><span class="fu">:</span> <span class="st">&quot;uuid&quot;</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 data-number="13.2.2" id="niveles-de-log"><span
+class="header-section-number">13.2.2</span> Niveles de Log</h3>
+<ul>
+<li><strong>ERROR</strong> - Errores que requieren atención</li>
+<li><strong>WARN</strong> - Advertencias</li>
+<li><strong>INFO</strong> - Información general</li>
+<li><strong>DEBUG</strong> - Debugging (solo desarrollo)</li>
+</ul>
+<h2 data-number="13.3" id="alertas"><span
+class="header-section-number">13.3</span> 12.3 Alertas</h2>
+<h3 data-number="13.3.1" id="configurar-alertas"><span
+class="header-section-number">13.3.1</span> Configurar Alertas</h3>
+<ol type="1">
+<li><strong>Alta tasa de errores</strong>
+<ul>
+<li>Threshold: &gt;5% error rate</li>
+<li>Action: Notificar equipo técnico</li>
+</ul></li>
+<li><strong>Base de datos lenta</strong>
+<ul>
+<li>Threshold: &gt;500ms query time</li>
+<li>Action: Revisar queries</li>
+</ul></li>
+<li><strong>Costos OpenAI</strong>
+<ul>
+<li>Threshold: &gt;$100/día</li>
+<li>Action: Revisar uso</li>
+</ul></li>
+</ol>
+<h2 data-number="13.4" id="mantenimiento-regular"><span
+class="header-section-number">13.4</span> 12.4 Mantenimiento
+Regular</h2>
+<h3 data-number="13.4.1" id="diario"><span
+class="header-section-number">13.4.1</span> Diario</h3>
+<ul>
+<li>Revisar logs de errores</li>
+<li>Monitorear métricas de performance</li>
+<li>Backup automático de DB</li>
+</ul>
+<h3 data-number="13.4.2" id="semanal"><span
+class="header-section-number">13.4.2</span> Semanal</h3>
+<ul>
+<li>Revisar analytics de uso</li>
+<li>Optimizar queries lentas</li>
+<li>Actualizar dependencias menores</li>
+</ul>
+<h3 data-number="13.4.3" id="mensual"><span
+class="header-section-number">13.4.3</span> Mensual</h3>
+<ul>
+<li>Backup completo del sistema</li>
+<li>Revisar costos de infraestructura</li>
+<li>Actualizar dependencias mayores</li>
+<li>Security audit</li>
+</ul>
+<h1 data-number="14" id="anexos"><span
+class="header-section-number">14</span> 13. Anexos</h1>
+<h2 data-number="14.1" id="glosario"><span
+class="header-section-number">14.1</span> 13.1 Glosario</h2>
+<p><strong>49er</strong> - Clase olímpica de vela de alto
+rendimiento</p>
+<p><strong>VMG</strong> - Velocity Made Good - Velocidad efectiva hacia
+el objetivo</p>
+<p><strong>Ceñida</strong> - Navegación contra el viento (upwind)</p>
+<p><strong>Popa</strong> - Navegación con el viento (downwind)</p>
+<p><strong>Virada</strong> - Tack - Cambio de dirección por proa</p>
+<p><strong>Giro</strong> - Gybe - Cambio de dirección por popa</p>
+<p><strong>KPI</strong> - Key Performance Indicator - Indicador clave de
+rendimiento</p>
+<p><strong>Microciclo</strong> - Período de entrenamiento de 1-4
+semanas</p>
+<p><strong>RAG</strong> - Retrieval Augmented Generation - IA con
+búsqueda de documentos</p>
+<p><strong>pgvector</strong> - Extensión de PostgreSQL para vectores de
+embeddings</p>
+<h2 data-number="14.2" id="contacto-y-soporte"><span
+class="header-section-number">14.2</span> 13.2 Contacto y Soporte</h2>
+<p><strong>Email:</strong> soporte@alonso49.com<br />
+<strong>Website:</strong> https://alonso49.com<br />
+<strong>Documentación:</strong> https://docs.alonso49.com</p>
+<h2 data-number="14.3" id="changelog"><span
+class="header-section-number">14.3</span> 13.3 Changelog</h2>
+<h3 data-number="14.3.1" id="versión-1.0.0-agosto-2026"><span
+class="header-section-number">14.3.1</span> Versión 1.0.0 (Agosto
+2026)</h3>
+<ul>
+<li>✅ Implementación completa de 8 módulos backend</li>
+<li>✅ Frontend con 10 páginas operativas</li>
+<li>✅ AI Coach con 20 herramientas</li>
+<li>✅ Integración OpenAI GPT-4 Turbo</li>
+<li>✅ Sistema completo de analytics</li>
+<li>✅ Closed loop coaching funcional</li>
+</ul>
+<h3 data-number="14.3.2" id="próximas-features-roadmap"><span
+class="header-section-number">14.3.2</span> Próximas Features
+(Roadmap)</h3>
+<p><strong>v1.1.0 - Septiembre 2026</strong> - Video upload directo (no
+solo URLs) - WebSocket para notificaciones real-time - Export de
+reportes PDF - Mobile app (React Native)</p>
+<p><strong>v1.2.0 - Octubre 2026</strong> - RAG implementation con
+knowledge base - GPS tracking integration - Wearables integration
+(Garmin, Apple Watch) - Predicción de rendimiento con ML</p>
+<p><strong>v2.0.0 - Q4 2026</strong> - Multi-idioma (English, Spanish,
+French) - Kubernetes deployment - Advanced analytics con ML -
+Marketplace de coaches/academias</p>
+<hr />
+<p><strong>Fin del Documento</strong></p>
+<p><em>Documentación generada el 1 de Agosto de 2026</em><br />
+<em>Versión 1.0.0</em><br />
+<em>Alonso49 Platform - High Performance Sailing Training</em></p>
+<hr />
+</body>
+</html>

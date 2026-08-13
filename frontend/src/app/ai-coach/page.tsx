@@ -1,12 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import { api } from '@/lib/api'
-import { Send, Loader2, Bot, User } from 'lucide-react'
+import { api, aiCoachApi, tagsApi } from '@/lib/api'
+import { Send, Loader2, Bot, User, Search, Video as VideoIcon, Calendar } from 'lucide-react'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -29,6 +29,31 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
     },
   ])
   const [input, setInput] = useState('')
+
+  const [showSearch, setShowSearch] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
+  const [searchTagKey, setSearchTagKey] = useState('')
+  const [searchWindMin, setSearchWindMin] = useState('')
+  const [searchWindMax, setSearchWindMax] = useState('')
+  const [searchLocation, setSearchLocation] = useState('')
+
+  const { data: sections } = useQuery({
+    queryKey: ['tags'],
+    queryFn: async () => (await tagsApi.getAll()).data,
+  })
+
+  const searchMutation = useMutation({
+    mutationFn: async () => {
+      const res = await aiCoachApi.search({
+        q: searchQuery || undefined,
+        tagKey: searchTagKey || undefined,
+        windMin: searchWindMin || undefined,
+        windMax: searchWindMax || undefined,
+        location: searchLocation || undefined,
+      })
+      return res.data as { videos: any[]; sessions: any[] }
+    },
+  })
 
   const chatMutation = useMutation({
     mutationFn: async (message: string) => {
@@ -87,8 +112,108 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
               <h1 className="text-3xl font-bold">AI High Performance Coach</h1>
               <p className="text-gray-600">Metodología Alonso49 · Clase Olímpica 49er</p>
             </div>
+            <button
+              onClick={() => setShowSearch((prev) => !prev)}
+              className="ml-auto p-3 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-full"
+              title="Buscador"
+            >
+              <Search className="h-5 w-5" />
+            </button>
           </div>
         </div>
+
+        {showSearch && (
+          <Card className="mb-6" title="Buscador">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-4">
+              <input
+                type="text"
+                placeholder="Texto libre..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm lg:col-span-2"
+              />
+              <select
+                value={searchTagKey}
+                onChange={(e) => setSearchTagKey(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
+              >
+                <option value="">Maniobra / área</option>
+                {sections?.map((section: any) => (
+                  <optgroup key={section.id} label={section.label}>
+                    {section.children?.map((child: any) => (
+                      <option key={child.id} value={child.key}>
+                        {child.label}
+                      </option>
+                    ))}
+                  </optgroup>
+                ))}
+              </select>
+              <input
+                type="text"
+                placeholder="Sitio..."
+                value={searchLocation}
+                onChange={(e) => setSearchLocation(e.target.value)}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
+              />
+              <div className="flex gap-2">
+                <input
+                  type="number"
+                  placeholder="Viento kn mín"
+                  value={searchWindMin}
+                  onChange={(e) => setSearchWindMin(e.target.value)}
+                  className="w-full min-w-0 px-2 py-2 border border-gray-300 rounded-lg text-sm"
+                />
+                <input
+                  type="number"
+                  placeholder="Viento kn máx"
+                  value={searchWindMax}
+                  onChange={(e) => setSearchWindMax(e.target.value)}
+                  className="w-full min-w-0 px-2 py-2 border border-gray-300 rounded-lg text-sm"
+                />
+              </div>
+            </div>
+            <Button size="sm" onClick={() => searchMutation.mutate()} disabled={searchMutation.isPending}>
+              {searchMutation.isPending ? 'Buscando...' : 'Buscar'}
+            </Button>
+
+            {searchMutation.data && (
+              <div className="mt-4 grid sm:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-xs font-semibold text-gray-500 uppercase mb-2">
+                    Videos/Informes ({searchMutation.data.videos.length})
+                  </p>
+                  <div className="space-y-2 max-h-56 overflow-y-auto">
+                    {searchMutation.data.videos.map((v) => (
+                      <div key={v.id} className="flex items-center gap-2 text-sm p-2 bg-gray-50 rounded">
+                        <VideoIcon className="h-4 w-4 text-gray-400 shrink-0" />
+                        <span>{v.title}</span>
+                      </div>
+                    ))}
+                    {searchMutation.data.videos.length === 0 && (
+                      <p className="text-sm text-gray-400">Sin resultados</p>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-gray-500 uppercase mb-2">
+                    Sesiones ({searchMutation.data.sessions.length})
+                  </p>
+                  <div className="space-y-2 max-h-56 overflow-y-auto">
+                    {searchMutation.data.sessions.map((s) => (
+                      <div key={s.id} className="flex items-center gap-2 text-sm p-2 bg-gray-50 rounded">
+                        <Calendar className="h-4 w-4 text-gray-400 shrink-0" />
+                        <span>{s.title}</span>
+                      </div>
+                    ))}
+                    {searchMutation.data.sessions.length === 0 && (
+                      <p className="text-sm text-gray-400">Sin resultados</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+          </Card>
+        )}
 
         <Card className="mb-6">
           <div className="h-[500px] flex flex-col">

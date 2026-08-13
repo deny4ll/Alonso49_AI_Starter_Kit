@@ -46,11 +46,27 @@ export const sessionsApi = {
 }
 
 export const videosApi = {
-  getAll: () => api.get('/videos'),
+  getAll: (filters?: Record<string, any>) => api.get('/videos', { params: filters }),
   getOne: (id: string) => api.get(`/videos/${id}`),
   create: (data: any) => api.post('/videos', data),
   update: (id: string, data: any) => api.patch(`/videos/${id}`, data),
   delete: (id: string) => api.delete(`/videos/${id}`),
+  getLoadDistribution: (teamId?: string) =>
+    api.get('/videos/load-distribution', { params: teamId ? { teamId } : undefined }),
+}
+
+export const tagsApi = {
+  getAll: () => api.get('/tags'),
+}
+
+export const progressApi = {
+  getSummary: (teamId?: string) => api.get('/progress', { params: teamId ? { teamId } : undefined }),
+}
+
+export const trackersApi = {
+  getAll: (sessionId?: string) => api.get('/trackers', { params: sessionId ? { sessionId } : undefined }),
+  getOne: (id: string) => api.get(`/trackers/${id}`),
+  create: (data: any) => api.post('/trackers', data),
 }
 
 export const teamsApi = {
@@ -70,11 +86,22 @@ export const coursesApi = {
 
 export const aiCoachApi = {
   chat: (message: string, context?: any) => api.post('/ai-coach/chat', { message, ...context }),
-  analyzeVideo: (videoId: string, specificQuestion?: string) => 
+  analyzeVideo: (videoId: string, specificQuestion?: string) =>
     api.post('/ai-coach/analyze-video', { videoId, specificQuestion }),
-  analyzeSession: (sessionId: string) => 
+  analyzeSession: (sessionId: string) =>
     api.post('/ai-coach/analyze-session', { sessionId }),
-  getTrainingPlan: (goals?: string) => 
+  getTrainingPlan: (goals?: string) =>
     api.post('/ai-coach/training-plan', { goals }),
   getHistory: () => api.get('/ai-coach/history'),
+  search: (filters: Record<string, any>) => api.get('/ai-coach/search', { params: filters }),
+}
+
+export const analyticsApi = {
+  getMyStats: () => api.get('/analytics/users/me/stats'),
+  getBenchmark: (teamId: string) => api.get(`/analytics/teams/${teamId}/benchmark`),
+  upsertBenchmark: (teamId: string, data: any) => api.post(`/analytics/teams/${teamId}/benchmark`, data),
+  getComparison: (teamId: string) => api.get(`/analytics/teams/${teamId}/comparison`),
+  getBigPicture: (teamId: string) => api.get(`/analytics/teams/${teamId}/big-picture`),
+  upsertBigPicture: (teamId: string, content: string) =>
+    api.post(`/analytics/teams/${teamId}/big-picture`, { content }),
 }

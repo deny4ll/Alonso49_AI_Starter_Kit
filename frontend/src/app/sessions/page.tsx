@@ -6,7 +6,7 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { sessionsApi } from '@/lib/api'
-import { Plus, Calendar, MapPin, Wind } from 'lucide-react'
+import { Plus, Calendar, MapPin, Wind, Waves } from 'lucide-react'
 import { formatDateTime } from '@/lib/utils'
 
 export default function SessionsPage() {
@@ -35,11 +35,17 @@ export default function SessionsPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
+    const windSpeed = formData.get('windSpeed') as string
+    const waveHeight = formData.get('waveHeight') as string
+    const scheduledAt = formData.get('scheduledAt') as string
     createMutation.mutate({
       title: formData.get('title'),
-      description: formData.get('description'),
-      location: formData.get('location'),
-      scheduledAt: formData.get('scheduledAt'),
+      description: formData.get('description') || undefined,
+      location: formData.get('location') || undefined,
+      scheduledAt: scheduledAt ? new Date(scheduledAt).toISOString() : undefined,
+      windSpeed: windSpeed ? Number(windSpeed) : undefined,
+      windDirection: formData.get('windDirection') || undefined,
+      waveHeight: waveHeight ? Number(waveHeight) : undefined,
       status: 'SCHEDULED',
     })
   }
@@ -93,7 +99,13 @@ export default function SessionsPage() {
                     {session.windSpeed && (
                       <div className="flex items-center gap-2">
                         <Wind className="h-4 w-4" />
-                        {session.windSpeed} nudos
+                        {session.windSpeed} nudos {session.windDirection}
+                      </div>
+                    )}
+                    {session.waveHeight && (
+                      <div className="flex items-center gap-2">
+                        <Waves className="h-4 w-4" />
+                        {session.waveHeight} m
                       </div>
                     )}
                   </div>
@@ -166,6 +178,39 @@ export default function SessionsPage() {
                   type="datetime-local"
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
+              </div>
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Viento (nudos)</label>
+                  <input
+                    name="windSpeed"
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    placeholder="12"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Dirección</label>
+                  <input
+                    name="windDirection"
+                    type="text"
+                    placeholder="NE"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Olas (m)</label>
+                  <input
+                    name="waveHeight"
+                    type="number"
+                    step="0.1"
+                    min="0"
+                    placeholder="0.5"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
               </div>
               <div className="flex gap-3">
                 <Button type="submit" disabled={createMutation.isPending}>

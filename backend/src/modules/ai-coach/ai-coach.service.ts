@@ -4,6 +4,8 @@ import { PrismaService } from '../../prisma/prisma.service';
 import { COACH_SYSTEM_PROMPT, ALONSO49_METHODOLOGY } from './coach-prompt';
 import { COACH_TOOLS } from './tools/tool-definitions';
 import { CoachTools } from './tools/tool-implementations';
+import { VideosService } from '../videos/videos.service';
+import { SessionsService } from '../sessions/sessions.service';
 
 interface Message {
   role: 'system' | 'user' | 'assistant';
@@ -28,6 +30,8 @@ export class AiCoachService {
   constructor(
     private prisma: PrismaService,
     private config: ConfigService,
+    private videosService: VideosService,
+    private sessionsService: SessionsService,
   ) {
     this.openaiApiKey = this.config.get('OPENAI_API_KEY');
     this.tools = new CoachTools(prisma);
@@ -35,7 +39,7 @@ export class AiCoachService {
 
   async chat(userId: string, message: string, context?: CoachContext) {
     const systemContext = await this.buildSystemContext(userId, context);
-    
+
     const messages: Message[] = [
       {
         role: 'system',
@@ -57,14 +61,62 @@ export class AiCoachService {
 
     // Call OpenAI with tools enabled
     const { response, toolCalls } = await this.callOpenAI(messages, userId);
-    
+
     await this.saveConversation(userId, message, response, context);
+    await this.trackUsage(userId);
 
     return {
       message: response,
       context: systemContext,
       toolsUsed: toolCalls?.length || 0,
     };
+  }
+
+  /**
+   * Buscador ("lupa") del AI Coach: filtra videos/informes y sesiones por
+   * viento, fecha, área/maniobra (tagKey), sitio o texto libre.
+   */
+  async search(
+    userId: string,
+    query: {
+      q?: string;
+      windMin?: number;
+      windMax?: number;
+      dateFrom?: string;
+      dateTo?: string;
+      location?: string;
+      tagKey?: string;
+    },
+  ) {
+    const filters = { ...query, mine: true, userId };
+    const [videos, sessions] = await Promise.all([
+      this.videosService.findAll(filters),
+      this.sessionsService.search(filters),
+    ]);
+
+    return { videos, sessions };
+  }
+
+  /**
+   * Agrupa los turnos de chat en "sesiones de uso" (para Estadísticas: horas
+   * dedicadas al AI Coach). Una nueva sesión arranca si pasaron > 30 min.
+   */
+  private async trackUsage(userId: string) {
+    const INACTIVITY_CUTOFF_MS = 30 * 60 * 1000;
+    const recent = await this.prisma.aiCoachSession.findFirst({
+      where: { userId },
+      orderBy: { lastActivityAt: 'desc' },
+    });
+
+    const now = new Date();
+    if (recent && now.getTime() - recent.lastActivityAt.getTime() < INACTIVITY_CUTOFF_MS) {
+      await this.prisma.aiCoachSession.update({
+        where: { id: recent.id },
+        data: { lastActivityAt: now, messageCount: { increment: 1 } },
+      });
+    } else {
+      await this.prisma.aiCoachSession.create({ data: { userId, messageCount: 1 } });
+    }
   }
 
   async analyzeVideo(userId: string, videoId: string, specificQuestion?: string) {

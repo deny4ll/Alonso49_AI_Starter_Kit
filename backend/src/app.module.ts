@@ -9,6 +9,9 @@ import { TeamsModule } from './modules/teams/teams.module';
 import { CoursesModule } from './modules/courses/courses.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
 import { AiCoachModule } from './modules/ai-coach/ai-coach.module';
+import { TagsModule } from './modules/tags/tags.module';
+import { ProgressModule } from './modules/progress/progress.module';
+import { TrackersModule } from './modules/trackers/trackers.module';
 
 @Module({
   imports: [
@@ -24,6 +27,9 @@ import { AiCoachModule } from './modules/ai-coach/ai-coach.module';
     CoursesModule,
     AnalyticsModule,
     AiCoachModule,
+    TagsModule,
+    ProgressModule,
+    TrackersModule,
   ],
 })
 export class AppModule {}

@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Get, Param } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Get, Param, Query } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { AiCoachService } from './ai-coach.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -39,6 +39,21 @@ export class AiCoachController {
   @ApiOperation({ summary: 'Generar plan de entrenamiento personalizado' })
   async getTrainingPlan(@GetUser('id') userId: string, @Body() dto: TrainingPlanDto) {
     return this.aiCoachService.getTrainingPlan(userId, dto.goals);
+  }
+
+  @Get('search')
+  @ApiOperation({ summary: 'Buscador con filtros: viento, fecha, área/maniobra (tagKey), sitio, texto' })
+  async search(@GetUser('id') userId: string, @Query() query: any) {
+    const { q, windMin, windMax, dateFrom, dateTo, location, tagKey } = query;
+    return this.aiCoachService.search(userId, {
+      q,
+      dateFrom,
+      dateTo,
+      location,
+      tagKey,
+      windMin: windMin !== undefined ? Number(windMin) : undefined,
+      windMax: windMax !== undefined ? Number(windMax) : undefined,
+    });
   }
 
   @Get('history')

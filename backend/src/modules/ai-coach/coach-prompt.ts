@@ -429,63 +429,77 @@ Every answer should create better sailors.
 export const ALONSO49_METHODOLOGY = `
 # ALONSO49 METHODOLOGY
 
-## Principios Fundamentales
+Sistema de preparación integral que transforma el entrenamiento intuitivo en un proceso
+científico, medible y repetible. Está organizado en 6 módulos.
 
-1. **Planificación Objetiva**
-   - Establecer objetivos SMART (Específicos, Medibles, Alcanzables, Relevantes, Temporales)
-   - Definir métricas claras de éxito
-   - Crear plan de entrenamiento basado en datos
+## Módulo 1: Filosofía y Metodología Alonso 49
 
-2. **Closed Loop Coaching**
-   - Planificar → Ejecutar → Analizar → Retroalimentar → Ajustar
-   - Feedback continuo entre atleta y coach
-   - Ciclos cortos de iteración y mejora
+Sistema de entrenamiento estructurado y basado en datos que elimina el estancamiento y
+acelera la curva de aprendizaje mediante metas claras y cuantificables (objetivos SMART).
 
-3. **Ejercicios Analíticos**
-   - Cada ejercicio tiene un objetivo específico
-   - Medición cuantitativa del progreso
-   - Análisis técnico detallado
+## Módulo 2: Periodización y Gestión de Cargas (Macrociclo)
 
-4. **Feedback Continuo**
-   - Retroalimentación inmediata cuando sea posible
-   - Uso de video para análisis post-sesión
-   - Comunicación constante atleta-coach
+Planificación por fases para garantizar el pico de rendimiento en los campeonatos objetivo:
+- **Pre-temporada**: construcción de base física y técnica
+- **Mitad de temporada**: consolidación y ajuste de rendimiento
+- **Eventos principales**: puesta a punto y pico de forma
+- Dosificación de cargas de trabajo entre Velocidad, Maniobra, Táctica, Preparación Física
+  y Preparación Mental
 
-5. **Medición del Rendimiento**
-   - GPS tracking de todas las sesiones
-   - Análisis de polar curves
-   - Comparación con benchmarks olímpicos
-   - Evolución temporal del rendimiento
+## Módulo 3: Protocolos Operativos ("Día Tipo" de Entreno y Regata)
 
-## Áreas de Enfoque
+Rutinas estandarizadas en tierra y agua, pre y post navegación, que maximizan el tiempo en
+el agua y aseguran el enfoque estratégico antes del pistoletazo de salida:
+- Briefing pre-salida y debriefing post-sesión estructurado
+- Preparación en tierra, nutrición e hidratación
+- Protocolos específicos según tipo de "día tipo": Brisa Marina (Sea Breeze) vs Viento de
+  Tierra (Offshore Breeze)
+- Automatización de la toma de decisiones en salidas, pasos de marca y gestión de la flota
 
-### Técnica de Navegación
-- Trimado óptimo en diferentes condiciones
-- Manejo de velas (mayor, foque, spinnaker)
-- Balance del barco
-- Timing en maniobras
+## Módulo 4: Las 5 Áreas Clave de Trabajo Deportivo
 
-### Velocidad del Barco
-- Optimización de ángulos
-- Boat speed en diferentes puntos de navegación
-- Aceleración post-maniobra
-- Mantenimiento de velocidad en olas
+Desarrollo integral de la pareja patrón/tripulante en cinco ejes:
+1. **Boat Speed** — velocidad del barco en todos los puntos de navegación
+2. **Boat Handling** — maniobra: viradas, trasluchadas, tomadas de boya, sincronización
+   milimétrica entre patrón y tripulante
+3. **Táctica/Estrategia** — lectura de viento y agua, decisiones según tipo de condiciones
+4. **Preparación Física** — fuerza específica para 49er, resistencia cardiovascular,
+   flexibilidad/movilidad y prevención de lesiones
+5. **Preparación Mental** — gestión de la presión, simulación de escenarios de alta
+   exigencia para rendir en los momentos decisivos
 
-### Táctica y Estrategia
-- Lectura de viento
-- Posicionamiento en regata
-- Decisiones en tiempo real
-- Gestión de riesgo
+## Módulo 5: Estándar Técnico de Puesta a Punto (SOP & Rigging)
 
-### Preparación Física
-- Fuerza específica para 49er
-- Resistencia cardiovascular
-- Flexibilidad y movilidad
-- Prevención de lesiones
+Guía sistematizada de reglaje del aparejo para optimizar los modos de navegación (VMG) en
+cualquier rango de viento (TWS):
+- Manejo de tensiómetros y tablas de reglaje según rango de viento
+- Mantenimiento preventivo de cabuyería y herrajes
+- Protocolos de comunicación rápida patrón-tripulante mediante palabras clave (Key Words)
+- Gestión técnica de la navegación en ceñida y empopada
 
-### Preparación Mental
-- Gestión de presión
-- Concentración en regata
-- Análisis post-competición
-- Visualización y objetivo
+**Nota de confidencialidad**: las cifras exactas de tensiones, fórmulas de reglaje y
+matrices numéricas son propiedad intelectual reservada de Alonso Performance Group y no
+se exponen aquí; refiere al atleta a su coach o a la documentación entregada bajo
+contrato para esos valores concretos.
+
+## Módulo 6: Monitorización e Inteligencia de Datos
+
+Sistema de registro de variables meteorológicas y rendimiento en regata para construir una
+base de conocimientos histórica y tomar decisiones predictivas:
+- GPS tracking y análisis de polares en todas las sesiones
+- Registro de condiciones meteorológicas, decisiones tácticas y evolución del equipo
+- Comparación con benchmarks olímpicos y evolución temporal del rendimiento
+
+## Closed Loop Coaching
+
+Todo el sistema opera bajo un ciclo cerrado: Planificar → Ejecutar → Analizar →
+Retroalimentar → Ajustar, con feedback continuo entre atleta y coach y ciclos cortos de
+iteración.
+
+## Programa Youth Pro (Transición de Cantera al 49er)
+
+Adaptación de la metodología Alonso 49 para regatistas jóvenes que dan el salto desde
+clases de cantera (29er, 420, ILCA) al 49er, cubriendo control del barco en trapecio,
+protocolos de seguridad y volcada, estandarización de maniobras (SOP), puesta a punto del
+aparejo, telemetría inicial (GPS/Vakaros) y hábitos profesionales de "Día Tipo".
 `;

@@ -4,16 +4,18 @@ import { ReactNode } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useAuthStore } from '@/stores/auth'
-import { 
-  Anchor, 
-  LayoutDashboard, 
-  Video, 
-  Calendar, 
-  Users, 
-  BookOpen, 
+import {
+  Anchor,
+  LayoutDashboard,
+  Video,
+  Calendar,
+  Users,
+  BookOpen,
   TrendingUp,
   LogOut,
-  Bot
+  Bot,
+  Target,
+  Map,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -24,8 +26,10 @@ interface DashboardLayoutProps {
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'AI Coach', href: '/ai-coach', icon: Bot },
+  { name: 'Progreso', href: '/progress', icon: Target },
   { name: 'Videos', href: '/videos', icon: Video },
   { name: 'Sesiones', href: '/sessions', icon: Calendar },
+  { name: 'Trackers', href: '/trackers', icon: Map },
   { name: 'Equipos', href: '/teams', icon: Users },
   { name: 'Cursos', href: '/courses', icon: BookOpen },
   { name: 'Estadísticas', href: '/analytics', icon: TrendingUp },
