@@ -326,7 +326,7 @@ export default function AnalyticsPage() {
       ) : (
         <Card>
           <p className="text-sm text-gray-500">
-            El benchmark de equipo y el resumen "Big Picture" están disponibles cuando el atleta pertenece a un
+            El benchmark de equipo y el resumen &quot;Big Picture&quot; están disponibles cuando el atleta pertenece a un
             equipo.
           </p>
         </Card>
