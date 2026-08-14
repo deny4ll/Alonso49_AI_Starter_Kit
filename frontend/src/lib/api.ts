@@ -67,6 +67,12 @@ export const tagsApi = {
   getAll: () => api.get('/tags'),
 }
 
+export const usersApi = {
+  updateProfile: (data: { firstName?: string; lastName?: string }) => api.patch('/users/me', data),
+  changePassword: (data: { currentPassword: string; newPassword: string }) =>
+    api.patch('/users/me/password', data),
+}
+
 export const progressApi = {
   getSummary: (teamId?: string) => api.get('/progress', { params: teamId ? { teamId } : undefined }),
 }

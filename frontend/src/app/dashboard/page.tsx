@@ -151,7 +151,7 @@ function StatCard({ icon, title, value, description }: {
   description: string
 }) {
   return (
-    <div className="bg-white rounded-lg shadow p-6">
+    <div className="bg-card text-card-foreground rounded-lg shadow p-6">
       <div className="flex items-center justify-between mb-4">
         <div>{icon}</div>
       </div>
