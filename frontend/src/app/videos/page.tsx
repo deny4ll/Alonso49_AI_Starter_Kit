@@ -198,7 +198,7 @@ export default function VideosPage() {
                 <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded">{video.status}</span>
                 <button
                   onClick={() => deleteMutation.mutate(video.id)}
-                  className="p-2 text-red-600 hover:bg-red-50 rounded"
+                  className="p-2 text-destructive hover:bg-destructive/10 rounded"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -221,7 +221,7 @@ export default function VideosPage() {
 
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto">
+          <div className="bg-card text-card-foreground rounded-lg p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto">
             <h2 className="text-2xl font-bold mb-4">Subir Video o Informe</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>

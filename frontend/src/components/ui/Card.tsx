@@ -10,7 +10,7 @@ interface CardProps {
 
 export function Card({ children, className, title, action }: CardProps) {
   return (
-    <div className={cn('bg-white rounded-lg shadow p-6', className)}>
+    <div className={cn('bg-card text-card-foreground rounded-lg shadow p-6', className)}>
       {(title || action) && (
         <div className="flex items-center justify-between mb-4">
           {title && <h2 className="text-xl font-semibold">{title}</h2>}

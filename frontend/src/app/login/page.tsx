@@ -42,13 +42,13 @@ export default function LoginPage() {
           <div className="flex justify-center mb-4">
             <Anchor className="h-12 w-12 text-red-600" />
           </div>
-          <h1 className="text-3xl font-bold">Alonso49</h1>
+          <h1 className="text-3xl font-bold text-gray-900">Alonso49</h1>
           <p className="text-gray-600 mt-2">Inicia sesión en tu cuenta</p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-lg p-8">
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm">
+            <div className="mb-4 p-3 bg-destructive/10 border border-destructive/30 text-destructive rounded-lg text-sm">
               {error}
             </div>
           )}

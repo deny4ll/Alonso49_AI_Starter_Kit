@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 import { PrismaService } from '../../prisma/prisma.service';
 
 @Injectable()
@@ -36,6 +37,25 @@ export class UsersService {
       where: { id },
       data,
     });
+  }
+
+  async updateProfile(id: string, data: { firstName?: string; lastName?: string }) {
+    return this.prisma.user.update({
+      where: { id },
+      data,
+      select: { id: true, email: true, firstName: true, lastName: true, role: true },
+    });
+  }
+
+  async changePassword(id: string, currentPassword: string, newPassword: string) {
+    const user = await this.prisma.user.findUniqueOrThrow({ where: { id } });
+    const isValid = await bcrypt.compare(currentPassword, user.passwordHash);
+    if (!isValid) {
+      throw new UnauthorizedException('Contraseña actual incorrecta');
+    }
+    const passwordHash = await bcrypt.hash(newPassword, 10);
+    await this.prisma.user.update({ where: { id }, data: { passwordHash } });
+    return { success: true };
   }
 
   async remove(id: string) {

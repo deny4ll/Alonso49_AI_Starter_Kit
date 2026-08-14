@@ -9,7 +9,7 @@ export default function HomePage() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Anchor className="h-8 w-8 text-red-600" />
-              <span className="text-2xl font-bold">Alonso49</span>
+              <span className="text-2xl font-bold text-gray-900">Alonso49</span>
             </div>
             <div className="flex gap-4">
               <Link href="/login" className="px-4 py-2 text-gray-600 hover:text-gray-900">
@@ -83,7 +83,7 @@ function FeatureCard({ icon, title, description }: { icon: React.ReactNode, titl
   return (
     <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
       <div className="mb-4">{icon}</div>
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
+      <h3 className="text-xl font-semibold mb-2 text-gray-900">{title}</h3>
       <p className="text-gray-600">{description}</p>
     </div>
   )

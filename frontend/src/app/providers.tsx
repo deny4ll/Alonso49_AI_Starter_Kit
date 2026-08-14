@@ -3,6 +3,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { useState, useEffect } from 'react'
 import { useAuthStore } from '@/stores/auth'
+import { useThemeStore } from '@/stores/theme'
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient({
@@ -15,12 +16,14 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
   const initAuth = useAuthStore((state) => state.initAuth)
   const isHydrated = useAuthStore((state) => state.isHydrated)
+  const initTheme = useThemeStore((state) => state.initTheme)
 
   useEffect(() => {
     if (!isHydrated) {
       initAuth()
     }
-  }, [initAuth, isHydrated])
+    initTheme()
+  }, [initAuth, isHydrated, initTheme])
 
   return (
     <QueryClientProvider client={queryClient}>
