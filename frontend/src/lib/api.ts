@@ -2,10 +2,18 @@ import axios from 'axios'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api'
 
+const GATE_USER = process.env.NEXT_PUBLIC_GATE_USER
+const GATE_PASSWORD = process.env.NEXT_PUBLIC_GATE_PASSWORD
+const gateAuth =
+  GATE_USER && GATE_PASSWORD
+    ? `Basic ${btoa(`${GATE_USER}:${GATE_PASSWORD}`)}`
+    : undefined
+
 export const api = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
+    ...(gateAuth ? { 'X-Gate-Auth': gateAuth } : {}),
   },
 })
 

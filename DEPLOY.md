@@ -46,7 +46,26 @@ No hace falta crear la extensión `vector` a mano: la migración de Prisma la cr
 4. Deploy. Vercel te da una URL tipo `https://alonso49.vercel.app`.
 5. Vuelve a Render y actualiza `FRONTEND_URL` con esa URL exacta de Vercel, luego redeploy del backend (para que el CORS la acepte).
 
-## 4. Datos de prueba (opcional)
+## 4. Gate de acceso (MVP, no público)
+
+Mientras esté en fase de demo, la plataforma queda cerrada detrás de un usuario/contraseña compartido: al abrir el sitio, el navegador pide login (HTTP Basic Auth) antes de mostrar nada, y la misma credencial protege la API del backend contra quien la encuentre directo.
+
+1. **Render** (`alonso49-backend`) → Environment, agregá:
+   - `GATE_USER` = el usuario que elijas
+   - `GATE_PASSWORD` = una contraseña random larga (generá una con `openssl rand -base64 18`, por ejemplo)
+2. **Vercel** → Settings > Environment Variables, agregá las **cuatro** con el mismo par de valores del paso anterior:
+   - `GATE_USER`
+   - `GATE_PASSWORD`
+   - `NEXT_PUBLIC_GATE_USER`
+   - `NEXT_PUBLIC_GATE_PASSWORD`
+
+   (Las dos primeras protegen la pantalla de login del navegador; las `NEXT_PUBLIC_` van embebidas en el JS para que el frontend pueda seguir llamando a la API una vez adentro. Usá el mismo valor en las cuatro.)
+3. Redeploy de ambos servicios.
+4. Compartile a tu cliente esa misma credencial para que pueda entrar.
+
+Si estas variables no están seteadas (por ejemplo en desarrollo local), el gate queda desactivado automáticamente — no hace falta nada especial para `docker-compose`.
+
+## 5. Datos de prueba (opcional)
 
 Si querés que el cliente vea contenido real y no una app vacía, corré los seeds contra la DB de Neon antes de la demo, apuntando `DATABASE_URL` local a Neon:
 
