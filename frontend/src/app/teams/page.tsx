@@ -63,8 +63,8 @@ export default function TeamsPage() {
           {teams.map((team: any) => (
             <Card key={team.id}>
               <div className="flex items-start justify-between mb-4">
-                <div className="p-3 bg-blue-100 rounded-lg">
-                  <UsersIcon className="h-6 w-6 text-blue-600" />
+                <div className="p-3 bg-red-100 rounded-lg">
+                  <UsersIcon className="h-6 w-6 text-red-600" />
                 </div>
                 {team.isActive && (
                   <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
@@ -108,7 +108,7 @@ export default function TeamsPage() {
                   type="text"
                   required
                   placeholder="Ej: Team Alpha"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
               </div>
               <div>
@@ -119,7 +119,7 @@ export default function TeamsPage() {
                   name="description"
                   rows={3}
                   placeholder="Describe el equipo..."
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
               </div>
               <div className="flex gap-3">

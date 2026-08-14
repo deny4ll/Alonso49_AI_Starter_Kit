@@ -117,7 +117,7 @@ export default function AnalyticsPage() {
   ]
 
   const colors: Record<string, string> = {
-    blue: 'bg-blue-100 text-blue-600',
+    blue: 'bg-red-100 text-red-600',
     green: 'bg-green-100 text-green-600',
     purple: 'bg-purple-100 text-purple-600',
     orange: 'bg-orange-100 text-orange-600',
@@ -150,7 +150,7 @@ export default function AnalyticsPage() {
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         <Card>
           <div className="flex items-center justify-between mb-4">
-            <div className="p-3 rounded-lg bg-blue-100 text-blue-600">
+            <div className="p-3 rounded-lg bg-red-100 text-red-600">
               <Activity className="h-6 w-6" />
             </div>
           </div>
@@ -300,7 +300,7 @@ export default function AnalyticsPage() {
                 value={bigPictureDraft}
                 onChange={(e) => setBigPictureDraft(e.target.value)}
                 rows={5}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 placeholder="Resumen cualitativo del progreso del equipo a la fecha..."
               />
               <div className="flex gap-2">

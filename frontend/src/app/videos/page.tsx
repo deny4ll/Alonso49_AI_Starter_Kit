@@ -116,7 +116,7 @@ export default function VideosPage() {
                 <div key={s.key} className="flex items-center gap-3">
                   <span className="text-sm text-gray-700 w-48 shrink-0">{s.label}</span>
                   <div className="h-2 flex-1 bg-gray-100 rounded-full overflow-hidden">
-                    <div className="h-full bg-blue-600 rounded-full" style={{ width: `${s.percentage}%` }} />
+                    <div className="h-full bg-red-600 rounded-full" style={{ width: `${s.percentage}%` }} />
                   </div>
                   <span className="text-xs text-gray-500 w-12 text-right">{s.percentage}%</span>
                 </div>
@@ -137,13 +137,13 @@ export default function VideosPage() {
               placeholder="Buscar por título, descripción o feedback..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
             />
           </div>
           <select
             value={areaFilter}
             onChange={(e) => setAreaFilter(e.target.value)}
-            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent sm:w-64"
+            className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent sm:w-64"
           >
             <option value="">Todas las áreas</option>
             {sections?.map((section) => (
@@ -183,12 +183,12 @@ export default function VideosPage() {
               <h3 className="font-semibold mb-2">{video.title}</h3>
               <p className="text-sm text-gray-600 mb-2">{video.description}</p>
               {video.feedback && (
-                <p className="text-sm text-blue-700 bg-blue-50 rounded p-2 mb-2">{video.feedback}</p>
+                <p className="text-sm text-red-700 bg-red-50 rounded p-2 mb-2">{video.feedback}</p>
               )}
               {video.tags?.length > 0 && (
                 <div className="flex flex-wrap gap-1 mb-3">
                   {video.tags.map((vt: any) => (
-                    <span key={vt.tagId} className="text-xs px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full">
+                    <span key={vt.tagId} className="text-xs px-2 py-0.5 bg-red-100 text-red-700 rounded-full">
                       {vt.tag.label}
                     </span>
                   ))}
@@ -230,14 +230,14 @@ export default function VideosPage() {
                   <button
                     type="button"
                     onClick={() => setContentType('VIDEO')}
-                    className={`flex-1 px-3 py-2 rounded-lg border ${contentType === 'VIDEO' ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-gray-300 text-gray-600'}`}
+                    className={`flex-1 px-3 py-2 rounded-lg border ${contentType === 'VIDEO' ? 'border-red-600 bg-red-50 text-red-700' : 'border-gray-300 text-gray-600'}`}
                   >
                     Video
                   </button>
                   <button
                     type="button"
                     onClick={() => setContentType('REPORT')}
-                    className={`flex-1 px-3 py-2 rounded-lg border ${contentType === 'REPORT' ? 'border-blue-600 bg-blue-50 text-blue-700' : 'border-gray-300 text-gray-600'}`}
+                    className={`flex-1 px-3 py-2 rounded-lg border ${contentType === 'REPORT' ? 'border-red-600 bg-red-50 text-red-700' : 'border-gray-300 text-gray-600'}`}
                   >
                     Informe (sin video)
                   </button>
@@ -250,7 +250,7 @@ export default function VideosPage() {
                   name="title"
                   type="text"
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
               </div>
               <div>
@@ -258,7 +258,7 @@ export default function VideosPage() {
                 <textarea
                   name="description"
                   rows={2}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
               </div>
               {contentType === 'VIDEO' && (
@@ -269,7 +269,7 @@ export default function VideosPage() {
                     type="url"
                     required={contentType === 'VIDEO'}
                     placeholder="https://..."
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   />
                 </div>
               )}
@@ -280,7 +280,7 @@ export default function VideosPage() {
                 <textarea
                   name="feedback"
                   rows={2}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
               </div>
 
@@ -300,7 +300,7 @@ export default function VideosPage() {
                             onClick={() => toggleTag(child.id)}
                             className={`text-xs px-2 py-1 rounded-full border ${
                               selectedTagIds.includes(child.id)
-                                ? 'bg-blue-600 text-white border-blue-600'
+                                ? 'bg-red-600 text-white border-red-600'
                                 : 'border-gray-300 text-gray-600'
                             }`}
                           >

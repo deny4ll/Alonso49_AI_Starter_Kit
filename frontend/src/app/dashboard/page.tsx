@@ -56,7 +56,7 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Cargando...</p>
         </div>
       </div>
@@ -80,7 +80,7 @@ export default function DashboardPage() {
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard
-          icon={<Video className="h-8 w-8 text-blue-600" />}
+          icon={<Video className="h-8 w-8 text-red-600" />}
           title="Videos"
           value={stats?.videos || 0}
           description="Videos subidos"

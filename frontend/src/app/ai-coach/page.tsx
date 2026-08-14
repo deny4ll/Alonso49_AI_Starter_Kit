@@ -105,8 +105,8 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
       <div className="max-w-4xl mx-auto">
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <div className="p-3 bg-blue-100 rounded-full">
-              <Bot className="h-8 w-8 text-blue-600" />
+            <div className="p-3 bg-red-100 rounded-full">
+              <Bot className="h-8 w-8 text-red-600" />
             </div>
             <div>
               <h1 className="text-3xl font-bold">AI High Performance Coach</h1>
@@ -114,7 +114,7 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
             </div>
             <button
               onClick={() => setShowSearch((prev) => !prev)}
-              className="ml-auto p-3 text-gray-500 hover:text-blue-600 hover:bg-blue-50 rounded-full"
+              className="ml-auto p-3 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full"
               title="Buscador"
             >
               <Search className="h-5 w-5" />
@@ -225,8 +225,8 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
                 >
                   {message.role === 'assistant' && (
                     <div className="flex-shrink-0">
-                      <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                        <Bot className="h-5 w-5 text-blue-600" />
+                      <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                        <Bot className="h-5 w-5 text-red-600" />
                       </div>
                     </div>
                   )}
@@ -234,7 +234,7 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
                   <div
                     className={`max-w-[80%] rounded-lg p-4 ${
                       message.role === 'user'
-                        ? 'bg-blue-600 text-white'
+                        ? 'bg-red-600 text-white'
                         : 'bg-gray-100 text-gray-900'
                     }`}
                   >
@@ -246,7 +246,7 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
 
                   {message.role === 'user' && (
                     <div className="flex-shrink-0">
-                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                      <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center">
                         <User className="h-5 w-5 text-white" />
                       </div>
                     </div>
@@ -257,8 +257,8 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
               {chatMutation.isPending && (
                 <div className="flex gap-3">
                   <div className="flex-shrink-0">
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                      <Bot className="h-5 w-5 text-blue-600" />
+                    <div className="w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                      <Bot className="h-5 w-5 text-red-600" />
                     </div>
                   </div>
                   <div className="bg-gray-100 rounded-lg p-4">
@@ -278,7 +278,7 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Pregunta al coach..."
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   disabled={chatMutation.isPending}
                 />
                 <Button
@@ -302,7 +302,7 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
               <button
                 key={index}
                 onClick={() => handleQuickQuestion(question)}
-                className="p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-blue-300 transition-colors"
+                className="p-3 text-left border border-gray-200 rounded-lg hover:bg-gray-50 hover:border-red-300 transition-colors"
               >
                 <p className="text-sm text-gray-700">{question}</p>
               </button>
@@ -310,9 +310,9 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
           </div>
         </Card>
 
-        <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-          <h3 className="font-semibold text-blue-900 mb-2">💡 Sobre el AI Coach</h3>
-          <p className="text-sm text-blue-800">
+        <div className="mt-6 p-4 bg-red-50 rounded-lg border border-red-200">
+          <h3 className="font-semibold text-red-900 mb-2">💡 Sobre el AI Coach</h3>
+          <p className="text-sm text-red-800">
             Este coach utiliza la metodología Alonso49 y análisis de datos para proporcionar
             feedback personalizado. Puede analizar videos, sesiones de entrenamiento, 
             condiciones meteorológicas y crear planes de entrenamiento específicos.

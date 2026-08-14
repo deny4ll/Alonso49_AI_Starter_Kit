@@ -3,19 +3,19 @@ import { Anchor, Video, Users, BookOpen } from 'lucide-react'
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-red-50 to-white">
       <nav className="border-b bg-white/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Anchor className="h-8 w-8 text-blue-600" />
+              <Anchor className="h-8 w-8 text-red-600" />
               <span className="text-2xl font-bold">Alonso49</span>
             </div>
             <div className="flex gap-4">
               <Link href="/login" className="px-4 py-2 text-gray-600 hover:text-gray-900">
                 Iniciar Sesión
               </Link>
-              <Link href="/register" className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+              <Link href="/register" className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
                 Registrarse
               </Link>
             </div>
@@ -36,35 +36,35 @@ export default function HomePage() {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
           <FeatureCard
-            icon={<Video className="h-12 w-12 text-blue-600" />}
+            icon={<Video className="h-12 w-12 text-red-600" />}
             title="Videos de Entrenamiento"
             description="Sube y analiza videos de tus sesiones en el agua"
           />
           <FeatureCard
-            icon={<Users className="h-12 w-12 text-blue-600" />}
+            icon={<Users className="h-12 w-12 text-red-600" />}
             title="Gestión de Equipos"
             description="Organiza tu equipo y recibe coaching personalizado"
           />
           <FeatureCard
-            icon={<BookOpen className="h-12 w-12 text-blue-600" />}
+            icon={<BookOpen className="h-12 w-12 text-red-600" />}
             title="Cursos Especializados"
             description="Accede a contenido educativo de alto nivel"
           />
           <FeatureCard
-            icon={<Anchor className="h-12 w-12 text-blue-600" />}
+            icon={<Anchor className="h-12 w-12 text-red-600" />}
             title="Análisis de Rendimiento"
             description="Métricas detalladas y feedback continuo"
           />
         </div>
 
-        <div className="bg-blue-600 text-white rounded-2xl p-12 text-center">
+        <div className="bg-red-600 text-white rounded-2xl p-12 text-center">
           <h2 className="text-3xl font-bold mb-4">
             ¿Listo para llevar tu entrenamiento al siguiente nivel?
           </h2>
           <p className="text-xl mb-8 opacity-90">
             Únete a la plataforma de entrenamiento más avanzada para vela olímpica
           </p>
-          <Link href="/register" className="inline-block px-8 py-3 bg-white text-blue-600 rounded-lg font-semibold hover:bg-blue-50">
+          <Link href="/register" className="inline-block px-8 py-3 bg-white text-red-600 rounded-lg font-semibold hover:bg-red-50">
             Comenzar Ahora
           </Link>
         </div>

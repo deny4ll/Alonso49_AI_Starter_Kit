@@ -56,7 +56,7 @@ export default function ProgressPage() {
 
       <Card className="mb-6">
         <div className="flex items-center gap-3">
-          <div className="p-3 rounded-lg bg-blue-100 text-blue-600">
+          <div className="p-3 rounded-lg bg-red-100 text-red-600">
             <Target className="h-6 w-6" />
           </div>
           <div>
@@ -90,7 +90,7 @@ export default function ProgressPage() {
               </button>
 
               <div className="mt-3 h-2 bg-gray-100 rounded-full overflow-hidden">
-                <div className="h-full bg-blue-600 rounded-full" style={{ width: `${pct}%` }} />
+                <div className="h-full bg-red-600 rounded-full" style={{ width: `${pct}%` }} />
               </div>
 
               {isOpen && (
@@ -102,7 +102,7 @@ export default function ProgressPage() {
                         <span className="text-sm text-gray-700">{sub.label}</span>
                         <div className="flex items-center gap-2 flex-1 max-w-[200px]">
                           <div className="h-1.5 flex-1 bg-gray-100 rounded-full overflow-hidden">
-                            <div className="h-full bg-blue-400 rounded-full" style={{ width: `${subPct}%` }} />
+                            <div className="h-full bg-red-400 rounded-full" style={{ width: `${subPct}%` }} />
                           </div>
                           <span className="text-xs text-gray-500 w-6 text-right">{sub.entries}</span>
                         </div>

@@ -31,7 +31,7 @@ export default function CoursesPage() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {courses.map((course: any) => (
             <Card key={course.id}>
-              <div className="aspect-video bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg mb-4 flex items-center justify-center">
+              <div className="aspect-video bg-gradient-to-br from-red-500 to-red-700 rounded-lg mb-4 flex items-center justify-center">
                 <BookOpen className="h-12 w-12 text-white" />
               </div>
               <h3 className="text-lg font-semibold mb-2">{course.title}</h3>
@@ -41,7 +41,7 @@ export default function CoursesPage() {
                   <Clock className="h-4 w-4" />
                   <span>{course.modules?.length || 0} módulos</span>
                 </div>
-                <div className="flex items-center gap-1 text-lg font-bold text-blue-600">
+                <div className="flex items-center gap-1 text-lg font-bold text-red-600">
                   <DollarSign className="h-5 w-5" />
                   {course.price === 0 ? 'Gratis' : course.price}
                 </div>

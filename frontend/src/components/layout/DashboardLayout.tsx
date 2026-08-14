@@ -45,7 +45,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link href="/dashboard" className="flex items-center gap-2">
-              <Anchor className="h-8 w-8 text-blue-600" />
+              <Anchor className="h-8 w-8 text-[#c31432]" />
               <span className="text-2xl font-bold">Alonso49</span>
             </Link>
             <div className="flex items-center gap-4">
@@ -53,7 +53,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 <p className="text-sm font-medium text-gray-900">
                   {user?.firstName} {user?.lastName}
                 </p>
-                <p className="text-xs text-gray-500">{user?.role}</p>
+                <p className="text-xs font-semibold text-[#c31432]">{user?.role}</p>
               </div>
               <button
                 onClick={logout}
@@ -68,7 +68,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       </nav>
 
       <div className="flex">
-        <aside className="w-64 bg-white border-r min-h-[calc(100vh-73px)] sticky top-[73px]">
+        <aside className="w-64 bg-[#131318] min-h-[calc(100vh-73px)] sticky top-[73px]">
           <nav className="p-4 space-y-1">
             {navigation.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
@@ -77,10 +77,10 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    'flex items-center gap-3 px-4 py-3 rounded-lg transition-colors',
+                    'flex items-center gap-3 px-4 py-3 rounded-lg transition-colors border-l-2',
                     isActive
-                      ? 'bg-blue-50 text-blue-600'
-                      : 'text-gray-700 hover:bg-gray-50'
+                      ? 'bg-[#c31432]/15 text-white border-[#c31432]'
+                      : 'text-gray-400 border-transparent hover:bg-white/5 hover:text-gray-200'
                   )}
                 >
                   <item.icon className="h-5 w-5" />

@@ -108,7 +108,7 @@ export default function TrackersPage() {
           {tracks?.map((track: any) => (
             <Card
               key={track.id}
-              className={`cursor-pointer transition-colors ${selectedId === track.id ? 'ring-2 ring-blue-500' : ''}`}
+              className={`cursor-pointer transition-colors ${selectedId === track.id ? 'ring-2 ring-red-500' : ''}`}
             >
               <div onClick={() => setSelectedId(track.id)}>
                 <p className="font-semibold mb-1">{track.originalFileName || track.source || 'Tracker'}</p>
@@ -117,15 +117,15 @@ export default function TrackersPage() {
                 </p>
                 <div className="grid grid-cols-3 gap-2 text-center">
                   <div>
-                    <Ruler className="h-4 w-4 text-blue-600 mx-auto mb-1" />
+                    <Ruler className="h-4 w-4 text-red-600 mx-auto mb-1" />
                     <p className="text-xs text-gray-500">{Math.round((track.distanceMeters || 0) / 100) / 10} km</p>
                   </div>
                   <div>
-                    <Clock className="h-4 w-4 text-blue-600 mx-auto mb-1" />
+                    <Clock className="h-4 w-4 text-red-600 mx-auto mb-1" />
                     <p className="text-xs text-gray-500">{formatDuration(track.durationSeconds)}</p>
                   </div>
                   <div>
-                    <Gauge className="h-4 w-4 text-blue-600 mx-auto mb-1" />
+                    <Gauge className="h-4 w-4 text-red-600 mx-auto mb-1" />
                     <p className="text-xs text-gray-500">{track.maxSpeed ?? '--'} kn max</p>
                   </div>
                 </div>
