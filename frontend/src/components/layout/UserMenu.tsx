@@ -58,7 +58,7 @@ export function UserMenu() {
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
               Tema
             </p>
-            <ThemeToggle className="w-full justify-between" />
+            <ThemeToggle className="w-full" />
           </div>
 
           <button

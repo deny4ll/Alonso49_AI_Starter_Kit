@@ -15,7 +15,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   const setMode = useThemeStore((state) => state.setMode)
 
   return (
-    <div className={cn('inline-flex rounded-lg bg-muted p-1 gap-1', className)}>
+    <div className={cn('flex rounded-lg bg-muted p-1 gap-1', className)}>
       {options.map((opt) => {
         const Icon = opt.icon
         const active = mode === opt.value
@@ -25,13 +25,13 @@ export function ThemeToggle({ className }: { className?: string }) {
             type="button"
             onClick={() => setMode(opt.value)}
             className={cn(
-              'flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-colors',
+              'flex-1 flex items-center justify-center gap-1.5 px-2 py-1.5 rounded-md text-sm font-medium transition-colors whitespace-nowrap',
               active
                 ? 'bg-primary text-primary-foreground'
                 : 'text-muted-foreground hover:bg-background/60'
             )}
           >
-            <Icon className="h-4 w-4" />
+            <Icon className="h-4 w-4 shrink-0" />
             {opt.label}
           </button>
         )
