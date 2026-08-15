@@ -17,6 +17,7 @@ import { ApiTags, ApiBearerAuth, ApiOperation, ApiConsumes } from '@nestjs/swagg
 import { VideosService } from './videos.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { GetUser } from '../auth/decorators/get-user.decorator';
+import { StorageService } from '../../storage/storage.service';
 
 const MAX_VIDEO_SIZE_BYTES = 200 * 1024 * 1024; // 200MB, límite razonable para un MVP
 
@@ -25,7 +26,16 @@ const MAX_VIDEO_SIZE_BYTES = 200 * 1024 * 1024; // 200MB, límite razonable para
 @UseGuards(JwtAuthGuard)
 @ApiBearerAuth()
 export class VideosController {
-  constructor(private videosService: VideosService) {}
+  constructor(
+    private videosService: VideosService,
+    private storageService: StorageService,
+  ) {}
+
+  @Get('storage-status')
+  @ApiOperation({ summary: '[Diagnóstico temporal] Estado de configuración del storage de videos' })
+  getStorageStatus() {
+    return this.storageService.getDiagnostics();
+  }
 
   @Post()
   @ApiOperation({ summary: 'Crear video o informe (video referenciado por URL, o informe sin archivo)' })

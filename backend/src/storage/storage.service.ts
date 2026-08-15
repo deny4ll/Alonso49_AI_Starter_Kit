@@ -14,13 +14,27 @@ export class StorageService {
   private readonly bucket: string;
 
   constructor(private config: ConfigService) {
-    this.url = this.config.get<string>('SUPABASE_URL');
-    this.key = this.config.get<string>('SUPABASE_SERVICE_ROLE_KEY');
-    this.bucket = this.config.get<string>('SUPABASE_STORAGE_BUCKET') || 'videos';
+    // Lee de ConfigService y, si no aparece ahí, cae a process.env directo
+    // (mismo patrón que ya usa el gate de Basic Auth en main.ts) por si hay
+    // alguna diferencia en cómo Render inyecta variables nuevas.
+    this.url = this.config.get<string>('SUPABASE_URL') || process.env.SUPABASE_URL;
+    this.key = this.config.get<string>('SUPABASE_SERVICE_ROLE_KEY') || process.env.SUPABASE_SERVICE_ROLE_KEY;
+    this.bucket =
+      this.config.get<string>('SUPABASE_STORAGE_BUCKET') || process.env.SUPABASE_STORAGE_BUCKET || 'videos';
   }
 
   get isConfigured() {
     return !!this.url && !!this.key;
+  }
+
+  getDiagnostics() {
+    return {
+      hasUrl: !!this.url,
+      hasKey: !!this.key,
+      urlPreview: this.url ? this.url.slice(0, 20) : null,
+      keyLength: this.key ? this.key.length : 0,
+      bucket: this.bucket,
+    };
   }
 
   async uploadFile(buffer: Buffer, originalName: string, mimetype: string): Promise<string> {
