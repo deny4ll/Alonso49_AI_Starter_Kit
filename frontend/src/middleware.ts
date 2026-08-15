@@ -22,7 +22,7 @@ export function middleware(request: NextRequest) {
 
   return new NextResponse('Acceso restringido', {
     status: 401,
-    headers: { 'WWW-Authenticate': 'Basic realm="Alonso49"' },
+    headers: { 'WWW-Authenticate': 'Basic realm="SAILVEX"' },
   })
 }
 

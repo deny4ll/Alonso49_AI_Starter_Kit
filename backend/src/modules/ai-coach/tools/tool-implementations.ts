@@ -29,7 +29,7 @@ export class CoachTools {
         id: course.id,
         title: course.title,
         description: course.description,
-        academy: course.academy?.name || 'Alonso49',
+        academy: course.academy?.name || 'SAILVEX',
         moduleCount: course.modules.length,
         price: course.price,
         modules: course.modules.map((m) => ({
@@ -45,7 +45,7 @@ export class CoachTools {
     const { query, focus, duration } = args;
 
     // En una implementación real, buscarías en una tabla de exercises
-    // Por ahora, retornamos ejercicios de la metodología Alonso49
+    // Por ahora, retornamos ejercicios de la metodología SAILVEX
     const exercises = [
       {
         name: 'Viradas en Escalera',
@@ -604,7 +604,7 @@ export class CoachTools {
       {
         title: 'Pre-Tack Communication Protocols',
         category: 'methodology',
-        content: 'Alonso49 methodology for crew communication...',
+        content: 'SAILVEX methodology for crew communication...',
         relevance: 0.87,
       },
     ];

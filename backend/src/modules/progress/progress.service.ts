@@ -7,7 +7,7 @@ export class ProgressService {
   constructor(private prisma: PrismaService) {}
 
   /**
-   * Progreso acumulado por sección/subsección de la Metodología Alonso49.
+   * Progreso acumulado por sección/subsección de la Metodología SAILVEX.
    * "Progreso" = cantidad de videos/informes etiquetados en cada área.
    * Si no se pasa teamId, se intenta resolver el equipo del atleta; si no
    * tiene equipo, se calcula a nivel individual (solo su propio contenido).

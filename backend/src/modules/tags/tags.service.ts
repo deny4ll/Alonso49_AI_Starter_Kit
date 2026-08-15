@@ -6,7 +6,7 @@ import { TagLevel } from '@prisma/client';
 export class TagsService {
   constructor(private prisma: PrismaService) {}
 
-  /** Taxonomía completa de la Metodología Alonso49: secciones con sus subsecciones. */
+  /** Taxonomía completa de la Metodología SAILVEX: secciones con sus subsecciones. */
   async findAll() {
     return this.prisma.tag.findMany({
       where: { level: TagLevel.SECTION },

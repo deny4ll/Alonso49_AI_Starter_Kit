@@ -38,21 +38,22 @@ const config: Config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
-        // Brand accent (Regatta orange) — remaps the literal `red-*`
-        // utility classes used across the app so existing pages pick up
-        // the new palette without a page-by-page rewrite.
+        // Brand accent (SAILVEX blue, from the sail mark in the logo) —
+        // remaps the literal `red-*` utility classes used across the app
+        // so existing pages pick up the new palette without a page-by-page
+        // rewrite.
         red: {
-          50: "#FEF3F0",
-          100: "#FEE3DD",
-          200: "#FCC6BA",
-          300: "#FC9D88",
-          400: "#FF7A5C",
-          500: "#FF5D38",
-          600: "#F93F15",
-          700: "#DA310B",
-          800: "#AC2D11",
-          900: "#852914",
-          950: "#571C0F",
+          50: "#EFF7FF",
+          100: "#DBEDFF",
+          200: "#B3DAFF",
+          300: "#7EC1FF",
+          400: "#3FA0F5",
+          500: "#1E88E5",
+          600: "#0D6FCB",
+          700: "#0A57A0",
+          800: "#0A4680",
+          900: "#0D3A66",
+          950: "#081F3D",
         },
       },
     },

@@ -30,7 +30,7 @@ export const COACH_TOOLS = [
     type: 'function',
     function: {
       name: 'searchExercises',
-      description: 'Search for training exercises and drills from the Alonso49 methodology library. Returns specific exercises with objectives and success criteria.',
+      description: 'Search for training exercises and drills from the SAILVEX methodology library. Returns specific exercises with objectives and success criteria.',
       parameters: {
         type: 'object',
         properties: {
@@ -277,7 +277,7 @@ export const COACH_TOOLS = [
     type: 'function',
     function: {
       name: 'searchKnowledgeBase',
-      description: 'Search the Alonso49 knowledge base for methodology articles, best practices, and technical guides using vector similarity search.',
+      description: 'Search the SAILVEX knowledge base for methodology articles, best practices, and technical guides using vector similarity search.',
       parameters: {
         type: 'object',
         properties: {

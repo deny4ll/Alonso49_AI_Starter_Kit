@@ -8,8 +8,8 @@ export default function HomePage() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <Anchor className="h-8 w-8 text-red-600" />
-              <span className="text-2xl font-bold text-gray-900">Alonso49</span>
+              <img src="/logo-mark-512.png" alt="SAILVEX" className="h-9 w-9 rounded" />
+              <span className="text-2xl font-bold text-gray-900">SAILVEX</span>
             </div>
             <div className="flex gap-4">
               <Link href="/login" className="px-4 py-2 text-gray-600 hover:text-gray-900">
@@ -72,7 +72,7 @@ export default function HomePage() {
 
       <footer className="border-t mt-16 py-8">
         <div className="container mx-auto px-4 text-center text-gray-600">
-          <p>&copy; 2024 Alonso49. Todos los derechos reservados.</p>
+          <p>&copy; 2024 SAILVEX. Todos los derechos reservados.</p>
         </div>
       </footer>
     </div>

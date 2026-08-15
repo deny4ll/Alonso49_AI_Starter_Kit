@@ -49,7 +49,7 @@ export default function ProgressPage() {
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Área de Progreso</h1>
         <p className="text-gray-600">
-          Progreso acumulado según la Metodología Alonso49
+          Progreso acumulado según la Metodología SAILVEX
           {data?.scope === 'team' ? ' — vista de equipo' : ' — vista individual'}
         </p>
       </div>

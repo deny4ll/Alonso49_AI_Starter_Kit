@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../../prisma/prisma.service';
-import { COACH_SYSTEM_PROMPT, ALONSO49_METHODOLOGY } from './coach-prompt';
+import { COACH_SYSTEM_PROMPT, SAILVEX_METHODOLOGY } from './coach-prompt';
 import { COACH_TOOLS } from './tools/tool-definitions';
 import { CoachTools } from './tools/tool-implementations';
 import { VideosService } from '../videos/videos.service';
@@ -51,7 +51,7 @@ export class AiCoachService {
       },
       {
         role: 'system',
-        content: ALONSO49_METHODOLOGY,
+        content: SAILVEX_METHODOLOGY,
       },
       {
         role: 'user',
@@ -136,7 +136,7 @@ export class AiCoachService {
     }
 
     const analysisPrompt = specificQuestion || 
-      'Analiza este video de entrenamiento y proporciona feedback técnico detallado según la metodología Alonso49.';
+      'Analiza este video de entrenamiento y proporciona feedback técnico detallado según la metodología SAILVEX.';
 
     const videoContext = `
 # VIDEO ANALYSIS REQUEST
@@ -286,7 +286,7 @@ ${recentPerformance.length > 0 ?
   'No recent sessions recorded'
 }
 
-Create a personalized 4-week training plan following the Alonso49 Methodology.
+Create a personalized 4-week training plan following the SAILVEX Methodology.
 Include specific exercises, drills, and measurable objectives.
 `;
 
@@ -578,7 +578,7 @@ Based on your query, I need more specific information to provide accurate coachi
 
 ## Why
 
-Every coaching recommendation should be based on concrete data and observations. The Alonso49 Methodology emphasizes data-driven decisions.
+Every coaching recommendation should be based on concrete data and observations. The SAILVEX Methodology emphasizes data-driven decisions.
 
 ## Recommendation
 

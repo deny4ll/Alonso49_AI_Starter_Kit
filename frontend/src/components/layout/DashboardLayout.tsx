@@ -4,7 +4,6 @@ import { ReactNode } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
-  Anchor,
   LayoutDashboard,
   Video,
   Calendar,
@@ -43,8 +42,8 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <Link href="/dashboard" className="flex items-center gap-2">
-              <Anchor className="h-8 w-8 text-primary" />
-              <span className="text-2xl font-bold text-foreground">Alonso49</span>
+              <img src="/logo-mark-512.png" alt="SAILVEX" className="h-9 w-9 rounded" />
+              <span className="text-2xl font-bold text-foreground">SAILVEX</span>
             </Link>
             <UserMenu />
           </div>

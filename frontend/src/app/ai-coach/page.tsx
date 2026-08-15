@@ -18,7 +18,7 @@ export default function AiCoachPage() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: `Bienvenido al AI High Performance Coach de Alonso49.
+      content: `Bienvenido al AI High Performance Coach de SAILVEX.
 
 Soy tu entrenador especializado en la clase olímpica 49er.
 
@@ -110,7 +110,7 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
             </div>
             <div>
               <h1 className="text-3xl font-bold">AI High Performance Coach</h1>
-              <p className="text-gray-600">Metodología Alonso49 · Clase Olímpica 49er</p>
+              <p className="text-gray-600">Metodología SAILVEX · Clase Olímpica 49er</p>
             </div>
             <button
               onClick={() => setShowSearch((prev) => !prev)}
@@ -313,7 +313,7 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
         <div className="mt-6 p-4 bg-red-50 rounded-lg border border-red-200">
           <h3 className="font-semibold text-red-900 mb-2">💡 Sobre el AI Coach</h3>
           <p className="text-sm text-red-800">
-            Este coach utiliza la metodología Alonso49 y análisis de datos para proporcionar
+            Este coach utiliza la metodología SAILVEX y análisis de datos para proporcionar
             feedback personalizado. Puede analizar videos, sesiones de entrenamiento, 
             condiciones meteorológicas y crear planes de entrenamiento específicos.
           </p>

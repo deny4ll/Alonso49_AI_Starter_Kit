@@ -134,7 +134,7 @@ export default function VideosPage() {
       <div className="mb-8 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold mb-2">Videos e Informes</h1>
-          <p className="text-gray-600">Organizados por área de trabajo (Metodología Alonso49)</p>
+          <p className="text-gray-600">Organizados por área de trabajo (Metodología SAILVEX)</p>
         </div>
         <Button onClick={() => setShowModal(true)}>
           <Plus className="h-4 w-4 mr-2" />
@@ -324,7 +324,7 @@ export default function VideosPage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Áreas / etiquetas (Metodología Alonso49)
+                  Áreas / etiquetas (Metodología SAILVEX)
                 </label>
                 <div className="max-h-56 overflow-y-auto border border-gray-200 rounded-lg p-3 space-y-3">
                   {sections?.map((section) => (

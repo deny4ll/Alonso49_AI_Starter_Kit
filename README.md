@@ -1,4 +1,4 @@
-# Alonso49 High Performance Platform
+# SAILVEX High Performance Platform
 
 Plataforma de entrenamiento de alto rendimiento para vela olímpica clase 49er.
 

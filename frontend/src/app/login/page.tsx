@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { Anchor } from 'lucide-react'
 import { authApi } from '@/lib/api'
 import { useAuthStore } from '@/stores/auth'
 
@@ -40,9 +39,9 @@ export default function LoginPage() {
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <Anchor className="h-12 w-12 text-red-600" />
+            <img src="/logo-mark-512.png" alt="SAILVEX" className="h-16 w-16 rounded-lg" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">Alonso49</h1>
+          <h1 className="text-3xl font-bold text-gray-900">SAILVEX</h1>
           <p className="text-gray-600 mt-2">Inicia sesión en tu cuenta</p>
         </div>
 

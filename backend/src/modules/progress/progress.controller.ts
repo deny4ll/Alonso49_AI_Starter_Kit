@@ -12,7 +12,7 @@ export class ProgressController {
   constructor(private progressService: ProgressService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Progreso acumulado por área (Metodología Alonso49), por equipo o individual' })
+  @ApiOperation({ summary: 'Progreso acumulado por área (Metodología SAILVEX), por equipo o individual' })
   getSummary(@GetUser('id') userId: string, @Query('teamId') teamId?: string) {
     return this.progressService.getSummary({ userId, teamId });
   }

@@ -35,7 +35,7 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('Alonso49 API')
+    .setTitle('SAILVEX API')
     .setDescription('API para plataforma de entrenamiento de alto rendimiento en vela olímpica')
     .setVersion('1.0')
     .addBearerAuth()
