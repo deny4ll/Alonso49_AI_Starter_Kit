@@ -167,7 +167,7 @@ export default function TeamDetailPage() {
             </Card>
             <Card>
               <div className="flex items-center justify-between mb-4">
-                <div className="p-3 rounded-lg bg-green-100 text-green-600">
+                <div className="p-3 rounded-lg bg-red-100 text-red-800">
                   <Calendar className="h-6 w-6" />
                 </div>
               </div>
@@ -176,7 +176,7 @@ export default function TeamDetailPage() {
             </Card>
             <Card>
               <div className="flex items-center justify-between mb-4">
-                <div className="p-3 rounded-lg bg-purple-100 text-purple-600">
+                <div className="p-3 rounded-lg bg-red-50 text-red-500">
                   <MapIcon className="h-6 w-6" />
                 </div>
               </div>
@@ -185,7 +185,7 @@ export default function TeamDetailPage() {
             </Card>
             <Card>
               <div className="flex items-center justify-between mb-4">
-                <div className="p-3 rounded-lg bg-orange-100 text-orange-600">
+                <div className="p-3 rounded-lg bg-red-200 text-red-700">
                   <Target className="h-6 w-6" />
                 </div>
               </div>

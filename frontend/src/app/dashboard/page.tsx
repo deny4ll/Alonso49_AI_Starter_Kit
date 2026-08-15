@@ -86,19 +86,19 @@ export default function DashboardPage() {
           description="Videos subidos"
         />
         <StatCard
-          icon={<Calendar className="h-8 w-8 text-green-600" />}
+          icon={<Calendar className="h-8 w-8 text-red-500" />}
           title="Sesiones"
           value={stats?.sessions || 0}
           description="Sesiones completadas"
         />
         <StatCard
-          icon={<BookOpen className="h-8 w-8 text-purple-600" />}
+          icon={<BookOpen className="h-8 w-8 text-red-800" />}
           title="Cursos"
           value="0"
           description="Cursos activos"
         />
         <StatCard
-          icon={<TrendingUp className="h-8 w-8 text-orange-600" />}
+          icon={<TrendingUp className="h-8 w-8 text-red-400" />}
           title="Rendimiento"
           value="--"
           description="Score promedio"
