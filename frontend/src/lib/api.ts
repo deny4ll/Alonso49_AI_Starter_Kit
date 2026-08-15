@@ -57,6 +57,17 @@ export const videosApi = {
   getAll: (filters?: Record<string, any>) => api.get('/videos', { params: filters }),
   getOne: (id: string) => api.get(`/videos/${id}`),
   create: (data: any) => api.post('/videos', data),
+  uploadFile: (file: File, fields: Record<string, any>) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    for (const [key, value] of Object.entries(fields)) {
+      if (value === undefined || value === null || value === '') continue
+      formData.append(key, typeof value === 'string' ? value : JSON.stringify(value))
+    }
+    return api.post('/videos/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+  },
   update: (id: string, data: any) => api.patch(`/videos/${id}`, data),
   delete: (id: string) => api.delete(`/videos/${id}`),
   getLoadDistribution: (teamId?: string) =>

@@ -1,8 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  BadRequestException,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiTags, ApiBearerAuth, ApiOperation, ApiConsumes } from '@nestjs/swagger';
 import { VideosService } from './videos.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { GetUser } from '../auth/decorators/get-user.decorator';
+
+const MAX_VIDEO_SIZE_BYTES = 200 * 1024 * 1024; // 200MB, límite razonable para un MVP
 
 @ApiTags('videos')
 @Controller('videos')
@@ -12,9 +28,24 @@ export class VideosController {
   constructor(private videosService: VideosService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Subir nuevo video o informe' })
+  @ApiOperation({ summary: 'Crear video o informe (video referenciado por URL, o informe sin archivo)' })
   create(@Body() createDto: any, @GetUser('id') userId: string) {
     return this.videosService.create(createDto, userId);
+  }
+
+  @Post('upload')
+  @ApiOperation({ summary: 'Subir un archivo de video real y crear el registro' })
+  @ApiConsumes('multipart/form-data')
+  @UseInterceptors(FileInterceptor('file', { limits: { fileSize: MAX_VIDEO_SIZE_BYTES } }))
+  async uploadFile(
+    @UploadedFile() file: Express.Multer.File,
+    @Body() body: Record<string, string>,
+    @GetUser('id') userId: string,
+  ) {
+    if (!file) {
+      throw new BadRequestException('Falta el archivo de video');
+    }
+    return this.videosService.createFromUpload(file, body, userId);
   }
 
   @Get()

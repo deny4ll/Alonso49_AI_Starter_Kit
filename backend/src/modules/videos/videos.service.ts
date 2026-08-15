@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
+import { StorageService } from '../../storage/storage.service';
 import { TagLevel } from '@prisma/client';
 
 export interface VideoQueryFilters {
@@ -19,7 +20,32 @@ export interface VideoQueryFilters {
 
 @Injectable()
 export class VideosService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private storage: StorageService,
+  ) {}
+
+  async createFromUpload(file: Express.Multer.File, body: Record<string, string>, userId: string) {
+    const url = await this.storage.uploadFile(file.buffer, file.originalname, file.mimetype);
+
+    const tagIds = body.tagIds ? JSON.parse(body.tagIds) : undefined;
+
+    return this.create(
+      {
+        type: 'VIDEO',
+        title: body.title,
+        description: body.description || undefined,
+        feedback: body.feedback || undefined,
+        sessionId: body.sessionId || undefined,
+        url,
+        format: file.mimetype,
+        size: file.size,
+        status: 'READY',
+        tagIds,
+      },
+      userId,
+    );
+  }
 
   async create(data: any, userId: string) {
     const { tagIds, ...videoData } = data;

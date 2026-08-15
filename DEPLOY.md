@@ -33,6 +33,9 @@ No hace falta crear la extensión `vector` a mano: la migración de Prisma la cr
    - `PORT` = `3001`
    - `FRONTEND_URL` = la URL de Vercel del paso 3 (para que el CORS deje pasar al frontend)
    - `OPENAI_API_KEY` = tu key (opcional; sin ella el AI Coach responde con un mensaje de demo en vez de fallar)
+   - `SUPABASE_URL` = la Project URL de tu proyecto de Supabase (para subir videos reales; sin esto, subir un video da error 500)
+   - `SUPABASE_SERVICE_ROLE_KEY` = la clave `secret` (no la `publishable`) de Settings → API en Supabase
+   - `SUPABASE_STORAGE_BUCKET` = `videos` (el bucket público creado en Supabase Storage)
 5. Deploy. Anota la URL que te da Render, ej. `https://alonso49-backend.onrender.com`.
 
 ⚠️ En el free tier, el servicio "duerme" tras ~15 min sin tráfico y la primera petición tras eso tarda 20-30s. Para la demo, entra tú primero unos minutos antes para "despertarlo".

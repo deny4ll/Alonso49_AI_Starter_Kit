@@ -21,6 +21,7 @@ export default function VideosPage() {
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
   const [search, setSearch] = useState('')
   const [areaFilter, setAreaFilter] = useState('')
+  const [uploadError, setUploadError] = useState('')
   const queryClient = useQueryClient()
 
   const { data: sections } = useQuery({
@@ -50,18 +51,32 @@ export default function VideosPage() {
     },
   })
 
+  const onUploadSuccess = () => {
+    queryClient.invalidateQueries({ queryKey: ['videos'] })
+    queryClient.invalidateQueries({ queryKey: ['videos-load-distribution'] })
+    queryClient.invalidateQueries({ queryKey: ['progress-summary'] })
+    setShowModal(false)
+    setSelectedTagIds([])
+    setContentType('VIDEO')
+    setUploadError('')
+  }
+
   const createMutation = useMutation({
     mutationFn: async (data: any) => {
       const res = await videosApi.create(data)
       return res.data
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['videos'] })
-      queryClient.invalidateQueries({ queryKey: ['videos-load-distribution'] })
-      queryClient.invalidateQueries({ queryKey: ['progress-summary'] })
-      setShowModal(false)
-      setSelectedTagIds([])
-      setContentType('VIDEO')
+    onSuccess: onUploadSuccess,
+  })
+
+  const uploadMutation = useMutation({
+    mutationFn: async ({ file, fields }: { file: File; fields: Record<string, any> }) => {
+      const res = await videosApi.uploadFile(file, fields)
+      return res.data
+    },
+    onSuccess: onUploadSuccess,
+    onError: (err: any) => {
+      setUploadError(err.response?.data?.message || 'No se pudo subir el video. Probá con un archivo más liviano.')
     },
   })
 
@@ -77,18 +92,38 @@ export default function VideosPage() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setUploadError('')
     const formData = new FormData(e.currentTarget)
-    const url = formData.get('url') as string
+
+    if (contentType === 'VIDEO') {
+      const file = formData.get('file') as File
+      if (!file || file.size === 0) {
+        setUploadError('Elegí un archivo de video')
+        return
+      }
+      uploadMutation.mutate({
+        file,
+        fields: {
+          title: formData.get('title'),
+          description: formData.get('description') || undefined,
+          feedback: formData.get('feedback') || undefined,
+          tagIds: selectedTagIds,
+        },
+      })
+      return
+    }
+
     createMutation.mutate({
       type: contentType,
       title: formData.get('title'),
       description: formData.get('description'),
       feedback: formData.get('feedback') || undefined,
-      url: contentType === 'VIDEO' ? url : undefined,
       status: 'READY',
       tagIds: selectedTagIds,
     })
   }
+
+  const isSubmitting = createMutation.isPending || uploadMutation.isPending
 
   const toggleTag = (id: string) => {
     setSelectedTagIds((prev) => (prev.includes(id) ? prev.filter((t) => t !== id) : [...prev, id]))
@@ -168,9 +203,11 @@ export default function VideosPage() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {videos.map((video: any) => (
             <Card key={video.id}>
-              <div className="aspect-video bg-gray-200 rounded-lg mb-4 flex items-center justify-center">
+              <div className="aspect-video bg-gray-200 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
                 {video.type === 'REPORT' ? (
                   <FileText className="h-12 w-12 text-gray-400" />
+                ) : video.url ? (
+                  <video src={video.url} controls className="w-full h-full object-cover bg-black" />
                 ) : (
                   <Play className="h-12 w-12 text-gray-400" />
                 )}
@@ -263,14 +300,15 @@ export default function VideosPage() {
               </div>
               {contentType === 'VIDEO' && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">URL del video</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Archivo de video</label>
                   <input
-                    name="url"
-                    type="url"
-                    required={contentType === 'VIDEO'}
-                    placeholder="https://..."
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                    name="file"
+                    type="file"
+                    accept="video/*"
+                    required
+                    className="w-full text-sm text-gray-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-red-600 file:text-white file:cursor-pointer"
                   />
+                  <p className="text-xs text-gray-500 mt-1">Máximo 200MB.</p>
                 </div>
               )}
               <div>
@@ -313,9 +351,11 @@ export default function VideosPage() {
                 </div>
               </div>
 
+              {uploadError && <p className="text-sm text-destructive">{uploadError}</p>}
+
               <div className="flex gap-3">
-                <Button type="submit" disabled={createMutation.isPending}>
-                  {createMutation.isPending ? 'Subiendo...' : 'Subir'}
+                <Button type="submit" disabled={isSubmitting}>
+                  {isSubmitting ? 'Subiendo...' : 'Subir'}
                 </Button>
                 <Button type="button" variant="outline" onClick={() => setShowModal(false)}>
                   Cancelar
