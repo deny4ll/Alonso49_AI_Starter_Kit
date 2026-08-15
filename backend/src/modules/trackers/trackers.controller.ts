@@ -18,9 +18,13 @@ export class TrackersController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Listar trackers GPS (propios o de una sesión)' })
-  findAll(@GetUser('id') userId: string, @Query('sessionId') sessionId?: string) {
-    return this.trackersService.findAll({ sessionId, userId });
+  @ApiOperation({ summary: 'Listar trackers GPS (propios, de una sesión o de un equipo)' })
+  findAll(
+    @GetUser('id') userId: string,
+    @Query('sessionId') sessionId?: string,
+    @Query('teamId') teamId?: string,
+  ) {
+    return this.trackersService.findAll({ sessionId, teamId, userId });
   }
 
   @Get(':id')

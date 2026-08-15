@@ -162,6 +162,7 @@ model Team {
   athletes          AthleteProfile[]
   sessions          Session[]
   videos            Video[]
+  gpsTracks         GpsTrack[]
   benchmarks        TeamBenchmark[]
   progressSummaries ProgressSummary[]
 
@@ -344,6 +345,10 @@ model GpsTrack {
   session          Session?  @relation(fields: [sessionId], references: [id])
   uploadedById     String
   uploadedBy       User      @relation(fields: [uploadedById], references: [id])
+  // Denormalizado desde Session o desde el equipo del uploader al crear el
+  // registro, igual que en Video, para poder listar/filtrar por tripulación.
+  teamId           String?
+  team             Team?     @relation(fields: [teamId], references: [id])
   source           String?
   originalFileName String?
   // Array de puntos: [{ lat, lng, timestamp, speed? }, ...]
@@ -357,6 +362,7 @@ model GpsTrack {
 
   @@index([sessionId])
   @@index([uploadedById])
+  @@index([teamId])
   @@map("gps_tracks")
 }
 

@@ -46,7 +46,7 @@ export const authApi = {
 }
 
 export const sessionsApi = {
-  getAll: () => api.get('/sessions'),
+  getAll: (teamId?: string) => api.get('/sessions', { params: teamId ? { teamId } : undefined }),
   getOne: (id: string) => api.get(`/sessions/${id}`),
   create: (data: any) => api.post('/sessions', data),
   update: (id: string, data: any) => api.patch(`/sessions/${id}`, data),
@@ -78,7 +78,7 @@ export const progressApi = {
 }
 
 export const trackersApi = {
-  getAll: (sessionId?: string) => api.get('/trackers', { params: sessionId ? { sessionId } : undefined }),
+  getAll: (filters?: { sessionId?: string; teamId?: string }) => api.get('/trackers', { params: filters }),
   getOne: (id: string) => api.get(`/trackers/${id}`),
   create: (data: any) => api.post('/trackers', data),
 }

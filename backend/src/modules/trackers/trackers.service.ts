@@ -20,10 +20,21 @@ export class TrackersService {
 
     const summary = this.computeSummary(points as TrackPoint[]);
 
+    let teamId: string | undefined;
+    if (sessionId) {
+      const session = await this.prisma.session.findUnique({ where: { id: sessionId } });
+      teamId = session?.teamId ?? undefined;
+    }
+    if (!teamId) {
+      const athleteProfile = await this.prisma.athleteProfile.findUnique({ where: { userId } });
+      teamId = athleteProfile?.teamId ?? undefined;
+    }
+
     return this.prisma.gpsTrack.create({
       data: {
         sessionId,
         uploadedById: userId,
+        teamId,
         source,
         originalFileName,
         points,
@@ -32,11 +43,15 @@ export class TrackersService {
     });
   }
 
-  async findAll(filters: { sessionId?: string; userId?: string }) {
+  async findAll(filters: { sessionId?: string; teamId?: string; userId?: string }) {
     return this.prisma.gpsTrack.findMany({
       where: {
         ...(filters.sessionId && { sessionId: filters.sessionId }),
-        ...(!filters.sessionId && filters.userId && { uploadedById: filters.userId }),
+        ...(filters.teamId && { teamId: filters.teamId }),
+        ...(!filters.sessionId && !filters.teamId && filters.userId && { uploadedById: filters.userId }),
+      },
+      include: {
+        uploadedBy: { select: { id: true, firstName: true, lastName: true } },
       },
       orderBy: { createdAt: 'desc' },
     });

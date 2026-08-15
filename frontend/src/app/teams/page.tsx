@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { Card } from '@/components/ui/Card'
@@ -61,24 +62,26 @@ export default function TeamsPage() {
       ) : teams && teams.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {teams.map((team: any) => (
-            <Card key={team.id}>
-              <div className="flex items-start justify-between mb-4">
-                <div className="p-3 bg-red-100 rounded-lg">
-                  <UsersIcon className="h-6 w-6 text-red-600" />
+            <Link key={team.id} href={`/teams/${team.id}`}>
+              <Card className="h-full hover:shadow-md transition-shadow cursor-pointer">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="p-3 bg-red-100 rounded-lg">
+                    <UsersIcon className="h-6 w-6 text-red-600" />
+                  </div>
+                  {team.isActive && (
+                    <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
+                      Activo
+                    </span>
+                  )}
                 </div>
-                {team.isActive && (
-                  <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
-                    Activo
-                  </span>
-                )}
-              </div>
-              <h3 className="text-lg font-semibold mb-2">{team.name}</h3>
-              <p className="text-sm text-gray-600 mb-4">{team.description}</p>
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                <User className="h-4 w-4" />
-                <span>{team.members?.length || 0} miembros</span>
-              </div>
-            </Card>
+                <h3 className="text-lg font-semibold mb-2">{team.name}</h3>
+                <p className="text-sm text-gray-600 mb-4">{team.description}</p>
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <User className="h-4 w-4" />
+                  <span>{team.members?.length || 0} miembros</span>
+                </div>
+              </Card>
+            </Link>
           ))}
         </div>
       ) : (

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { SessionsService } from './sessions.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -18,9 +18,9 @@ export class SessionsController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Obtener todas las sesiones' })
-  findAll() {
-    return this.sessionsService.findAll();
+  @ApiOperation({ summary: 'Obtener sesiones (opcionalmente filtradas por equipo)' })
+  findAll(@Query('teamId') teamId?: string) {
+    return this.sessionsService.findAll(teamId ? { teamId } : undefined);
   }
 
   @Get(':id')
