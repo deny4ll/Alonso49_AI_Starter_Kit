@@ -60,13 +60,18 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    'flex items-center gap-3 px-4 py-3 rounded-lg transition-colors border-l-2',
-                    isActive
-                      ? 'bg-primary/15 text-white border-primary'
-                      : 'text-gray-400 border-transparent hover:bg-white/5 hover:text-gray-200'
+                    'flex items-center gap-3 pl-2 pr-4 py-2 rounded-lg transition-colors',
+                    isActive ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
                   )}
                 >
-                  <item.icon className="h-5 w-5" />
+                  <span
+                    className={cn(
+                      'flex items-center justify-center w-8 h-8 rounded-lg shrink-0 transition-colors',
+                      isActive ? 'bg-primary text-white' : 'bg-white/5 text-gray-400'
+                    )}
+                  >
+                    <item.icon className="h-4 w-4" />
+                  </span>
                   <span className="font-medium">{item.name}</span>
                 </Link>
               )
