@@ -82,6 +82,22 @@ export const usersApi = {
   updateProfile: (data: { firstName?: string; lastName?: string }) => api.patch('/users/me', data),
   changePassword: (data: { currentPassword: string; newPassword: string }) =>
     api.patch('/users/me/password', data),
+  getAthleteProfile: () => api.get('/users/me/athlete-profile'),
+  updateAthleteProfile: (data: Record<string, any>) => api.patch('/users/me/athlete-profile', data),
+}
+
+export const knowledgeBaseApi = {
+  getDocuments: () => api.get('/knowledge-base/documents'),
+  uploadDocument: (file: File, fields: { title: string; category: string }) => {
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('title', fields.title)
+    formData.append('category', fields.category)
+    return api.post('/knowledge-base/documents', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+  },
+  deleteDocument: (id: string) => api.delete(`/knowledge-base/documents/${id}`),
 }
 
 export const progressApi = {

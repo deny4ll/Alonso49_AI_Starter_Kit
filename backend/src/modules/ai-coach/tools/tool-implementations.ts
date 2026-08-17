@@ -1,7 +1,19 @@
+import { Prisma } from '@prisma/client';
 import { PrismaService } from '../../../prisma/prisma.service';
+import { getEmbedding, toVectorLiteral } from '../../knowledge-base/embeddings.util';
+
+interface KnowledgeSearchRow {
+  title: string;
+  category: string;
+  content: string;
+  similarity: number;
+}
 
 export class CoachTools {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private openaiApiKey?: string,
+  ) {}
 
   // ===== SEARCH TOOLS =====
 
@@ -593,25 +605,38 @@ export class CoachTools {
   async searchKnowledgeBase(args: any, userId: string) {
     const { query, category, limit = 3 } = args;
 
-    // En producción, usarías pgvector para búsqueda semántica
-    const articles = [
-      {
-        title: 'Optimizing Tacking Efficiency in 49er',
-        category: 'technique',
-        content: 'Key principles for reducing speed loss during tacks...',
-        relevance: 0.95,
-      },
-      {
-        title: 'Pre-Tack Communication Protocols',
-        category: 'methodology',
-        content: 'SAILVEX methodology for crew communication...',
-        relevance: 0.87,
-      },
-    ];
+    if (!this.openaiApiKey) {
+      return {
+        success: false,
+        data: [],
+        message: 'Knowledge base search is unavailable (OPENAI_API_KEY not configured)',
+      };
+    }
+
+    const embedding = await getEmbedding(this.openaiApiKey, query);
+    const vectorLiteral = toVectorLiteral(embedding);
+
+    const rows = await this.prisma.$queryRaw<KnowledgeSearchRow[]>`
+      SELECT kd.title, kd.category, kc.content,
+             1 - (kc.embedding <=> ${vectorLiteral}::vector) AS similarity
+      FROM knowledge_chunks kc
+      JOIN knowledge_documents kd ON kd.id = kc."documentId"
+      WHERE kd.status = 'READY'
+        ${category ? Prisma.sql`AND kd.category = ${category}::"KnowledgeCategory"` : Prisma.empty}
+      ORDER BY kc.embedding <=> ${vectorLiteral}::vector
+      LIMIT ${limit}
+    `;
+
+    const articles = rows.map((row) => ({
+      title: row.title,
+      category: row.category,
+      content: row.content,
+      relevance: Number(row.similarity.toFixed(4)),
+    }));
 
     return {
       success: true,
-      data: articles.slice(0, limit),
+      data: articles,
       message: `Found ${articles.length} knowledge base articles`,
     };
   }

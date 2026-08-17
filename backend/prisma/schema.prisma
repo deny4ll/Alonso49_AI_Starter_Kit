@@ -41,6 +41,21 @@ enum TagLevel {
   SUBSECTION
 }
 
+enum KnowledgeCategory {
+  methodology
+  technique
+  tactics
+  boat_setup
+  physical_prep
+  mental_prep
+}
+
+enum KnowledgeDocumentStatus {
+  PROCESSING
+  READY
+  FAILED
+}
+
 model User {
   id           String    @id @default(uuid())
   email        String    @unique
@@ -67,6 +82,7 @@ model User {
   gpsTracks                 GpsTrack[]
   aiCoachSessions           AiCoachSession[]
   progressSummariesAuthored ProgressSummary[]
+  uploadedKnowledgeDocuments KnowledgeDocument[]
 
   @@index([email])
   @@index([role])
@@ -265,6 +281,43 @@ model Video {
   @@index([type])
   @@index([recordedAt])
   @@map("videos")
+}
+
+// Documento fuente (PDF/DOCX) subido por un admin/coach para alimentar la Knowledge
+// Base del AI Coach. El texto se trocea y embebe en KnowledgeChunk para búsqueda
+// semántica (ver searchKnowledgeBase en ai-coach/tools/tool-implementations.ts).
+model KnowledgeDocument {
+  id             String                  @id @default(uuid())
+  title          String
+  category       KnowledgeCategory
+  sourceFileName String
+  sourceUrl      String
+  status         KnowledgeDocumentStatus @default(PROCESSING)
+  errorMessage   String?
+  uploadedById   String
+  uploadedBy     User                    @relation(fields: [uploadedById], references: [id])
+  chunks         KnowledgeChunk[]
+  createdAt      DateTime                @default(now())
+  updatedAt      DateTime                @updatedAt
+
+  @@index([category])
+  @@index([uploadedById])
+  @@map("knowledge_documents")
+}
+
+// Fragmento de texto de un KnowledgeDocument con su embedding para búsqueda por
+// similitud coseno (pgvector). Mismo patrón que Video.embedding más arriba.
+model KnowledgeChunk {
+  id         String                       @id @default(uuid())
+  documentId String
+  document   KnowledgeDocument            @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  chunkIndex Int
+  content    String
+  embedding  Unsupported("vector(1536)")?
+  createdAt  DateTime                     @default(now())
+
+  @@index([documentId])
+  @@map("knowledge_chunks")
 }
 
 // Taxonomía Alonso49 de secciones/subsecciones (Team Set Up, Boat Handling, etc.).

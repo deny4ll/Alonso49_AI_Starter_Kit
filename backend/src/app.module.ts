@@ -13,6 +13,7 @@ import { AiCoachModule } from './modules/ai-coach/ai-coach.module';
 import { TagsModule } from './modules/tags/tags.module';
 import { ProgressModule } from './modules/progress/progress.module';
 import { TrackersModule } from './modules/trackers/trackers.module';
+import { KnowledgeBaseModule } from './modules/knowledge-base/knowledge-base.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { TrackersModule } from './modules/trackers/trackers.module';
     TagsModule,
     ProgressModule,
     TrackersModule,
+    KnowledgeBaseModule,
   ],
 })
 export class AppModule {}

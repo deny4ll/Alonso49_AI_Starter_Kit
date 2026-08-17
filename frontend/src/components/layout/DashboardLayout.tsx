@@ -13,9 +13,11 @@ import {
   Bot,
   Target,
   Map,
+  Library,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { UserMenu } from './UserMenu'
+import { useAuthStore } from '@/stores/auth'
 
 interface DashboardLayoutProps {
   children: ReactNode
@@ -33,8 +35,17 @@ const navigation = [
   { name: 'Estadísticas', href: '/analytics', icon: TrendingUp },
 ]
 
+const adminNavigation = [
+  { name: 'Knowledge Base', href: '/knowledge-base', icon: Library, roles: ['ADMIN', 'COACH'] },
+]
+
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const pathname = usePathname()
+  const { user } = useAuthStore()
+  const items = [
+    ...navigation,
+    ...adminNavigation.filter((item) => !item.roles || item.roles.includes(user?.role || '')),
+  ]
 
   return (
     <div className="min-h-screen bg-background">
@@ -53,7 +64,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             <span className="text-lg font-bold text-white tracking-wide">SAILVEX</span>
           </Link>
           <nav className="p-4 space-y-1">
-            {navigation.map((item) => {
+            {items.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
               return (
                 <Link

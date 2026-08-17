@@ -47,6 +47,21 @@ export class UsersService {
     });
   }
 
+  async getAthleteProfile(userId: string) {
+    return this.prisma.athleteProfile.findUnique({ where: { userId } });
+  }
+
+  async updateAthleteProfile(userId: string, data: any) {
+    const { birthDate, ...rest } = data as { birthDate?: string; [key: string]: unknown };
+    const payload = { ...rest, ...(birthDate ? { birthDate: new Date(birthDate) } : {}) };
+
+    return this.prisma.athleteProfile.upsert({
+      where: { userId },
+      create: { userId, ...payload },
+      update: payload,
+    });
+  }
+
   async changePassword(id: string, currentPassword: string, newPassword: string) {
     const user = await this.prisma.user.findUniqueOrThrow({ where: { id } });
     const isValid = await bcrypt.compare(currentPassword, user.passwordHash);

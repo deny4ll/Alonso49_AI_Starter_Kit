@@ -34,7 +34,7 @@ export class AiCoachService {
     private sessionsService: SessionsService,
   ) {
     this.openaiApiKey = this.config.get('OPENAI_API_KEY');
-    this.tools = new CoachTools(prisma);
+    this.tools = new CoachTools(prisma, this.openaiApiKey);
   }
 
   async chat(userId: string, message: string, context?: CoachContext) {
