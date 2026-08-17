@@ -40,11 +40,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
     <div className="min-h-screen bg-background">
       <nav className="bg-card border-b border-border sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/dashboard" className="flex items-center gap-2">
-              <img src="/logo-mark-512.png" alt="SAILVEX" className="h-9 w-9 rounded" />
-              <span className="text-2xl font-bold text-foreground">SAILVEX</span>
-            </Link>
+          <div className="flex items-center justify-end">
             <UserMenu />
           </div>
         </div>
@@ -52,6 +48,10 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
 
       <div className="flex">
         <aside className="w-64 bg-[#0B1F33] min-h-[calc(100vh-73px)] sticky top-[73px]">
+          <Link href="/dashboard" className="flex items-center gap-2 px-4 py-4 border-b border-white/10">
+            <img src="/logo-mark-512.png" alt="SAILVEX" className="h-8 w-8 rounded-lg" />
+            <span className="text-lg font-bold text-white tracking-wide">SAILVEX</span>
+          </Link>
           <nav className="p-4 space-y-1">
             {navigation.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
