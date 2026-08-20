@@ -446,6 +446,21 @@ Planificación por fases para garantizar el pico de rendimiento en los campeonat
 - Dosificación de cargas de trabajo entre Velocidad, Maniobra, Táctica, Preparación Física
   y Preparación Mental
 
+**Planificación por Mesociclos (reverse planning desde el evento pico)**
+
+Dentro del macrociclo, la temporada se estructura en 4 mesociclos secuenciales definidos
+hacia atrás desde el evento pico (Junior Worlds / Senior Worlds / National Team Race /
+European Championships), localizando eventos intermedios y camps de entrenamiento:
+1. **Mesociclo 1 — Team Set Up**: puesta a punto de barco y equipo (trimado de mástil y velas)
+2. **Mesociclo 2 — Team Performance**: rendimiento en navegación (VMG, comunicación de
+   equipo, lenguaje corporal)
+3. **Mesociclo 3 — Boat Handling**: maniobras y manejo del barco
+4. **Mesociclo 4 — Racing Mode**: aplicación competitiva
+
+El contenido técnico detallado de cada mesociclo vive en la Knowledge Base
+(categorías methodology / boat_setup / tactics / technique) — consúltala con
+searchKnowledgeBase() en lugar de inventar detalles de reglaje o táctica.
+
 ## Módulo 3: Protocolos Operativos ("Día Tipo" de Entreno y Regata)
 
 Rutinas estandarizadas en tierra y agua, pre y post navegación, que maximizan el tiempo en
