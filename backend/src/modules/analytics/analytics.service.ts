@@ -1,9 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
+import { VideosService } from '../videos/videos.service';
 
 @Injectable()
 export class AnalyticsService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    private videosService: VideosService,
+  ) {}
 
   async getSessionAnalytics(sessionId: string) {
     return this.prisma.sessionAnalytics.findUnique({
@@ -105,6 +109,69 @@ export class AnalyticsService {
         performanceScore: avg(analytics.map((a) => a.performanceScore)),
       },
     };
+  }
+
+  /**
+   * Estadísticas de un equipo para comparar contra otros equipos: sesiones subidas
+   * vs completadas, días entrenados/descanso, videos/informes subidos, horas de AI
+   * Coach (suma de todos los miembros) y distribución de carga por área de trabajo.
+   */
+  async getTeamStats(teamId: string) {
+    const [sessionsTotal, sessionsCompleted, videos, loadDistribution, members] = await Promise.all([
+      this.prisma.session.count({ where: { teamId, deletedAt: null } }),
+      this.prisma.session.count({ where: { teamId, deletedAt: null, status: 'COMPLETED' } }),
+      this.prisma.video.count({ where: { teamId, deletedAt: null } }),
+      this.videosService.getLoadDistribution({ teamId }),
+      this.prisma.teamMember.findMany({ where: { teamId }, select: { userId: true } }),
+    ]);
+
+    const completedSessions = await this.prisma.session.findMany({
+      where: { teamId, deletedAt: null, status: 'COMPLETED' },
+      select: { completedAt: true, scheduledAt: true },
+    });
+
+    const trainingDates = new Set(
+      completedSessions
+        .map((s) => s.completedAt ?? s.scheduledAt)
+        .filter((d): d is Date => !!d)
+        .map((d) => d.toISOString().slice(0, 10)),
+    );
+    const trainingDays = trainingDates.size;
+    const { restDays } = this.computeSpanAndRest(trainingDates);
+
+    const memberHours = await Promise.all(members.map((m) => this.getAiCoachHours(m.userId)));
+    const aiCoachHours = Math.round(memberHours.reduce((sum, h) => sum + h, 0) * 10) / 10;
+
+    return {
+      teamId,
+      sessionsTotal,
+      sessionsCompleted,
+      videos,
+      trainingDays,
+      restDays,
+      aiCoachHours,
+      memberCount: members.length,
+      workAreas: loadDistribution.sections.map((s) => ({
+        key: s.key,
+        label: s.label,
+        percentage: s.percentage,
+      })),
+    };
+  }
+
+  /** Compara las estadísticas de dos o más equipos, uno al lado del otro. */
+  async compareTeams(teamIds: string[]) {
+    const teams = await this.prisma.team.findMany({
+      where: { id: { in: teamIds } },
+      select: { id: true, name: true },
+    });
+
+    const stats = await Promise.all(teamIds.map((teamId) => this.getTeamStats(teamId)));
+
+    return teamIds.map((teamId, i) => ({
+      team: teams.find((t) => t.id === teamId) ?? { id: teamId, name: 'Equipo' },
+      stats: stats[i],
+    }));
   }
 
   private computeSpanAndRest(waterDates: Set<string>) {

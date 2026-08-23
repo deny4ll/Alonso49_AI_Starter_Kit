@@ -210,9 +210,12 @@ model Session {
   completedAt       DateTime?
   location          String?
   weatherConditions Json?
-  windSpeed         Float?
+  windSpeedMin      Float?
+  windSpeedMax      Float?
   windDirection     String?
   waveHeight        Float?
+  durationHours     Float?
+  coachOnWater      Boolean?
   createdById       String
   createdBy         User          @relation(fields: [createdById], references: [id])
   teamId            String?
@@ -347,6 +350,10 @@ model VideoTag {
   video     Video    @relation(fields: [videoId], references: [id])
   tagId     String
   tag       Tag      @relation(fields: [tagId], references: [id])
+  // Nivel puesto por el AI Coach (1-10) para esta subárea, a partir del texto
+  // de la entrada (ver TagScoringService). null hasta que se puntúe.
+  score     Int?
+  note      String?
   createdAt DateTime @default(now())
 
   @@id([videoId, tagId])

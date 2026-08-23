@@ -6,6 +6,7 @@ import { COACH_TOOLS } from './tools/tool-definitions';
 import { CoachTools } from './tools/tool-implementations';
 import { VideosService } from '../videos/videos.service';
 import { SessionsService } from '../sessions/sessions.service';
+import { formatWindRange } from '../../common/format-wind-range';
 
 interface Message {
   role: 'system' | 'user' | 'assistant';
@@ -149,7 +150,7 @@ ${video.session ? `
 Session Details:
 - Title: ${video.session.title}
 - Location: ${video.session.location || 'Unknown'}
-- Wind Speed: ${video.session.windSpeed || 'Not recorded'} knots
+- Wind Speed: ${formatWindRange(video.session.windSpeedMin, video.session.windSpeedMax)} knots
 - Wind Direction: ${video.session.windDirection || 'Not recorded'}
 - Wave Height: ${video.session.waveHeight || 'Not recorded'} m
 - Status: ${video.session.status}
@@ -204,7 +205,7 @@ Location: ${session.location || 'Not specified'}
 Status: ${session.status}
 
 ## Weather Conditions
-- Wind Speed: ${session.windSpeed || 'Not recorded'} knots
+- Wind Speed: ${formatWindRange(session.windSpeedMin, session.windSpeedMax)} knots
 - Wind Direction: ${session.windDirection || 'Not recorded'}
 - Wave Height: ${session.waveHeight || 'Not recorded'} m
 
@@ -370,7 +371,7 @@ ${lastSession ? `
 - Session: ${lastSession.title}
 - Date: ${lastSession.scheduledAt ? new Date(lastSession.scheduledAt).toLocaleDateString() : new Date(lastSession.createdAt).toLocaleDateString()}
 - Location: ${lastSession.location || 'Not specified'}
-- Wind: ${lastSession.windSpeed || 'N/A'} knots ${lastSession.windDirection || ''}
+- Wind: ${formatWindRange(lastSession.windSpeedMin, lastSession.windSpeedMax)} knots ${lastSession.windDirection || ''}
 - Waves: ${lastSession.waveHeight || 'N/A'} m
 - Status: ${lastSession.status}
 ${lastSession.analytics ? `
@@ -448,7 +449,7 @@ ${profile?.todayObjective || 'Not defined'}
 
     try {
       const allToolCalls = [];
-      let currentMessages = [...messages];
+      const currentMessages = [...messages];
       let iterations = 0;
       const MAX_ITERATIONS = 5; // Prevent infinite loops
 
@@ -460,7 +461,7 @@ ${profile?.todayObjective || 'Not defined'}
             'Authorization': `Bearer ${this.openaiApiKey}`,
           },
           body: JSON.stringify({
-            model: 'gpt-4-turbo-preview',
+            model: 'gpt-4o-mini',
             messages: currentMessages,
             tools: COACH_TOOLS,
             tool_choice: 'auto',

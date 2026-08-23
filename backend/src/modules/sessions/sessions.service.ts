@@ -85,12 +85,9 @@ export class SessionsService {
         deletedAt: null,
         ...(mine && userId && { createdById: userId }),
         ...(location && { location: { contains: location, mode: 'insensitive' } }),
-        ...((windMin !== undefined || windMax !== undefined) && {
-          windSpeed: {
-            ...(windMin !== undefined && { gte: windMin }),
-            ...(windMax !== undefined && { lte: windMax }),
-          },
-        }),
+        // Rango de la sesión [windSpeedMin, windSpeedMax] se solapa con el rango buscado.
+        ...(windMin !== undefined && { windSpeedMax: { gte: windMin } }),
+        ...(windMax !== undefined && { windSpeedMin: { lte: windMax } }),
         ...((dateFrom || dateTo) && {
           scheduledAt: {
             ...(dateFrom && { gte: new Date(dateFrom) }),

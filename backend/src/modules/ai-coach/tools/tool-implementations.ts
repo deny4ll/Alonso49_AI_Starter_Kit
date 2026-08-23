@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client';
 import { PrismaService } from '../../../prisma/prisma.service';
 import { getEmbedding, toVectorLiteral } from '../../knowledge-base/embeddings.util';
+import { formatWindRange } from '../../../common/format-wind-range';
 
 interface KnowledgeSearchRow {
   title: string;
@@ -384,7 +385,7 @@ export class CoachTools {
         status: s.status,
         location: s.location,
         conditions: {
-          wind: `${s.windSpeed || 'N/A'} knots ${s.windDirection || ''}`,
+          wind: `${formatWindRange(s.windSpeedMin, s.windSpeedMax)} knots ${s.windDirection || ''}`,
           waves: `${s.waveHeight || 'N/A'} m`,
         },
         analytics: s.analytics ? {
@@ -424,7 +425,8 @@ export class CoachTools {
           select: {
             title: true,
             scheduledAt: true,
-            windSpeed: true,
+            windSpeedMin: true,
+            windSpeedMax: true,
           },
         },
       },

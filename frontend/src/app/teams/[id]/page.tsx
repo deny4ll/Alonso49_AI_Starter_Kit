@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { Card } from '@/components/ui/Card'
 import { teamsApi, progressApi, videosApi, sessionsApi, trackersApi } from '@/lib/api'
+import { nivelBandClasses, NivelReadout } from '@/components/progress/Nivel'
 import { formatDateTime } from '@/lib/utils'
 import {
   ArrowLeft,
@@ -60,7 +61,14 @@ export default function TeamDetailPage() {
       const res = await progressApi.getSummary(teamId)
       return res.data as {
         totalEntries: number
-        sections: { id: string; label: string; entries: number; subsections: { id: string; label: string; entries: number }[] }[]
+        sections: {
+          id: string
+          label: string
+          entries: number
+          nivel: number | null
+          nivelDelta: number | null
+          subsections: { id: string; label: string; entries: number; nivel: number | null; nivelDelta: number | null }[]
+        }[]
       }
     },
   })
@@ -309,7 +317,7 @@ export default function TeamDetailPage() {
                 return (
                   <Card key={section.id}>
                     <button
-                      className="w-full flex items-center justify-between text-left"
+                      className="w-full flex items-center justify-between text-left gap-4"
                       onClick={() => toggleSection(section.id)}
                     >
                       <div className="flex items-center gap-2">
@@ -320,10 +328,23 @@ export default function TeamDetailPage() {
                         )}
                         <span className="font-semibold">{section.label}</span>
                       </div>
-                      <span className="text-sm text-gray-600">{section.entries} entradas</span>
+                      <div className="flex items-center gap-5 shrink-0">
+                        <NivelReadout nivel={section.nivel} delta={section.nivelDelta} />
+                        <span className="text-sm text-gray-600">{section.entries} entradas</span>
+                      </div>
                     </button>
-                    <div className="mt-3 h-2 bg-gray-100 rounded-full overflow-hidden">
-                      <div className="h-full bg-red-600 rounded-full" style={{ width: `${pct}%` }} />
+                    <div className="mt-3 space-y-1.5">
+                      <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-red-600 rounded-full" style={{ width: `${pct}%` }} />
+                      </div>
+                      <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                        {section.nivel != null && (
+                          <div
+                            className={`h-full rounded-full ${nivelBandClasses(section.nivel).bar}`}
+                            style={{ width: `${section.nivel * 10}%` }}
+                          />
+                        )}
+                      </div>
                     </div>
                     {isOpen && (
                       <div className="mt-4 space-y-2 pl-6 border-l-2 border-gray-100">
@@ -332,11 +353,14 @@ export default function TeamDetailPage() {
                           return (
                             <div key={sub.id} className="flex items-center justify-between gap-4">
                               <span className="text-sm text-gray-700">{sub.label}</span>
-                              <div className="flex items-center gap-2 flex-1 max-w-[200px]">
-                                <div className="h-1.5 flex-1 bg-gray-100 rounded-full overflow-hidden">
-                                  <div className="h-full bg-red-400 rounded-full" style={{ width: `${subPct}%` }} />
+                              <div className="flex items-center gap-4 shrink-0">
+                                <NivelReadout nivel={sub.nivel} delta={sub.nivelDelta} />
+                                <div className="flex items-center gap-2 w-[140px]">
+                                  <div className="h-1.5 flex-1 bg-gray-100 rounded-full overflow-hidden">
+                                    <div className="h-full bg-red-400 rounded-full" style={{ width: `${subPct}%` }} />
+                                  </div>
+                                  <span className="text-xs text-gray-500 w-6 text-right">{sub.entries}</span>
                                 </div>
-                                <span className="text-xs text-gray-500 w-6 text-right">{sub.entries}</span>
                               </div>
                             </div>
                           )

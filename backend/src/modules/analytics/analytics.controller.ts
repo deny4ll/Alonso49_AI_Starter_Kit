@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, UseGuards, BadRequestException } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { AnalyticsService } from './analytics.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -48,6 +48,25 @@ export class AnalyticsController {
   @ApiOperation({ summary: 'Comparar rendimiento real del equipo contra el benchmark' })
   getTeamComparison(@Param('teamId') teamId: string) {
     return this.analyticsService.getTeamComparison(teamId);
+  }
+
+  @Get('teams/:teamId/stats')
+  @ApiOperation({
+    summary:
+      'Estadísticas del equipo: sesiones subidas/completadas, videos, días entrenados/descanso, horas de AI Coach, % por área',
+  })
+  getTeamStats(@Param('teamId') teamId: string) {
+    return this.analyticsService.getTeamStats(teamId);
+  }
+
+  @Get('teams/compare')
+  @ApiOperation({ summary: 'Comparar estadísticas de dos o más equipos entre sí (?teamIds=id1,id2,...)' })
+  compareTeams(@Query('teamIds') teamIds: string) {
+    const ids = (teamIds || '').split(',').map((id) => id.trim()).filter(Boolean);
+    if (ids.length < 2) {
+      throw new BadRequestException('Se necesitan al menos 2 teamIds para comparar');
+    }
+    return this.analyticsService.compareTeams(ids);
   }
 
   @Get('teams/:teamId/big-picture')

@@ -1,12 +1,13 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import { videosApi, tagsApi } from '@/lib/api'
-import { Plus, Play, Trash2, FileText, Search } from 'lucide-react'
+import { videosApi, tagsApi, sessionsApi } from '@/lib/api'
+import { Plus, Play, Trash2, FileText, Search, X } from 'lucide-react'
 
 interface Tag {
   id: string
@@ -16,6 +17,14 @@ interface Tag {
 }
 
 export default function VideosPage() {
+  return (
+    <Suspense fallback={null}>
+      <VideosPageContent />
+    </Suspense>
+  )
+}
+
+function VideosPageContent() {
   const [showModal, setShowModal] = useState(false)
   const [contentType, setContentType] = useState<'VIDEO' | 'REPORT'>('VIDEO')
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
@@ -23,6 +32,9 @@ export default function VideosPage() {
   const [areaFilter, setAreaFilter] = useState('')
   const [uploadError, setUploadError] = useState('')
   const queryClient = useQueryClient()
+  const router = useRouter()
+  const searchParams = useSearchParams()
+  const sessionIdFilter = searchParams.get('sessionId') || ''
 
   const { data: sections } = useQuery({
     queryKey: ['tags'],
@@ -33,14 +45,24 @@ export default function VideosPage() {
   })
 
   const { data: videos, isLoading } = useQuery({
-    queryKey: ['videos', search, areaFilter],
+    queryKey: ['videos', search, areaFilter, sessionIdFilter],
     queryFn: async () => {
       const res = await videosApi.getAll({
         q: search || undefined,
         tagKey: areaFilter || undefined,
+        sessionId: sessionIdFilter || undefined,
       })
       return res.data
     },
+  })
+
+  const { data: filteredSession } = useQuery({
+    queryKey: ['session', sessionIdFilter],
+    queryFn: async () => {
+      const res = await sessionsApi.getOne(sessionIdFilter)
+      return res.data
+    },
+    enabled: !!sessionIdFilter,
   })
 
   const { data: loadDistribution } = useQuery({
@@ -93,6 +115,12 @@ export default function VideosPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setUploadError('')
+
+    if (selectedTagIds.length === 0) {
+      setUploadError('Elegí al menos un área de trabajo que hayas entrenado en esta sesión.')
+      return
+    }
+
     const formData = new FormData(e.currentTarget)
 
     if (contentType === 'VIDEO') {
@@ -141,6 +169,21 @@ export default function VideosPage() {
           Subir Video / Informe
         </Button>
       </div>
+
+      {sessionIdFilter && (
+        <Card className="mb-6 flex items-center justify-between">
+          <p className="text-sm text-gray-700">
+            Mostrando videos/informes de la sesión{' '}
+            <span className="font-semibold">{filteredSession?.title || '...'}</span>
+          </p>
+          <button
+            onClick={() => router.push('/videos')}
+            className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700"
+          >
+            <X className="h-4 w-4" /> Quitar filtro
+          </button>
+        </Card>
+      )}
 
       {loadDistribution && loadDistribution.total > 0 && (
         <Card className="mb-6" title="Distribución de carga por área">
@@ -324,8 +367,12 @@ export default function VideosPage() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Áreas / etiquetas (Metodología SAILVEX)
+                  Áreas de trabajo (Metodología SAILVEX) <span className="text-red-600">*</span>
                 </label>
+                <p className="text-xs text-gray-500 mb-2">
+                  Elegí 1, 2 o todas las áreas que trabajaste en esta sesión — así se calcula tu distribución de
+                  carga de trabajo en el Dashboard.
+                </p>
                 <div className="max-h-56 overflow-y-auto border border-gray-200 rounded-lg p-3 space-y-3">
                   {sections?.map((section) => (
                     <div key={section.id}>

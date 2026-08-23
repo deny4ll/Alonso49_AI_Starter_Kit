@@ -145,4 +145,7 @@ export const analyticsApi = {
   getBigPicture: (teamId: string) => api.get(`/analytics/teams/${teamId}/big-picture`),
   upsertBigPicture: (teamId: string, content: string) =>
     api.post(`/analytics/teams/${teamId}/big-picture`, { content }),
+  getTeamStats: (teamId: string) => api.get(`/analytics/teams/${teamId}/stats`),
+  compareTeams: (teamIds: string[]) =>
+    api.get('/analytics/teams/compare', { params: { teamIds: teamIds.join(',') } }),
 }

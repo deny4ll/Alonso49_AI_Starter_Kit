@@ -113,9 +113,12 @@ async function main() {
         startedAt: new Date('2024-07-28T09:15:00Z'),
         completedAt: new Date('2024-07-28T12:30:00Z'),
         location: 'Puerto de Valencia - Zona de entrenamiento A',
-        windSpeed: 13.5,
+        windSpeedMin: 12,
+        windSpeedMax: 15,
         windDirection: 'NE',
         waveHeight: 0.8,
+        durationHours: 3.25,
+        coachOnWater: true,
         createdById: athlete.id,
         weatherConditions: {
           temperature: 24,

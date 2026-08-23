@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { StorageService } from '../../storage/storage.service';
 import { TagLevel } from '@prisma/client';
+import { TagScoringService } from './tag-scoring.service';
 
 export interface VideoQueryFilters {
   type?: string;
@@ -23,6 +24,7 @@ export class VideosService {
   constructor(
     private prisma: PrismaService,
     private storage: StorageService,
+    private tagScoring: TagScoringService,
   ) {}
 
   async createFromUpload(file: Express.Multer.File, body: Record<string, string>, userId: string) {
@@ -49,6 +51,11 @@ export class VideosService {
 
   async create(data: any, userId: string) {
     const { tagIds, ...videoData } = data;
+    if (!tagIds?.length) {
+      throw new BadRequestException(
+        'Elegí al menos un área de trabajo (Metodología SAILVEX) para este video/informe',
+      );
+    }
     if (videoData.recordedAt) {
       videoData.recordedAt = new Date(videoData.recordedAt);
     }
@@ -59,7 +66,7 @@ export class VideosService {
       if (session) {
         teamId = session.teamId ?? undefined;
         videoData.location = videoData.location ?? session.location ?? undefined;
-        videoData.windSpeed = videoData.windSpeed ?? session.windSpeed ?? undefined;
+        videoData.windSpeed = videoData.windSpeed ?? session.windSpeedMax ?? session.windSpeedMin ?? undefined;
         videoData.waveHeight = videoData.waveHeight ?? session.waveHeight ?? undefined;
       }
     }
@@ -68,7 +75,7 @@ export class VideosService {
       teamId = athleteProfile?.teamId ?? undefined;
     }
 
-    return this.prisma.video.create({
+    const video = await this.prisma.video.create({
       data: {
         ...videoData,
         uploadedById: userId,
@@ -83,6 +90,12 @@ export class VideosService {
         tags: { include: { tag: true } },
       },
     });
+
+    // Puntaje del AI Coach por subárea ("Nivel" en Progreso): best-effort,
+    // no bloquea la respuesta de la subida.
+    this.tagScoring.scoreEntryTags(video.id).catch(() => undefined);
+
+    return video;
   }
 
   async findAll(filters: VideoQueryFilters = {}) {
@@ -139,7 +152,7 @@ export class VideosService {
     if (videoData.recordedAt) {
       videoData.recordedAt = new Date(videoData.recordedAt);
     }
-    return this.prisma.video.update({
+    const video = await this.prisma.video.update({
       where: { id },
       data: {
         ...videoData,
@@ -152,6 +165,11 @@ export class VideosService {
       },
       include: { tags: { include: { tag: true } } },
     });
+
+    // Re-puntúa: el texto o las áreas pudieron haber cambiado.
+    this.tagScoring.scoreEntryTags(video.id).catch(() => undefined);
+
+    return video;
   }
 
   async remove(id: string) {
@@ -162,7 +180,7 @@ export class VideosService {
   }
 
   /** Distribución de videos/informes por sección (indicador de % de carga por área). */
-  async getLoadDistribution({ userId, teamId }: { userId: string; teamId?: string }) {
+  async getLoadDistribution({ userId, teamId }: { userId?: string; teamId?: string }) {
     const where = {
       deletedAt: null,
       ...(teamId ? { teamId } : { uploadedById: userId }),

@@ -7,7 +7,7 @@ import { useAuthStore } from '@/stores/auth'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { Card } from '@/components/ui/Card'
 import { Video, Calendar, BookOpen, TrendingUp } from 'lucide-react'
-import { api } from '@/lib/api'
+import { api, videosApi } from '@/lib/api'
 
 export default function DashboardPage() {
   const router = useRouter()
@@ -48,6 +48,15 @@ export default function DashboardPage() {
     queryFn: async () => {
       const res = await api.get('/videos')
       return res.data
+    },
+    enabled: !!token,
+  })
+
+  const { data: loadDistribution } = useQuery({
+    queryKey: ['videos-load-distribution'],
+    queryFn: async () => {
+      const res = await videosApi.getLoadDistribution()
+      return res.data as { total: number; sections: { key: string; label: string; percentage: number }[] }
     },
     enabled: !!token,
   })
@@ -104,6 +113,24 @@ export default function DashboardPage() {
           description="Score promedio"
         />
       </div>
+
+      {loadDistribution && loadDistribution.total > 0 && (
+        <Card className="mb-8" title="Carga de trabajo por área (Metodología SAILVEX)">
+          <div className="space-y-2">
+            {loadDistribution.sections
+              .filter((s) => s.percentage > 0)
+              .map((s) => (
+                <div key={s.key} className="flex items-center gap-3">
+                  <span className="text-sm text-gray-700 w-48 shrink-0">{s.label}</span>
+                  <div className="h-2 flex-1 bg-gray-100 rounded-full overflow-hidden">
+                    <div className="h-full bg-red-600 rounded-full" style={{ width: `${s.percentage}%` }} />
+                  </div>
+                  <span className="text-xs text-gray-500 w-12 text-right">{s.percentage}%</span>
+                </div>
+              ))}
+          </div>
+        </Card>
+      )}
 
       <div className="grid md:grid-cols-2 gap-6">
         <Card title="Sesiones Recientes">
