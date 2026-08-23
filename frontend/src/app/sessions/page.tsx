@@ -165,8 +165,11 @@ export default function SessionsPage() {
             return (
               <Card key={session.id}>
                 <div className="flex items-start justify-between gap-3">
-                  <div className="flex-1">
-                    <h3 className="text-lg font-semibold mb-2">{session.title}</h3>
+                  <div
+                    className="flex-1 cursor-pointer"
+                    onClick={() => setEditingSession(session)}
+                  >
+                    <h3 className="text-lg font-semibold mb-2 hover:text-red-600">{session.title}</h3>
                     <p className="text-gray-600 mb-4">{session.description}</p>
                     <div className="flex flex-wrap gap-4 text-sm text-gray-500">
                       {session.scheduledAt && (
@@ -207,6 +210,7 @@ export default function SessionsPage() {
                       )}
                       <Link
                         href={`/videos?sessionId=${session.id}`}
+                        onClick={(e) => e.stopPropagation()}
                         className={`flex items-center gap-2 ${mediaCount > 0 ? 'text-red-600 hover:underline' : 'text-gray-400'}`}
                       >
                         <VideoIcon className="h-4 w-4" />
