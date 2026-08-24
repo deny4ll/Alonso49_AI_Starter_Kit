@@ -6,7 +6,7 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { analyticsApi, progressApi } from '@/lib/api'
-import { TrendingUp, Activity, Target, Bot, Waves, Moon } from 'lucide-react'
+import { TrendingUp, Activity, Target, Bot, Waves, Moon, Gauge } from 'lucide-react'
 
 interface BenchmarkDraft {
   averageSpeed: string
@@ -200,6 +200,39 @@ export default function AnalyticsPage() {
           )
         })}
       </div>
+
+      <Card className="mb-6" title="Tus mejores marcas de velocidad (GPS)">
+        {stats?.gpsTracksCount ? (
+          <div className="grid sm:grid-cols-2 gap-4">
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-lg bg-red-100 text-red-600">
+                <Gauge className="h-6 w-6" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold">{stats.bestMaxSpeed ?? '--'} kn</div>
+                <div className="text-sm text-gray-600">Velocidad máxima registrada</div>
+              </div>
+            </div>
+            <div className="flex items-center gap-4">
+              <div className="p-3 rounded-lg bg-red-50 text-red-500">
+                <Gauge className="h-6 w-6" />
+              </div>
+              <div>
+                <div className="text-2xl font-bold">{stats.bestAverageSpeed ?? '--'} kn</div>
+                <div className="text-sm text-gray-600">Mejor velocidad media de una salida</div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <p className="text-sm text-gray-500">
+            Todavía no hay velocidades calculadas. Subí un tracker GPS en{' '}
+            <a href="/trackers" className="text-red-600 hover:underline">
+              Trackers
+            </a>{' '}
+            (idealmente vinculado a una sesión) para ver tus marcas reales acá.
+          </p>
+        )}
+      </Card>
 
       {teamId ? (
         <Card className="mb-6" title="Progreso del equipo vs. Equipo Target AI">

@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { api, aiCoachApi, tagsApi } from '@/lib/api'
 import { Send, Loader2, Bot, User, Search, Video as VideoIcon, Calendar } from 'lucide-react'
+import { MarkdownLite } from '@/components/ui/MarkdownLite'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -238,7 +239,11 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
                         : 'bg-gray-100 text-gray-900'
                     }`}
                   >
-                    <div className="whitespace-pre-wrap">{message.content}</div>
+                    {message.role === 'assistant' ? (
+                      <MarkdownLite content={message.content} />
+                    ) : (
+                      <div className="whitespace-pre-wrap">{message.content}</div>
+                    )}
                     <div className="text-xs mt-2 opacity-70">
                       {message.timestamp.toLocaleTimeString()}
                     </div>

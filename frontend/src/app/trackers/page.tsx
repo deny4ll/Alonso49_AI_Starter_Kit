@@ -6,7 +6,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
-import { trackersApi } from '@/lib/api'
+import { trackersApi, sessionsApi } from '@/lib/api'
 import { parseTrackFile } from '@/lib/gpsParser'
 import { Upload, Gauge, Clock, Ruler, Map as MapIcon } from 'lucide-react'
 
@@ -22,6 +22,7 @@ function formatDuration(seconds?: number) {
 export default function TrackersPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [linkedSessionId, setLinkedSessionId] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
   const queryClient = useQueryClient()
 
@@ -29,6 +30,14 @@ export default function TrackersPage() {
     queryKey: ['trackers'],
     queryFn: async () => {
       const res = await trackersApi.getAll()
+      return res.data
+    },
+  })
+
+  const { data: sessions } = useQuery({
+    queryKey: ['sessions'],
+    queryFn: async () => {
+      const res = await sessionsApi.getAll()
       return res.data
     },
   })
@@ -72,18 +81,34 @@ export default function TrackersPage() {
       source: file.name.toLowerCase().endsWith('.gpx') ? 'GPX' : 'CSV',
       originalFileName: file.name,
       points,
+      sessionId: linkedSessionId || undefined,
     })
     e.target.value = ''
   }
 
   return (
     <DashboardLayout>
-      <div className="mb-8 flex items-center justify-between">
+      <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold mb-2">Trackers GPS</h1>
           <p className="text-gray-600">Sube el recorrido de tus sesiones (GPX/CSV) y visualízalo en el mapa</p>
         </div>
-        <div>
+        <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-end">
+          <div>
+            <label className="block text-xs text-gray-500 mb-1">Vincular a sesión (opcional)</label>
+            <select
+              value={linkedSessionId}
+              onChange={(e) => setLinkedSessionId(e.target.value)}
+              className="w-full sm:w-56 px-3 py-2 border border-gray-300 rounded-lg text-sm"
+            >
+              <option value="">Sin vincular</option>
+              {sessions?.map((s: any) => (
+                <option key={s.id} value={s.id}>
+                  {s.title}
+                </option>
+              ))}
+            </select>
+          </div>
           <Button onClick={() => fileInputRef.current?.click()} disabled={uploadMutation.isPending}>
             <Upload className="h-4 w-4 mr-2" />
             {uploadMutation.isPending ? 'Subiendo...' : 'Subir tracker'}
@@ -91,6 +116,11 @@ export default function TrackersPage() {
           <input ref={fileInputRef} type="file" accept=".gpx,.csv" className="hidden" onChange={handleFile} />
         </div>
       </div>
+
+      <p className="text-xs text-gray-500 mb-4">
+        Si vinculás el tracker a una sesión, la velocidad media y máxima medidas por GPS se usan
+        automáticamente en Estadísticas para comparar contra el objetivo del equipo.
+      </p>
 
       {error && <div className="mb-4 p-3 bg-destructive/10 text-destructive rounded-lg text-sm">{error}</div>}
 

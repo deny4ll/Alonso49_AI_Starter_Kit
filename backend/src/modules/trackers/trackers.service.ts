@@ -8,6 +8,11 @@ interface TrackPoint {
   speed?: number;
 }
 
+// GPX <speed> (y el fallback distancia/tiempo) vienen en m/s; toda la plataforma
+// muestra velocidades en nudos ("nudos" en sesiones, benchmarks, etc.), así que
+// se convierte una sola vez acá al ingestar el tracker.
+const MS_TO_KNOTS = 1.9438445;
+
 @Injectable()
 export class TrackersService {
   constructor(private prisma: PrismaService) {}
@@ -30,7 +35,7 @@ export class TrackersService {
       teamId = athleteProfile?.teamId ?? undefined;
     }
 
-    return this.prisma.gpsTrack.create({
+    const track = await this.prisma.gpsTrack.create({
       data: {
         sessionId,
         uploadedById: userId,
@@ -41,6 +46,30 @@ export class TrackersService {
         ...summary,
       },
     });
+
+    // Si el tracker quedó vinculado a una sesión, el rendimiento real medido por
+    // GPS (velocidad media/máxima, distancia) pasa a alimentar SessionAnalytics
+    // automáticamente, que es de donde salen las comparaciones de Estadísticas.
+    // Sin esto, subir un tracker no tenía ningún efecto visible en el resto de la
+    // plataforma.
+    if (sessionId && (summary.averageSpeed != null || summary.maxSpeed != null)) {
+      await this.prisma.sessionAnalytics.upsert({
+        where: { sessionId },
+        create: {
+          sessionId,
+          totalDistance: summary.distanceMeters != null ? Math.round(summary.distanceMeters / 10) / 100 : undefined,
+          averageSpeed: summary.averageSpeed ?? undefined,
+          maxSpeed: summary.maxSpeed ?? undefined,
+        },
+        update: {
+          totalDistance: summary.distanceMeters != null ? Math.round(summary.distanceMeters / 10) / 100 : undefined,
+          averageSpeed: summary.averageSpeed ?? undefined,
+          maxSpeed: summary.maxSpeed ?? undefined,
+        },
+      });
+    }
+
+    return track;
   }
 
   async findAll(filters: { sessionId?: string; teamId?: string; userId?: string }) {
@@ -63,14 +92,14 @@ export class TrackersService {
 
   private computeSummary(points: TrackPoint[]) {
     let distanceMeters = 0;
-    let maxSpeed = 0;
-    const speeds: number[] = [];
+    let maxSpeedMs = 0;
+    const speedsMs: number[] = [];
 
     for (let i = 1; i < points.length; i++) {
       distanceMeters += this.haversine(points[i - 1], points[i]);
       if (points[i].speed != null) {
-        speeds.push(points[i].speed as number);
-        maxSpeed = Math.max(maxSpeed, points[i].speed as number);
+        speedsMs.push(points[i].speed as number);
+        maxSpeedMs = Math.max(maxSpeedMs, points[i].speed as number);
       }
     }
 
@@ -81,17 +110,20 @@ export class TrackersService {
       Math.round((new Date(last.timestamp).getTime() - new Date(first.timestamp).getTime()) / 1000),
     );
 
-    const averageSpeed = speeds.length
-      ? speeds.reduce((a, b) => a + b, 0) / speeds.length
+    // m/s: de los puntos GPS si traen <speed>, si no, distancia/tiempo del recorrido.
+    const averageSpeedMs = speedsMs.length
+      ? speedsMs.reduce((a, b) => a + b, 0) / speedsMs.length
       : durationSeconds > 0
         ? distanceMeters / durationSeconds
         : null;
 
+    const toKnots = (ms: number) => Math.round(ms * MS_TO_KNOTS * 100) / 100;
+
     return {
       distanceMeters: Math.round(distanceMeters),
       durationSeconds,
-      averageSpeed: averageSpeed != null ? Math.round(averageSpeed * 100) / 100 : null,
-      maxSpeed: maxSpeed || null,
+      averageSpeed: averageSpeedMs != null ? toKnots(averageSpeedMs) : null,
+      maxSpeed: maxSpeedMs ? toKnots(maxSpeedMs) : null,
       startedAt: first.timestamp ? new Date(first.timestamp) : null,
     };
   }

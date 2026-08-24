@@ -48,6 +48,7 @@ export class AnalyticsService {
     const monthlyAvgDaysOnWater = monthsSpan > 0 ? Math.round((daysOnWater / monthsSpan) * 10) / 10 : 0;
 
     const aiCoachHours = await this.getAiCoachHours(userId);
+    const gpsSpeed = await this.getPersonalGpsSpeed(userId);
 
     return {
       sessions,
@@ -56,6 +57,28 @@ export class AnalyticsService {
       monthlyAvgDaysOnWater,
       restDays,
       aiCoachHours,
+      ...gpsSpeed,
+    };
+  }
+
+  /**
+   * Mejores marcas de velocidad medidas por GPS, propias del atleta. Se muestran
+   * en Estadísticas aunque el atleta todavía no pertenezca a un equipo (el
+   * benchmark de equipo requiere teamId, esto no).
+   */
+  private async getPersonalGpsSpeed(userId: string) {
+    const tracks = await this.prisma.gpsTrack.findMany({
+      where: { uploadedById: userId },
+      select: { averageSpeed: true, maxSpeed: true },
+    });
+
+    const averages = tracks.map((t) => t.averageSpeed).filter((v): v is number => v != null);
+    const maxes = tracks.map((t) => t.maxSpeed).filter((v): v is number => v != null);
+
+    return {
+      bestAverageSpeed: averages.length ? Math.round(Math.max(...averages) * 100) / 100 : null,
+      bestMaxSpeed: maxes.length ? Math.round(Math.max(...maxes) * 100) / 100 : null,
+      gpsTracksCount: tracks.length,
     };
   }
 
