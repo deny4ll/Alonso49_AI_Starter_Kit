@@ -18,8 +18,8 @@ export class CoachTools {
 
   // ===== SEARCH TOOLS =====
 
-  async searchLessons(args: any, userId: string) {
-    const { query, skillLevel, limit = 5 } = args;
+  async searchLessons(args: any, _userId: string) {
+    const { query, limit = 5 } = args;
 
     const courses = await this.prisma.course.findMany({
       where: {
@@ -54,8 +54,8 @@ export class CoachTools {
     };
   }
 
-  async searchExercises(args: any, userId: string) {
-    const { query, focus, duration } = args;
+  async searchExercises(args: any, _userId: string) {
+    const { query, focus } = args;
 
     // En una implementación real, buscarías en una tabla de exercises
     // Por ahora, retornamos ejercicios de la metodología SAILVEX
@@ -239,8 +239,8 @@ export class CoachTools {
     };
   }
 
-  async searchBoatSetup(args: any, userId: string) {
-    const { windSpeed, windCondition, waveHeight } = args;
+  async searchBoatSetup(args: any, _userId: string) {
+    const { windSpeed, windCondition } = args;
 
     // En producción, esto vendría de una base de datos de configuraciones
     const setups = [
@@ -310,7 +310,7 @@ export class CoachTools {
     };
   }
 
-  async searchWeather(args: any, userId: string) {
+  async searchWeather(args: any, _userId: string) {
     const { location, date } = args;
 
     // En producción, llamarías a una API de clima real (OpenWeather, etc.)
@@ -401,7 +401,7 @@ export class CoachTools {
   }
 
   async searchPerformanceReports(args: any, userId: string) {
-    const { metric, dateFrom, dateTo } = args;
+    const { dateFrom, dateTo } = args;
 
     const where: any = {
       session: {
@@ -481,7 +481,7 @@ export class CoachTools {
   }
 
   async searchGPS(args: any, userId: string) {
-    const { sessionId, maneuverType } = args;
+    const { sessionId } = args;
 
     if (!sessionId) {
       return {
@@ -578,9 +578,7 @@ export class CoachTools {
     };
   }
 
-  async searchCompetitionHistory(args: any, userId: string) {
-    const { eventName, year, dateFrom } = args;
-
+  async searchCompetitionHistory(_args: any, _userId: string) {
     // En producción, esto vendría de una tabla de competiciones
     return {
       success: true,
@@ -604,7 +602,7 @@ export class CoachTools {
     };
   }
 
-  async searchKnowledgeBase(args: any, userId: string) {
+  async searchKnowledgeBase(args: any, _userId: string) {
     const { query, category, limit = 3 } = args;
 
     if (!this.openaiApiKey) {
@@ -671,7 +669,7 @@ export class CoachTools {
     };
   }
 
-  async generateBriefing(args: any, userId: string) {
+  async generateBriefing(args: any, _userId: string) {
     const { sessionType, objectives, conditions } = args;
 
     return {
@@ -792,7 +790,7 @@ export class CoachTools {
   }
 
   async comparePerformance(args: any, userId: string) {
-    const { session1Id, session2Id, metrics } = args;
+    const { session1Id, session2Id } = args;
 
     const [session1, session2] = await Promise.all([
       this.prisma.sessionAnalytics.findFirst({
@@ -853,7 +851,7 @@ export class CoachTools {
   }
 
   async recommendExercises(args: any, userId: string) {
-    const { weakness, availableTime, conditions } = args;
+    const { weakness, availableTime } = args;
 
     const exercises = await this.searchExercises({ query: weakness }, userId);
 

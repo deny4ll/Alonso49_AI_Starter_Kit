@@ -175,7 +175,7 @@ IMPORTANT: Since you cannot actually watch the video, focus your analysis on:
 5. Questions to ask the athlete about what happened
 `;
 
-    return this.chat(userId, analysisPrompt, {
+    return this.chat(userId, `${videoContext}\n\n${analysisPrompt}`, {
       userId,
       videoId,
       sessionId: video.sessionId,
@@ -575,7 +575,7 @@ ${profile?.todayObjective || 'Not defined'}
 
     return `## Assessment
 
-Based on your query, I need more specific information to provide accurate coaching.
+Based on your query ("${userMessage}"), I need more specific information to provide accurate coaching.
 
 ## Why
 

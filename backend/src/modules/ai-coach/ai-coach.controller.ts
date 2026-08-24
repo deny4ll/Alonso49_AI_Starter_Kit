@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards, Get, Param, Query } from '@nestjs/common';
+import { Controller, Post, Body, UseGuards, Get, Query } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { AiCoachService } from './ai-coach.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
