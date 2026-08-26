@@ -277,7 +277,7 @@ export const COACH_TOOLS = [
     type: 'function',
     function: {
       name: 'searchKnowledgeBase',
-      description: 'Search the SAILVEX knowledge base for methodology articles, best practices, and technical guides using vector similarity search.',
+      description: 'Search the documents coaches/admins have uploaded to the SAILVEX knowledge base (methodology, technique, tactics, boat setup, physical/mental prep) using vector similarity search. This is the athlete\'s own team reference material and may contradict or refine your general sailing knowledge — call this BEFORE answering any question in those categories, even if you think you already know the answer, since new documents are added regularly and take priority over built-in knowledge.',
       parameters: {
         type: 'object',
         properties: {
