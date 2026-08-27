@@ -4,30 +4,34 @@ Mismo combo gratuito que la plataforma principal (ver [../DEPLOY.md](../DEPLOY.m
 
 Este documento asume que la plataforma principal ya está desplegada siguiendo `../DEPLOY.md` (backend en Render, frontend en Vercel, DB en Neon) y que vas a **reutilizar** su `OPENAI_API_KEY` y su proyecto de Supabase, según lo confirmado con el cliente.
 
-## 1. Base de datos propia (Neon)
+## Estado actual (ya hecho)
 
-El Training Studio necesita su **propia** base de datos — nunca la misma que usa la plataforma para sus tablas (`users`, `sessions`, etc.), aunque sea el mismo proveedor.
+- ✅ DB propia en Neon (proyecto `training-studio`, separado del proyecto de la plataforma), migrada.
+- ✅ Frontend en Vercel: [training-studio-amber.vercel.app](https://training-studio-amber.vercel.app), conectado a GitHub (auto-deploy en cada push a `main`, Root Directory `training-studio/frontend`).
+- ✅ Link "Training Studio" ya en el menú de la plataforma principal (`NEXT_PUBLIC_TRAINING_STUDIO_URL` seteada en Vercel).
+- ✅ `render.yaml` en la raíz del repo, listo para el paso 2.
+- ⬜ Backend en Render — único paso manual que falta, ver abajo.
+- ⬜ `FRONTEND_URL` del backend de Render → una vez creado, actualizarla con `https://training-studio-amber.vercel.app`.
 
-1. En el mismo (o en otro) proyecto de Neon, creá una base de datos nueva, ej. `training_studio`.
-2. Copiá su connection string. Se ve así:
-   `postgresql://user:pass@ep-xxxx.neon.tech/training_studio?sslmode=require`
-3. La extensión `vector` se crea sola con `prisma migrate deploy` (igual que en la plataforma principal).
+## 1. Base de datos propia (Neon) — ya hecha
+
+El connection string real de producción quedó guardado en `training-studio/backend/.env` (`DATABASE_URL`, gitignored) — no hace falta crear una nueva a mano.
 
 ## 2. Backend (Render)
 
-1. En Render: **New > Web Service**, conectá el mismo repo de GitHub.
-2. Configuración:
-   - **Root Directory:** `training-studio/backend`
-   - **Runtime:** Docker (usa `training-studio/backend/Dockerfile`)
-   - **Instance Type:** Free
-3. Variables de entorno:
-   - `DATABASE_URL` = el connection string de Neon del paso 1 (la base **propia** del Training Studio)
-   - `JWT_SECRET` = un valor random largo, **distinto** del que usa la plataforma principal (son sistemas de login separados)
-   - `JWT_EXPIRATION` = `7d`
-   - `PORT` = `3002`
-   - `NODE_ENV` = `production`
-   - `FRONTEND_URL` = la URL de Vercel del Training Studio (paso 3, la vas a tener después de ese paso — completá esta variable y redeployá al final)
-   - `OPENAI_API_KEY` = **la misma key** que ya usa `alonso49-backend` en Render (Render > alonso49-backend > Environment > copiar el valor)
+Usá el Blueprint en vez de crearlo a mano — está pensado para no tocar el `alonso49-backend` existente (nombre de servicio distinto):
+
+1. Render dashboard → **New > Blueprint**.
+2. Conectá este repo de GitHub. Render detecta `render.yaml` automáticamente y muestra un solo servicio nuevo: `training-studio-backend`.
+3. Antes de aplicar, va a pedir los valores marcados `sync: false` en `render.yaml`:
+   - `DATABASE_URL` = el que está en `training-studio/backend/.env` de este repo (correlo local: `grep DATABASE_URL training-studio/backend/.env`)
+   - `FRONTEND_URL` = `https://training-studio-amber.vercel.app`
+   - `OPENAI_API_KEY` = la misma que ya usa `alonso49-backend` (Render → alonso49-backend → Environment → copiar)
+   - `SUPABASE_URL` = la misma que ya usa `alonso49-backend`
+   - `SUPABASE_SERVICE_ROLE_KEY` = la misma que ya usa `alonso49-backend`
+   - (`JWT_SECRET` se genera solo, no hace falta tocarlo)
+4. Apply. Anotá la URL final, ej. `https://training-studio-backend.onrender.com`.
+5. Si no coincide con `https://training-studio-backend.onrender.com` (Render agrega un sufijo si el nombre ya existe), actualizá `NEXT_PUBLIC_API_URL` en el proyecto Vercel `training-studio` con la URL real, y redeployá (`vercel deploy --prod` desde `training-studio/frontend`).
    - `SUPABASE_URL` = **la misma** que usa `alonso49-backend`
    - `SUPABASE_SERVICE_ROLE_KEY` = **la misma** que usa `alonso49-backend`
    - `SUPABASE_STORAGE_BUCKET` = `training-documents` (bucket **nuevo**, crealo en el mismo proyecto de Supabase, Storage > New bucket, público)
