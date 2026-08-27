@@ -81,3 +81,7 @@ DATABASE_URL="postgresql://...neon..." npm --prefix backend run seed:youth-pro
 - App (cliente entra acá): `https://alonso49.vercel.app`
 - API: `https://alonso49-backend.onrender.com/api`
 - Docs Swagger: `https://alonso49-backend.onrender.com/api/docs`
+
+## Training Studio (módulo de entrenamiento del AI Coach)
+
+App independiente (DB, backend, frontend y login propios) para que los entrenadores suban documentos, escriban conocimiento a mano o corrijan respuestas del AI Coach. No tiene conexión en tiempo de ejecución con lo de arriba — solo un enlace de acceso en el menú (rol ADMIN/COACH) y un script manual de sincronización. Ver [training-studio/DEPLOY.md](training-studio/DEPLOY.md) para desplegarla.

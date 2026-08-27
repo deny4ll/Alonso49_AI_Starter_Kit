@@ -16,6 +16,8 @@ import {
   Library,
   Menu,
   X,
+  GraduationCap,
+  ExternalLink,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { UserMenu } from './UserMenu'
@@ -25,7 +27,15 @@ interface DashboardLayoutProps {
   children: ReactNode
 }
 
-const navigation = [
+interface NavItem {
+  name: string
+  href: string
+  icon: typeof LayoutDashboard
+  roles?: string[]
+  external?: boolean
+}
+
+const navigation: NavItem[] = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'AI Coach', href: '/ai-coach', icon: Bot },
   { name: 'Progreso', href: '/progress', icon: Target },
@@ -37,25 +47,27 @@ const navigation = [
   { name: 'Estadísticas', href: '/analytics', icon: TrendingUp },
 ]
 
-const adminNavigation = [
+const adminNavigation: NavItem[] = [
   { name: 'Knowledge Base', href: '/knowledge-base', icon: Library, roles: ['ADMIN', 'COACH'] },
+  // App independiente (login y base de datos propios) donde los
+  // entrenadores curan el conocimiento del AI Coach. Es solo un enlace de
+  // salida — nunca hay una llamada API en runtime entre ambos frontends.
+  {
+    name: 'Training Studio',
+    href: process.env.NEXT_PUBLIC_TRAINING_STUDIO_URL || 'http://localhost:3003',
+    icon: GraduationCap,
+    roles: ['ADMIN', 'COACH'],
+    external: true,
+  },
 ]
 
-function SidebarNav({ items, pathname, onNavigate }: { items: typeof navigation; pathname: string; onNavigate?: () => void }) {
+function SidebarNav({ items, pathname, onNavigate }: { items: NavItem[]; pathname: string; onNavigate?: () => void }) {
   return (
     <nav className="p-4 space-y-1">
       {items.map((item) => {
         const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
-        return (
-          <Link
-            key={item.name}
-            href={item.href}
-            onClick={onNavigate}
-            className={cn(
-              'flex items-center gap-3 pl-2 pr-4 py-2 rounded-lg transition-colors',
-              isActive ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
-            )}
-          >
+        const content = (
+          <>
             <span
               className={cn(
                 'flex items-center justify-center w-8 h-8 rounded-lg shrink-0 transition-colors',
@@ -65,6 +77,26 @@ function SidebarNav({ items, pathname, onNavigate }: { items: typeof navigation;
               <item.icon className="h-4 w-4" />
             </span>
             <span className="font-medium">{item.name}</span>
+            {item.external && <ExternalLink className="h-3.5 w-3.5 ml-auto text-gray-500" />}
+          </>
+        )
+
+        const className = cn(
+          'flex items-center gap-3 pl-2 pr-4 py-2 rounded-lg transition-colors',
+          isActive ? 'bg-white/5 text-white' : 'text-gray-400 hover:bg-white/5 hover:text-gray-200'
+        )
+
+        if (item.external) {
+          return (
+            <a key={item.name} href={item.href} target="_blank" rel="noopener noreferrer" className={className}>
+              {content}
+            </a>
+          )
+        }
+
+        return (
+          <Link key={item.name} href={item.href} onClick={onNavigate} className={className}>
+            {content}
           </Link>
         )
       })}
