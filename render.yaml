@@ -1,0 +1,38 @@
+# Blueprint de Render — SOLO define el servicio nuevo del Training Studio.
+# A propósito no incluye `alonso49-backend` (ya existe, creado a mano en
+# Render) para no arriesgar tocar el servicio de producción actual: los
+# nombres de servicio en este archivo son distintos, así que "New >
+# Blueprint" en Render solo va a crear lo que está acá.
+#
+# Uso: Render dashboard > New > Blueprint > conectar este repo > Apply.
+# Las variables marcadas `sync: false` las completás vos a mano una sola
+# vez en ese mismo asistente (son las que hay que copiar desde
+# `alonso49-backend` o generar nuevas — ver training-studio/DEPLOY.md).
+services:
+  - type: web
+    name: training-studio-backend
+    runtime: docker
+    rootDir: training-studio/backend
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: PORT
+        value: 3002
+      - key: NODE_ENV
+        value: production
+      - key: JWT_EXPIRATION
+        value: 7d
+      - key: SUPABASE_STORAGE_BUCKET
+        value: training-documents
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false # connection string de la DB Neon PROPIA del Training Studio (no la de la plataforma)
+      - key: FRONTEND_URL
+        sync: false # URL de Vercel del training-studio-frontend (paso posterior)
+      - key: OPENAI_API_KEY
+        sync: false # mismo valor que ya usa alonso49-backend
+      - key: SUPABASE_URL
+        sync: false # mismo valor que ya usa alonso49-backend
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false # mismo valor que ya usa alonso49-backend
