@@ -54,5 +54,67 @@ services:
       - backend
     command: npm run dev
 
+  # --- Training Studio: módulo de entrenamiento del AI Coach, independiente
+  # de la plataforma (DB, backend, frontend y login propios). El único
+  # puente hacia la plataforma es el script manual
+  # `npm run sync:platform` (training-studio/backend/scripts), nunca una
+  # llamada en runtime entre estos servicios y los de arriba.
+  training-studio-postgres:
+    image: pgvector/pgvector:pg16
+    container_name: training-studio-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: training_studio
+    ports:
+      - "5433:5432"
+    volumes:
+      - training_studio_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  training-studio-backend:
+    build:
+      context: ./training-studio/backend
+      dockerfile: Dockerfile
+    container_name: training-studio-backend
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@training-studio-postgres:5432/training_studio?schema=public
+      JWT_SECRET: development-secret-key-change-in-production
+      JWT_EXPIRATION: 7d
+      PORT: 3002
+      FRONTEND_URL: http://localhost:3003
+      NODE_ENV: development
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./training-studio/backend:/app
+      - /app/node_modules
+    depends_on:
+      training-studio-postgres:
+        condition: service_healthy
+    command: npm run start:dev
+
+  training-studio-frontend:
+    build:
+      context: ./training-studio/frontend
+      dockerfile: Dockerfile
+    container_name: training-studio-frontend
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3002/api
+    ports:
+      - "3003:3003"
+    volumes:
+      - ./training-studio/frontend:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - training-studio-backend
+    command: npm run dev
+
 volumes:
   postgres_data:
+  training_studio_postgres_data:

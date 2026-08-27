@@ -1,0 +1,138 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+enum TrainerRole {
+  TRAINER
+  ADMIN
+}
+
+enum EntryOrigin {
+  UPLOAD
+  MANUAL
+  CORRECTION
+}
+
+enum ReviewStatus {
+  DRAFT
+  PENDING_REVIEW
+  APPROVED
+  REJECTED
+}
+
+enum ProcessingStatus {
+  PROCESSING
+  READY
+  FAILED
+}
+
+enum PiiStatus {
+  CLEAN
+  FLAGGED
+  CONFIRMED
+}
+
+// Debe reflejar exactamente el enum KnowledgeCategory de la plataforma
+// principal (backend/prisma/schema.prisma) para poder mapear 1:1 en
+// scripts/sync-to-platform.ts.
+enum KnowledgeCategory {
+  methodology
+  technique
+  tactics
+  boat_setup
+  physical_prep
+  mental_prep
+}
+
+model Trainer {
+  id           String      @id @default(uuid())
+  email        String      @unique
+  passwordHash String
+  firstName    String
+  lastName     String
+  role         TrainerRole @default(TRAINER)
+  isActive     Boolean     @default(true)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  entriesCreated  TrainingEntry[] @relation("CreatedBy")
+  entriesReviewed TrainingEntry[] @relation("ReviewedBy")
+
+  @@map("trainers")
+}
+
+// Tabla única para los tres métodos de acción (subida, escritura manual,
+// corrección de chat) con un discriminador `origin`. Así hay una sola cola
+// de revisión y un solo pipeline PII -> chunk -> embedding -> sync.
+model TrainingEntry {
+  id       String      @id @default(uuid())
+  origin   EntryOrigin
+  title    String
+  category KnowledgeCategory
+
+  content  String // cuerpo manual, texto del documento, o respuesta final (corregida o aprobada)
+  question String? // solo origin = CORRECTION
+  aiAnswer String? // respuesta original de la IA, se conserva aunque se corrija
+
+  status           ReviewStatus     @default(DRAFT)
+  processingStatus ProcessingStatus @default(READY)
+  errorMessage     String?
+
+  piiStatus      PiiStatus @default(CLEAN)
+  piiFindings    Json?
+  piiConfirmedAt DateTime?
+
+  createdById String
+  createdBy   Trainer @relation("CreatedBy", fields: [createdById], references: [id])
+
+  reviewedById String?
+  reviewedBy   Trainer?  @relation("ReviewedBy", fields: [reviewedById], references: [id])
+  reviewedAt   DateTime?
+
+  syncedAt           DateTime?
+  syncedToPlatformId String?
+
+  document TrainingDocument?
+  chunks   TrainingChunk[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([origin])
+  @@index([category])
+  @@map("training_entries")
+}
+
+// Solo existe para origin = UPLOAD.
+model TrainingDocument {
+  id             String        @id @default(uuid())
+  entryId        String        @unique
+  entry          TrainingEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  sourceFileName String
+  sourceUrl      String
+  mimeType       String
+  createdAt      DateTime      @default(now())
+
+  @@map("training_documents")
+}
+
+model TrainingChunk {
+  id         String                       @id @default(uuid())
+  entryId    String
+  entry      TrainingEntry                @relation(fields: [entryId], references: [id], onDelete: Cascade)
+  chunkIndex Int
+  content    String
+  embedding  Unsupported("vector(1536)")?
+  createdAt  DateTime                     @default(now())
+
+  @@index([entryId])
+  @@map("training_chunks")
+}
