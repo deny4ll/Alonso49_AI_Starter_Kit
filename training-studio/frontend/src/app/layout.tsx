@@ -6,7 +6,7 @@ import { Providers } from './providers'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Training Studio · AI Coach Alonso49',
+  title: 'Training Studio · AI Coach Sailvex',
   description: 'Módulo independiente para entrenar el conocimiento del AI Coach: subida de documentos, escritura manual y corrección de respuestas.',
 }
 

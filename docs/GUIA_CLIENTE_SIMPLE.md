@@ -1,18 +1,18 @@
 ---
-title: "Alonso49 - Guía Completa para Usuarios"
+title: "Sailvex - Guía Completa para Usuarios"
 subtitle: "Tu Plataforma de Entrenamiento de Vela de Alto Rendimiento"
-author: "Equipo Alonso49"
+author: "Equipo Sailvex"
 date: "Agosto 2026"
 version: "1.0"
 ---
 
 \pagebreak
 
-# Bienvenido a Alonso49 🌊⛵
+# Bienvenido a Sailvex 🌊⛵
 
-## ¿Qué es Alonso49?
+## ¿Qué es Sailvex?
 
-Alonso49 es tu **plataforma digital de entrenamiento** diseñada específicamente para vela olímpica de clase 49er. Es como tener un entrenador personal disponible las 24 horas del día, que nunca olvida ningún detalle de tu progreso.
+Sailvex es tu **plataforma digital de entrenamiento** diseñada específicamente para vela olímpica de clase 49er. Es como tener un entrenador personal disponible las 24 horas del día, que nunca olvida ningún detalle de tu progreso.
 
 Imagina que es tu **diario de entrenamiento inteligente** que:
 
@@ -23,7 +23,7 @@ Imagina que es tu **diario de entrenamiento inteligente** que:
 - Te conecta con tu entrenador
 - Te muestra tu evolución con el tiempo
 
-![Página principal de Alonso49](screenshots/01-landing-page.png)
+![Página principal de Sailvex](screenshots/01-landing-page.png)
 
 \pagebreak
 
@@ -31,7 +31,7 @@ Imagina que es tu **diario de entrenamiento inteligente** que:
 
 ## 👤 Tipos de Usuarios
 
-Alonso49 está diseñado para **cuatro tipos de personas** diferentes, cada una con sus propias necesidades:
+Sailvex está diseñado para **cuatro tipos de personas** diferentes, cada una con sus propias necesidades:
 
 ### 1. 🏃‍♂️ Atleta (Tú como Regatista)
 
@@ -98,7 +98,7 @@ Alonso49 está diseñado para **cuatro tipos de personas** diferentes, cada una 
 
 **Es tan fácil como crear una cuenta de email:**
 
-1. Ve a la página de Alonso49
+1. Ve a la página de Sailvex
 2. Haz clic en "Registrarse"
 3. Completa tus datos:
    - Nombre
@@ -183,7 +183,7 @@ A veces no tenés un video, pero sí querés dejar constancia de algo que trabaj
    - **Título:** Ejemplo: "Entrenamiento maniobras - 15 nudos"
    - **Descripción:** Qué estabas practicando
    - **Feedback:** Qué estuvo bien y qué es mejorable
-   - **Áreas / etiquetas:** una o más secciones y subsecciones de la Metodología Alonso49 (ver [Área de Progreso](#8-área-de-progreso))
+   - **Áreas / etiquetas:** una o más secciones y subsecciones de la Metodología Sailvex (ver [Área de Progreso](#8-área-de-progreso))
 5. Haz clic en **"Subir"**
 
 **¡Listo!** Cada video o informe etiquetado alimenta automáticamente tu Área de Progreso.
@@ -287,7 +287,7 @@ Es como tener un **entrenador experto disponible 24/7** que conoce TODO sobre ti
 Arriba a la derecha del chat hay un ícono de **lupa**. Al abrirlo aparece un buscador con filtros para encontrar rápido lo que necesitás, sin tener que escribirle al coach:
 
 - **Texto libre:** busca en títulos, descripciones y feedback
-- **Maniobra / área:** cualquier sección o subsección de la Metodología Alonso49 (por ejemplo, "Tacking - Light wind")
+- **Maniobra / área:** cualquier sección o subsección de la Metodología Sailvex (por ejemplo, "Tacking - Light wind")
 - **Sitio:** dónde entrenaste
 - **Viento (mín/máx):** rango de nudos
 
@@ -505,7 +505,7 @@ Cuando tu coach te deja feedback, recibes una **notificación** para que no te p
 
 ### ¿Qué es un Equipo?
 
-Un equipo en Alonso49 es tu **grupo de entrenamiento**. Puede ser:
+Un equipo en Sailvex es tu **grupo de entrenamiento**. Puede ser:
 
 - Tu academia completa
 - Un grupo de regatistas que entrenan juntos
@@ -585,7 +585,7 @@ Temas organizados en lecciones:
 
 ### ¿Qué es el Área de Progreso?
 
-Es el corazón de la Metodología Alonso49 dentro de la plataforma: una vista que organiza **todo tu contenido etiquetado** (videos e informes) según las 6 áreas de trabajo de la metodología, cada una con sus subsecciones.
+Es el corazón de la Metodología Sailvex dentro de la plataforma: una vista que organiza **todo tu contenido etiquetado** (videos e informes) según las 6 áreas de trabajo de la metodología, cada una con sus subsecciones.
 
 **Las 6 áreas:**
 
@@ -635,7 +635,7 @@ Al seleccionar un tracker de la lista, se dibuja el recorrido sobre un mapa real
 
 \pagebreak
 
-# Metodología Alonso49: El Ciclo Cerrado
+# Metodología Sailvex: El Ciclo Cerrado
 
 ## ¿Qué es el "Ciclo Cerrado de Coaching"?
 
@@ -948,9 +948,9 @@ Si mantienes este ritmo:
 ## ❓ Sobre Uso General
 
 ### ¿Necesito internet para usar la plataforma?
-**Sí**, Alonso49 funciona en la nube, necesitas conexión a internet. Pero puedes subir videos más tarde si grabas sin conexión.
+**Sí**, Sailvex funciona en la nube, necesitas conexión a internet. Pero puedes subir videos más tarde si grabas sin conexión.
 
-### ¿Puedo usar Alonso49 desde mi teléfono?
+### ¿Puedo usar Sailvex desde mi teléfono?
 **Sí**, la plataforma funciona en:
 
 - 💻 Computadoras (Mac, Windows, Linux)
@@ -1104,7 +1104,7 @@ Nadie más tiene acceso.
 
 ## ❓ Sobre Costos y Planes
 
-### ¿Cuánto cuesta Alonso49?
+### ¿Cuánto cuesta Sailvex?
 El costo depende de tu rol:
 
 - **Atletas:** Generalmente incluido por tu academia o coach
@@ -1250,7 +1250,7 @@ La motivación viene de ver resultados.
 - **Experiencia inicial:** 6 meses en vela
 - **Objetivo:** Clasificar a campeonato regional
 
-### Uso de Alonso49
+### Uso de Sailvex
 
 **Mes 1-2: Construcción de Base**
 
@@ -1287,7 +1287,7 @@ La motivación viene de ver resultados.
 - **Mejora total desde inicio: +29%**
 
 ### Lo que María dice:
-> "Alonso49 fue como tener un entrenador conmigo todo el tiempo. El AI Coach me ayudó en momentos donde mi entrenador no estaba disponible, y ver mi progreso en gráficas me motivaba a seguir. ¡Nunca pensé que llegaría tan lejos tan rápido!"
+> "Sailvex fue como tener un entrenador conmigo todo el tiempo. El AI Coach me ayudó en momentos donde mi entrenador no estaba disponible, y ver mi progreso en gráficas me motivaba a seguir. ¡Nunca pensé que llegaría tan lejos tan rápido!"
 
 ---
 
@@ -1299,7 +1299,7 @@ La motivación viene de ver resultados.
 - **Coaches:** 2 entrenadores
 - **Objetivo:** Mejorar rendimiento general del equipo
 
-### Uso de Alonso49
+### Uso de Sailvex
 
 **Implementación:**
 
@@ -1328,7 +1328,7 @@ La motivación viene de ver resultados.
 - **Mejor temporada de la academia en 5 años**
 
 ### Lo que el Coach dice:
-> "Alonso49 transformó completamente cómo entrenamos. Antes era difícil seguir a 12 atletas. Ahora veo todo en un solo lugar, puedo dar feedback específico a cada uno, y los atletas se motivan viendo el progreso de sus compañeros. Es increíble."
+> "Sailvex transformó completamente cómo entrenamos. Antes era difícil seguir a 12 atletas. Ahora veo todo en un solo lugar, puedo dar feedback específico a cada uno, y los atletas se motivan viendo el progreso de sus compañeros. Es increíble."
 
 \pagebreak
 
@@ -1431,7 +1431,7 @@ Para que entiendas mejor, aquí están los términos que usamos en la plataforma
 ### Recursos de Autoayuda
 
 #### 1. Centro de Ayuda en la Plataforma
-Dentro de Alonso49:
+Dentro de Sailvex:
 
 - Haz clic en **"?"** en la esquina superior
 - Busca tu duda en el buscador
@@ -1489,7 +1489,7 @@ Si encuentras un error o bug:
 
 ### Sugerir Mejoras
 
-¿Tienes ideas para mejorar Alonso49?
+¿Tienes ideas para mejorar Sailvex?
 
 **¡Queremos escucharte!**
 
@@ -1502,7 +1502,7 @@ Las mejores ideas se implementan y **reconocemos a quien las sugirió**.
 
 # Actualizaciones y Nuevas Funcionalidades
 
-## 🚀 Próximamente en Alonso49
+## 🚀 Próximamente en Sailvex
 
 ### En Desarrollo
 
@@ -1552,21 +1552,21 @@ Síguenos en:
 
 - Instagram: @alonso49platform
 - Twitter: @alonso49
-- YouTube: Alonso49 Official
+- YouTube: Sailvex Official
 
 \pagebreak
 
 # Conclusión
 
-## 🎯 Tu Viaje con Alonso49
+## 🎯 Tu Viaje con Sailvex
 
-Alonso49 no es solo una plataforma tecnológica, es tu **compañero de viaje** hacia la excelencia en vela olímpica.
+Sailvex no es solo una plataforma tecnológica, es tu **compañero de viaje** hacia la excelencia en vela olímpica.
 
 ### Lo que has aprendido
 
 En esta guía has descubierto:
 
-✅ **Qué es Alonso49** y cómo puede ayudarte
+✅ **Qué es Sailvex** y cómo puede ayudarte
 ✅ **Cómo funciona** cada función principal
 ✅ **El poder del AI Coach** y sus 20 herramientas
 ✅ **La metodología del Ciclo Cerrado** de coaching
@@ -1588,7 +1588,7 @@ En esta guía has descubierto:
 
 > **"El éxito en vela, como en cualquier deporte, viene de la suma de pequeñas mejoras consistentes."**
 
-Alonso49 te ayuda a:
+Sailvex te ayuda a:
 
 - 📊 **Medir** cada mejora
 - 🎯 **Enfocar** tu esfuerzo donde más importa
@@ -1599,7 +1599,7 @@ Alonso49 te ayuda a:
 
 ## 🙏 Agradecimientos
 
-Gracias por elegir Alonso49 como tu plataforma de entrenamiento.
+Gracias por elegir Sailvex como tu plataforma de entrenamiento.
 
 Estamos comprometidos con tu éxito y seguiremos mejorando para darte las mejores herramientas posibles.
 
@@ -1625,7 +1625,7 @@ Si tienes preguntas, dudas o necesitas ayuda:
 
 ---
 
-*Equipo Alonso49*  
+*Equipo Sailvex*  
 *Agosto 2026*
 
 \pagebreak

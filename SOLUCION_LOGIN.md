@@ -23,7 +23,7 @@ Password: Test123!
 ### Opción 1: Reiniciar el Frontend (Más Rápido)
 
 ```bash
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit
 docker-compose restart frontend
 ```
 
@@ -34,7 +34,7 @@ Espera 10 segundos y luego intenta hacer login nuevamente.
 ### Opción 2: Reiniciar Todo el Sistema (Más Completo)
 
 ```bash
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit
 docker-compose down
 docker-compose up -d
 ```
@@ -105,7 +105,7 @@ Si después de reiniciar el frontend el problema continúa, aplica este parche:
 ### Paso 1: Modificar el Layout Principal
 
 ```bash
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit/frontend
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit/frontend
 ```
 
 Crea el archivo `src/app/layout.tsx` si no existe o actualízalo:
@@ -115,7 +115,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Alonso49 Platform',
+  title: 'Sailvex Platform',
   description: 'High Performance Sailing Training Platform',
 }
 
@@ -183,7 +183,7 @@ Después de aplicar la solución, verifica:
 ### Opción de Último Recurso: Rebuild Completo
 
 ```bash
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit
 
 # Detener todo
 docker-compose down -v

@@ -1,11 +1,11 @@
-# 🚀 Guía de Inicio Rápido - Alonso49
+# 🚀 Guía de Inicio Rápido - Sailvex
 
 ## Inicio Rápido con Docker (Recomendado)
 
 ### 1. Clonar y Configurar
 
 ```bash
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit
 
 cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env
@@ -267,4 +267,4 @@ Para problemas o preguntas:
 
 ---
 
-**¡Bienvenido a Alonso49! 🎉**
+**¡Bienvenido a Sailvex! 🎉**

@@ -1,4 +1,4 @@
-# Publicar Alonso49 gratis (demo para cliente)
+# Publicar Sailvex gratis (demo para cliente)
 
 Stack: Next.js (frontend) + NestJS/Prisma (backend) + Postgres con pgvector.
 

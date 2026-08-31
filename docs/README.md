@@ -1,4 +1,4 @@
-# 📚 Documentación Completa - Alonso49 Platform
+# 📚 Documentación Completa - Sailvex Platform
 
 > **Plataforma de Entrenamiento de Alto Rendimiento para Vela Olímpica 49er**  
 > Versión 1.0.0 | Fecha: 1 Agosto 2026
@@ -9,19 +9,19 @@
 
 ### Para Ejecutivos y Product Owners
 📄 **Leer primero:** [`RESUMEN_ENTREGA.md`](./RESUMEN_ENTREGA.md)  
-📊 **Documento principal:** [`ALONSO49_DOCUMENTACION_PROFESIONAL.pdf`](./ALONSO49_DOCUMENTACION_PROFESIONAL.pdf) (Secciones 1 y 5)
+📊 **Documento principal:** [`SAILVEX_DOCUMENTACION_PROFESIONAL.pdf`](./SAILVEX_DOCUMENTACION_PROFESIONAL.pdf) (Secciones 1 y 5)
 
 ### Para Project Managers
 📋 **Guía rápida:** [`GUIA_RAPIDA.md`](./GUIA_RAPIDA.md)  
-📊 **Documento principal:** [`ALONSO49_DOCUMENTACION_PROFESIONAL.pdf`](./ALONSO49_DOCUMENTACION_PROFESIONAL.pdf) (Secciones 2, 4 y 9)
+📊 **Documento principal:** [`SAILVEX_DOCUMENTACION_PROFESIONAL.pdf`](./SAILVEX_DOCUMENTACION_PROFESIONAL.pdf) (Secciones 2, 4 y 9)
 
 ### Para Desarrolladores
-💻 **Documentación técnica:** [`ALONSO49_DOCUMENTACION_PROFESIONAL.pdf`](./ALONSO49_DOCUMENTACION_PROFESIONAL.pdf) (Secciones 3, 6, 7)  
+💻 **Documentación técnica:** [`SAILVEX_DOCUMENTACION_PROFESIONAL.pdf`](./SAILVEX_DOCUMENTACION_PROFESIONAL.pdf) (Secciones 3, 6, 7)  
 🔧 **Fuente Markdown:** [`DOCUMENTACION_CLIENTE.md`](./DOCUMENTACION_CLIENTE.md)
 
 ### Para End Users (Atletas/Coaches/Academias)
 👤 **Guía de uso:** [`GUIA_RAPIDA.md`](./GUIA_RAPIDA.md)  
-📖 **Manual completo:** [`ALONSO49_DOCUMENTACION_PROFESIONAL.pdf`](./ALONSO49_DOCUMENTACION_PROFESIONAL.pdf) (Sección 9)
+📖 **Manual completo:** [`SAILVEX_DOCUMENTACION_PROFESIONAL.pdf`](./SAILVEX_DOCUMENTACION_PROFESIONAL.pdf) (Sección 9)
 
 ---
 
@@ -31,7 +31,7 @@
 
 | Archivo | Tipo | Tamaño | Descripción | Recomendado Para |
 |---------|------|--------|-------------|------------------|
-| **ALONSO49_DOCUMENTACION_PROFESIONAL.pdf** | PDF | 1.4 MB | 📌 **PRINCIPAL** - Documentación completa con formato profesional | Todos |
+| **SAILVEX_DOCUMENTACION_PROFESIONAL.pdf** | PDF | 1.4 MB | 📌 **PRINCIPAL** - Documentación completa con formato profesional | Todos |
 | **RESUMEN_ENTREGA.md** | Markdown | 9.9 KB | Resumen ejecutivo de la entrega | Ejecutivos, PMs |
 | **GUIA_RAPIDA.md** | Markdown | 8.6 KB | Referencia rápida de funcionalidades y comandos | Usuarios, Devs |
 | **DOCUMENTACION_CLIENTE.md** | Markdown | 44 KB | Fuente original (1,938 líneas) | Desarrolladores |
@@ -40,9 +40,9 @@
 
 | Archivo | Tipo | Descripción |
 |---------|------|-------------|
-| **ALONSO49_DOCUMENTACION_PROFESIONAL.html** | HTML | Versión web interactiva con CSS |
-| **ALONSO49_DOCUMENTACION.pdf** | PDF | Versión alternativa del PDF (sin CSS personalizado) |
-| **ALONSO49_DOCUMENTACION.html** | HTML | HTML básico sin estilos |
+| **SAILVEX_DOCUMENTACION_PROFESIONAL.html** | HTML | Versión web interactiva con CSS |
+| **SAILVEX_DOCUMENTACION.pdf** | PDF | Versión alternativa del PDF (sin CSS personalizado) |
+| **SAILVEX_DOCUMENTACION.html** | HTML | HTML básico sin estilos |
 
 ### Recursos
 
@@ -55,7 +55,7 @@
 
 ## 📖 Estructura de la Documentación
 
-### ALONSO49_DOCUMENTACION_PROFESIONAL.pdf
+### SAILVEX_DOCUMENTACION_PROFESIONAL.pdf
 
 **11 Secciones Principales | 1,938 Líneas | 50+ Páginas**
 
@@ -331,11 +331,11 @@ docker-compose down        # Detener
 ### Documentación por Área
 - **General:** RESUMEN_ENTREGA.md
 - **Referencia rápida:** GUIA_RAPIDA.md
-- **Técnica completa:** ALONSO49_DOCUMENTACION_PROFESIONAL.pdf
+- **Técnica completa:** SAILVEX_DOCUMENTACION_PROFESIONAL.pdf
 - **Fuente editable:** DOCUMENTACION_CLIENTE.md
 
 ### Contacto
-- **Proyecto:** Alonso49 Platform
+- **Proyecto:** Sailvex Platform
 - **Versión:** 1.0.0
 - **Última Actualización:** 1 Agosto 2026
 
@@ -363,10 +363,10 @@ docker-compose down        # Detener
 
 **✅ DOCUMENTACIÓN COMPLETA Y LISTA PARA CLIENTE**
 
-Este paquete incluye toda la documentación técnica, guías de usuario, y recursos necesarios para entender y utilizar la plataforma Alonso49.
+Este paquete incluye toda la documentación técnica, guías de usuario, y recursos necesarios para entender y utilizar la plataforma Sailvex.
 
 **Archivo Principal Recomendado:**  
-📄 [`ALONSO49_DOCUMENTACION_PROFESIONAL.pdf`](./ALONSO49_DOCUMENTACION_PROFESIONAL.pdf)
+📄 [`SAILVEX_DOCUMENTACION_PROFESIONAL.pdf`](./SAILVEX_DOCUMENTACION_PROFESIONAL.pdf)
 
 ---
 

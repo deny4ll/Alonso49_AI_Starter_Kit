@@ -10,7 +10,7 @@
 1. Ve a GitHub: https://github.com/new
 
 2. Configura el repositorio:
-   - **Nombre**: `Alonso49_AI_Starter_Kit` (o el que prefieras)
+   - **Nombre**: `Sailvex_AI_Starter_Kit` (o el que prefieras)
    - **Descripción**: `Plataforma de entrenamiento de alto rendimiento para vela olímpica clase 49er`
    - **Visibilidad**: Privado o Público (tú eliges)
    - ⚠️ **NO** marques ninguna opción (README, .gitignore, license)
@@ -24,10 +24,10 @@ Después de crear el repo en GitHub, ejecuta estos comandos:
 
 ### Si usas SSH (recomendado):
 ```bash
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit
 
 # Agregar el remote (cambia TU_USUARIO por tu username de GitHub)
-git remote add origin git@github.com:TU_USUARIO/Alonso49_AI_Starter_Kit.git
+git remote add origin git@github.com:TU_USUARIO/Sailvex_AI_Starter_Kit.git
 
 # Renombrar la rama a main
 git branch -M main
@@ -38,10 +38,10 @@ git push -u origin main
 
 ### Si usas HTTPS:
 ```bash
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit
 
 # Agregar el remote (cambia TU_USUARIO por tu username de GitHub)
-git remote add origin https://github.com/TU_USUARIO/Alonso49_AI_Starter_Kit.git
+git remote add origin https://github.com/TU_USUARIO/Sailvex_AI_Starter_Kit.git
 
 # Renombrar la rama a main
 git branch -M main

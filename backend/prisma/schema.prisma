@@ -323,7 +323,7 @@ model KnowledgeChunk {
   @@map("knowledge_chunks")
 }
 
-// Taxonomía Alonso49 de secciones/subsecciones (Team Set Up, Boat Handling, etc.).
+// Taxonomía Sailvex de secciones/subsecciones (Team Set Up, Boat Handling, etc.).
 // Jerarquía fija de 2 niveles, poblada por seed (ver prisma/seed-progress-tags.ts).
 model Tag {
   id        String     @id @default(uuid())

@@ -1,5 +1,5 @@
 ---
-title: "Alonso49 Platform - Documentación Técnica Completa"
+title: "Sailvex Platform - Documentación Técnica Completa"
 subtitle: "Plataforma de Entrenamiento de Alto Rendimiento para Vela Olímpica"
 author: "Christian Alonso"
 date: "1 Agosto 2026"
@@ -30,7 +30,7 @@ version: "1.0.0"
 
 ## 1.1 Descripción del Proyecto
 
-**Alonso49** es una plataforma integral de entrenamiento de alto rendimiento diseñada específicamente para la clase olímpica de vela 49er. La plataforma implementa la **Metodología Alonso49** de coaching basado en datos y ciclos cerrados de mejora continua.
+**Sailvex** es una plataforma integral de entrenamiento de alto rendimiento diseñada específicamente para la clase olímpica de vela 49er. La plataforma implementa la **Metodología Sailvex** de coaching basado en datos y ciclos cerrados de mejora continua.
 
 ### Objetivos Principales
 
@@ -1933,6 +1933,6 @@ rclone sync ./storage cloudflare:alonso49-videos
 
 *Documentación generada el 1 de Agosto de 2026*  
 *Versión 1.0.0*  
-*Alonso49 Platform - High Performance Sailing Training*
+*Sailvex Platform - High Performance Sailing Training*
 
 ---

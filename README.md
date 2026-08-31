@@ -233,7 +233,7 @@ npm run lint           # Linter
 - ✅ CORS configurado
 - ✅ Variables de entorno para secretos
 
-## Metodología Alonso49
+## Metodología Sailvex
 
 La plataforma implementa la metodología de entrenamiento basada en:
 - **Planificación objetiva** - Establecer metas claras y medibles
@@ -263,7 +263,7 @@ A diferencia de chatbots tradicionales que pueden "alucinar" información, el AI
 - `searchVideos()` - Videos subidos
 - `searchCoachNotes()` - Feedback de coaches
 - `searchPerformanceReports()` - Analytics y métricas
-- `searchKnowledgeBase()` - Metodología Alonso49
+- `searchKnowledgeBase()` - Metodología Sailvex
 - Y 6 más...
 
 **📝 Generate Tools (3)** - Crean documentos:
@@ -342,7 +342,7 @@ Ver documentación completa: **[AI_COACH_TOOLS.md](./AI_COACH_TOOLS.md)**
 
 ## Licencia
 
-Todos los derechos reservados © 2024 Alonso49
+Todos los derechos reservados © 2024 Sailvex
 
 ## Contacto
 

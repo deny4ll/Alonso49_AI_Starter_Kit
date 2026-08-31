@@ -2,7 +2,7 @@ import { PrismaClient, TagLevel } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-// Taxonomía fija del Área de Progreso (Metodología Alonso49). Jerarquía de 2
+// Taxonomía fija del Área de Progreso (Metodología Sailvex). Jerarquía de 2
 // niveles: sección -> subsecciones. Se usa para etiquetar Videos/Informes y
 // calcular el progreso acumulado por área.
 const TAXONOMY: { key: string; label: string; children: { key: string; label: string }[] }[] = [
@@ -72,7 +72,7 @@ const TAXONOMY: { key: string; label: string; children: { key: string; label: st
 ];
 
 async function main() {
-  console.log('🌱 Seeding taxonomía Área de Progreso (Alonso49)...');
+  console.log('🌱 Seeding taxonomía Área de Progreso (Sailvex)...');
 
   for (let sectionOrder = 0; sectionOrder < TAXONOMY.length; sectionOrder++) {
     const section = TAXONOMY[sectionOrder];

@@ -1,4 +1,4 @@
-# ALONSO49 - Guía Rápida de Referencia
+# SAILVEX - Guía Rápida de Referencia
 
 ## 🎯 Acceso Rápido a Funcionalidades
 
@@ -338,8 +338,8 @@ GET /api/health/storage   # Estado de R2
 ## 🎓 Recursos de Aprendizaje
 
 ### Documentación Técnica
-- **Completa:** `ALONSO49_DOCUMENTACION_PROFESIONAL.pdf`
-- **Web:** `ALONSO49_DOCUMENTACION_PROFESIONAL.html`
+- **Completa:** `SAILVEX_DOCUMENTACION_PROFESIONAL.pdf`
+- **Web:** `SAILVEX_DOCUMENTACION_PROFESIONAL.html`
 - **Markdown:** `DOCUMENTACION_CLIENTE.md`
 
 ### Por Área

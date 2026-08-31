@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "👥 Creando usuarios de prueba para Alonso49..."
+echo "👥 Creando usuarios de prueba para Sailvex..."
 echo ""
 
 API_URL="http://localhost:3001/api"

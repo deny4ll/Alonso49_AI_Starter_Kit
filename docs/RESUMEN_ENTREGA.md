@@ -1,4 +1,4 @@
-# ALONSO49 - Documentación Completa del Proyecto
+# SAILVEX - Documentación Completa del Proyecto
 ## Resumen de Entrega para Cliente
 
 **Fecha de Entrega:** 1 Agosto 2026  
@@ -14,9 +14,9 @@
 | Archivo | Formato | Tamaño | Descripción |
 |---------|---------|--------|-------------|
 | `DOCUMENTACION_CLIENTE.md` | Markdown | 45 KB | Fuente original en texto plano |
-| `ALONSO49_DOCUMENTACION_PROFESIONAL.pdf` | PDF | 1.4 MB | **PRINCIPAL** - Documento profesional con formato mejorado |
-| `ALONSO49_DOCUMENTACION.pdf` | PDF | 1.2 MB | Versión alternativa del PDF |
-| `ALONSO49_DOCUMENTACION_PROFESIONAL.html` | HTML | 143 KB | Versión web interactiva |
+| `SAILVEX_DOCUMENTACION_PROFESIONAL.pdf` | PDF | 1.4 MB | **PRINCIPAL** - Documento profesional con formato mejorado |
+| `SAILVEX_DOCUMENTACION.pdf` | PDF | 1.2 MB | Versión alternativa del PDF |
+| `SAILVEX_DOCUMENTACION_PROFESIONAL.html` | HTML | 143 KB | Versión web interactiva |
 
 ### 2. Recursos Adicionales
 
@@ -34,7 +34,7 @@
 El documento PDF profesional incluye **11 secciones principales**:
 
 #### 1️⃣ Resumen Ejecutivo
-- Descripción del proyecto Alonso49
+- Descripción del proyecto Sailvex
 - Objetivos principales
 - Tecnologías utilizadas (NestJS, Next.js, PostgreSQL, OpenAI)
 - Características clave de la plataforma
@@ -293,7 +293,7 @@ Si desea expandir la documentación, se pueden agregar:
 Para cualquier pregunta sobre la documentación o el proyecto:
 
 - **Email:** [correo del desarrollador]
-- **Proyecto:** Alonso49 Platform
+- **Proyecto:** Sailvex Platform
 - **Versión:** 1.0.0
 - **Última Actualización:** 1 Agosto 2026
 
@@ -320,6 +320,6 @@ Para cualquier pregunta sobre la documentación o el proyecto:
 
 **🎉 DOCUMENTACIÓN COMPLETA Y LISTA PARA ENTREGA**
 
-Este documento representa la documentación técnica completa del proyecto Alonso49, incluyendo todos los módulos, funcionalidades, perfiles de usuario, API endpoints, y guías de uso.
+Este documento representa la documentación técnica completa del proyecto Sailvex, incluyendo todos los módulos, funcionalidades, perfiles de usuario, API endpoints, y guías de uso.
 
-**Archivo Principal Recomendado:** `ALONSO49_DOCUMENTACION_PROFESIONAL.pdf`
+**Archivo Principal Recomendado:** `SAILVEX_DOCUMENTACION_PROFESIONAL.pdf`

@@ -1,4 +1,4 @@
-# 🎯 Guía Completa de Funcionalidades - Alonso49
+# 🎯 Guía Completa de Funcionalidades - Sailvex
 
 ## ✅ Funcionalidades Implementadas
 
@@ -314,4 +314,4 @@ Si tienes problemas:
 
 ---
 
-**¡Disfruta de Alonso49! 🏆⛵**
+**¡Disfruta de Sailvex! 🏆⛵**

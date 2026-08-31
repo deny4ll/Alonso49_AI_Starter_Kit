@@ -1,7 +1,7 @@
 {
   "name": "training-studio-backend",
   "version": "1.0.0",
-  "description": "Backend independiente del Training Studio para curar el conocimiento del AI Coach de Alonso49",
+  "description": "Backend independiente del Training Studio para curar el conocimiento del AI Coach de Sailvex",
   "scripts": {
     "build": "nest build",
     "start": "nest start",

@@ -70,7 +70,7 @@ Deberías ver:
 
 ### Opción 3: Logs del Frontend
 ```bash
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit
 docker-compose logs frontend --tail 50
 ```
 
@@ -78,7 +78,7 @@ Busca líneas con "Error" o "Failed"
 
 ### Opción 4: Reinicia Todo
 ```bash
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit
 
 # Detener
 docker-compose down
@@ -130,7 +130,7 @@ Password: password123
 Si nada funciona, ejecuta:
 
 ```bash
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit
 
 # Reset completo
 docker-compose down -v
