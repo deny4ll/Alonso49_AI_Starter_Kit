@@ -51,7 +51,7 @@ AI: Voy a buscar lecciones sobre tacking...
 ```
 
 #### 2. `searchExercises()`
-**Propósito:** Buscar ejercicios y drills de la metodología Alonso49
+**Propósito:** Buscar ejercicios y drills de la metodología Sailvex
 
 **Parámetros:**
 - `query` (requerido): Tipo de ejercicio

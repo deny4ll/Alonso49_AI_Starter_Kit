@@ -1,7 +1,7 @@
 {
   "name": "sailvex-backend",
   "version": "1.0.0",
-  "description": "Backend para plataforma Alonso49 - Entrenamiento de alto rendimiento en vela olímpica",
+  "description": "Backend para plataforma Sailvex - Entrenamiento de alto rendimiento en vela olímpica",
   "scripts": {
     "build": "nest build",
     "start": "nest start",

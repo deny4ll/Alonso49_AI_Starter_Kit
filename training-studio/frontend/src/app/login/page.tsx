@@ -85,7 +85,7 @@ export default function LoginPage() {
 
           <p className="mt-4 text-center text-sm text-muted-foreground">
             Acceso solo para entrenadores autorizados. Este es un módulo independiente de la
-            plataforma principal Alonso49.
+            plataforma principal Sailvex.
           </p>
         </form>
       </div>

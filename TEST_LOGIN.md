@@ -96,7 +96,7 @@ Si ves:
 
 ```bash
 # Reinicia el frontend
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit
 docker-compose restart frontend
 sleep 5
 

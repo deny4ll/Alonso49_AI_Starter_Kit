@@ -1,4 +1,4 @@
-# 👥 Usuarios de Prueba - Alonso49
+# 👥 Usuarios de Prueba - Sailvex
 
 ## 🎯 Credenciales de Acceso
 
@@ -161,7 +161,7 @@ Rol:      ACADEMY
 Si necesitas recrear los usuarios:
 
 ```bash
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit
 ./create-test-users.sh
 ```
 

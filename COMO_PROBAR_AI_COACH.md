@@ -82,7 +82,7 @@ Si prefieres probar directamente desde la terminal, aquí están los comandos:
 ### Paso 1: Obtener Token de Autenticación
 
 ```bash
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit
 
 # Guardar el token en una variable
 TOKEN=$(curl -s -X POST http://localhost:3001/api/auth/login \
@@ -304,7 +304,7 @@ Objetivos: Mejorar salidas y maniobras
 **Solución:**
 ```bash
 # Editar el archivo .env del backend
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit/backend
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit/backend
 nano .env
 
 # Agregar tu clave real de OpenAI:
@@ -404,7 +404,7 @@ Copia y pega este script completo para hacer una prueba rápida:
 ```bash
 #!/bin/bash
 
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit
 
 echo "🤖 Prueba Rápida del AI Coach"
 echo "=============================="
@@ -457,7 +457,7 @@ Si tienes problemas:
 
 1. **Revisa los logs:** `docker-compose logs -f backend`
 2. **Verifica el estado:** `docker-compose ps`
-3. **Lee la documentación:** `docs/ALONSO49_GUIA_CLIENTE.pdf`
+3. **Lee la documentación:** `docs/SAILVEX_GUIA_CLIENTE.pdf`
 
 ---
 

@@ -270,9 +270,9 @@ Las conversaciones se guardan en `audit_logs`:
 
 ---
 
-## 🎓 Metodología Alonso49
+## 🎓 Metodología Sailvex
 
-El AI Coach está programado para seguir la **Metodología Alonso49**:
+El AI Coach está programado para seguir la **Metodología Sailvex**:
 
 1. **Planificación Objetiva** - Objetivos SMART y medibles
 2. **Closed Loop Coaching** - Ciclo continuo de feedback

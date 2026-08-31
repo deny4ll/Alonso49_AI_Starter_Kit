@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🌱 Creando datos de demostración para Alonso49..."
+echo "🌱 Creando datos de demostración para Sailvex..."
 echo ""
 
 API_URL="http://localhost:3001/api"

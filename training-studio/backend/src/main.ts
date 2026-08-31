@@ -24,7 +24,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Training Studio API')
     .setDescription(
-      'API independiente para curar el conocimiento del AI Coach de Alonso49 (subida de documentos, escritura manual y corrección de respuestas).',
+      'API independiente para curar el conocimiento del AI Coach de Sailvex (subida de documentos, escritura manual y corrección de respuestas).',
     )
     .setVersion('1.0')
     .addBearerAuth()

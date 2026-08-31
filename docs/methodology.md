@@ -1,4 +1,4 @@
-# Alonso49 Methodology
+# Sailvex Methodology
 
 Sistema de preparación integral que transforma el entrenamiento intuitivo en un proceso
 científico, medible y repetible. Organizado en 6 módulos.

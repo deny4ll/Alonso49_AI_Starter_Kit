@@ -1,4 +1,4 @@
-# Alonso49 - Guía para Agentes de IA
+# Sailvex - Guía para Agentes de IA
 
 Este documento contiene instrucciones específicas para agentes de IA que trabajen en este proyecto.
 

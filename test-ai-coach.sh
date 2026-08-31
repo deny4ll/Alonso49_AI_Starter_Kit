@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Script de Prueba del AI Coach
-# Alonso49 Platform
+# Sailvex Platform
 
 echo ""
 echo "╔═══════════════════════════════════════════════╗"
@@ -9,7 +9,7 @@ echo "║   🤖 Prueba del AI High Performance Coach    ║"
 echo "╚═══════════════════════════════════════════════╝"
 echo ""
 
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit
 
 # 1. Verificar que los servicios estén corriendo
 echo "1️⃣  Verificando servicios..."

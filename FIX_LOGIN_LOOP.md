@@ -165,7 +165,7 @@ location.reload()
 
 ### Paso 2: Verifica los logs del frontend
 ```bash
-cd /Users/chris/Documents/Projects/chrisAI/Alonso49_AI_Starter_Kit
+cd /Users/chris/Documents/Projects/chrisAI/Sailvex_AI_Starter_Kit
 docker-compose logs frontend --tail 50
 ```
 

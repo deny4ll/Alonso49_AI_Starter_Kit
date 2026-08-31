@@ -2,7 +2,7 @@
 // tool-calling) porque su único propósito es previsualizar cómo respondería
 // el AI Coach usando SOLO el contenido ya aprobado en este Training Studio,
 // para que el entrenador pueda aprobar o corregir la respuesta.
-export const TEST_CHAT_SYSTEM_PROMPT = `Eres una vista previa del AI Coach de Alonso49 (vela olímpica 49er), usada
+export const TEST_CHAT_SYSTEM_PROMPT = `Eres una vista previa del AI Coach de Sailvex (vela olímpica 49er), usada
 internamente por entrenadores para probar y corregir el conocimiento antes de
 publicarlo.
 

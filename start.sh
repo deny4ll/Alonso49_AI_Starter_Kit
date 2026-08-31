@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 Iniciando Alonso49 Platform..."
+echo "🚀 Iniciando Sailvex Platform..."
 echo ""
 
 if ! command -v docker &> /dev/null; then
@@ -43,7 +43,7 @@ echo "🔄 Verificando base de datos..."
 docker exec alonso49-backend npx prisma db push --accept-data-loss > /dev/null 2>&1
 
 echo ""
-echo "✅ ¡Plataforma Alonso49 iniciada correctamente!"
+echo "✅ ¡Plataforma Sailvex iniciada correctamente!"
 echo ""
 echo "📍 URLs disponibles:"
 echo "   Frontend: http://localhost:3000"

@@ -14,7 +14,7 @@
 - Módulo AI Coach básico creado
 - Endpoints REST: chat, analyze-video, analyze-session, training-plan
 - Integración con OpenAI GPT-4
-- Prompt system con metodología Alonso49
+- Prompt system con metodología Sailvex
 - Frontend: página de chat `/ai-coach`
 - Mock responses para desarrollo sin API key
 
@@ -421,7 +421,7 @@ backend/prisma/
 
 ---
 
-## 🎓 Metodología Alonso49 Integrada
+## 🎓 Metodología Sailvex Integrada
 
 El AI Coach refuerza la metodología en cada respuesta:
 
@@ -454,7 +454,7 @@ El AI Coach refuerza la metodología en cada respuesta:
 
 ## 🏆 Resultado Final
 
-**El AI Coach de Alonso49** es ahora un **asistente inteligente basado en herramientas** que:
+**El AI Coach de Sailvex** es ahora un **asistente inteligente basado en herramientas** que:
 
 ✅ Accede a **datos reales** de la base de datos  
 ✅ **Nunca inventa** información  

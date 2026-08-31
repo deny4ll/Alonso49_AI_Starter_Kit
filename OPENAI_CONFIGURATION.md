@@ -2,7 +2,7 @@
 
 ## ✅ Estado Actual
 
-El **AI Coach de Alonso49** está completamente configurado y funcionando con **OpenAI GPT-4 Turbo**.
+El **AI Coach de Sailvex** está completamente configurado y funcionando con **OpenAI GPT-4 Turbo**.
 
 ```
 ✅ Código: 100% funcional
