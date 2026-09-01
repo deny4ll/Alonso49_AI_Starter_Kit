@@ -5,8 +5,10 @@ import Link from 'next/link'
 import { ChevronDown, Settings, LogOut } from 'lucide-react'
 import { useAuthStore } from '@/stores/auth'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
+import { useT } from '@/lib/i18n/useT'
 
 export function UserMenu() {
+  const t = useT()
   const { user, logout } = useAuthStore()
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
@@ -51,12 +53,12 @@ export function UserMenu() {
             className="flex items-center gap-2 px-4 py-2.5 text-sm text-foreground hover:bg-muted"
           >
             <Settings className="h-4 w-4" />
-            Editar perfil
+            {t('userMenu.editProfile')}
           </Link>
 
           <div className="px-4 py-3 border-t border-border">
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
-              Tema
+              {t('userMenu.theme')}
             </p>
             <ThemeToggle className="w-full" />
           </div>
@@ -66,7 +68,7 @@ export function UserMenu() {
             className="w-full flex items-center gap-2 px-4 py-2.5 text-sm text-foreground hover:bg-muted border-t border-border"
           >
             <LogOut className="h-4 w-4" />
-            Cerrar sesión
+            {t('userMenu.logout')}
           </button>
         </div>
       )}

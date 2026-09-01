@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/Button'
 import { trackersApi, sessionsApi } from '@/lib/api'
 import { parseTrackFile } from '@/lib/gpsParser'
 import { Upload, Gauge, Clock, Ruler, Map as MapIcon } from 'lucide-react'
+import { useT } from '@/lib/i18n/useT'
 
 const TrackMap = dynamic(() => import('@/components/TrackMap'), { ssr: false })
 
@@ -20,6 +21,7 @@ function formatDuration(seconds?: number) {
 }
 
 export default function TrackersPage() {
+  const t = useT()
   const [selectedId, setSelectedId] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [linkedSessionId, setLinkedSessionId] = useState('')
@@ -61,7 +63,7 @@ export default function TrackersPage() {
       setSelectedId(created.id)
       setError(null)
     },
-    onError: () => setError('No se pudo subir el tracker. Verificá el formato del archivo (GPX o CSV).'),
+    onError: () => setError(t('trackers.errors.uploadFailed')),
   })
 
   const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,7 +74,7 @@ export default function TrackersPage() {
     const points = parseTrackFile(file.name, text)
 
     if (points.length < 2) {
-      setError('No se pudieron leer al menos 2 puntos GPS del archivo.')
+      setError(t('trackers.errors.tooFewPoints'))
       e.target.value = ''
       return
     }
@@ -90,18 +92,18 @@ export default function TrackersPage() {
     <DashboardLayout>
       <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Trackers GPS</h1>
-          <p className="text-gray-600">Sube el recorrido de tus sesiones (GPX/CSV) y visualízalo en el mapa</p>
+          <h1 className="text-3xl font-bold mb-2">{t('trackers.header.title')}</h1>
+          <p className="text-gray-600">{t('trackers.header.subtitle')}</p>
         </div>
         <div className="flex flex-col sm:flex-row gap-2 items-stretch sm:items-end">
           <div>
-            <label className="block text-xs text-gray-500 mb-1">Vincular a sesión (opcional)</label>
+            <label className="block text-xs text-gray-500 mb-1">{t('trackers.linkSession.label')}</label>
             <select
               value={linkedSessionId}
               onChange={(e) => setLinkedSessionId(e.target.value)}
               className="w-full sm:w-56 px-3 py-2 border border-gray-300 rounded-lg text-sm"
             >
-              <option value="">Sin vincular</option>
+              <option value="">{t('trackers.linkSession.none')}</option>
               {sessions?.map((s: any) => (
                 <option key={s.id} value={s.id}>
                   {s.title}
@@ -111,27 +113,24 @@ export default function TrackersPage() {
           </div>
           <Button onClick={() => fileInputRef.current?.click()} disabled={uploadMutation.isPending}>
             <Upload className="h-4 w-4 mr-2" />
-            {uploadMutation.isPending ? 'Subiendo...' : 'Subir tracker'}
+            {uploadMutation.isPending ? t('trackers.upload.buttonLoading') : t('trackers.upload.button')}
           </Button>
           <input ref={fileInputRef} type="file" accept=".gpx,.csv" className="hidden" onChange={handleFile} />
         </div>
       </div>
 
-      <p className="text-xs text-gray-500 mb-4">
-        Si vinculás el tracker a una sesión, la velocidad media y máxima medidas por GPS se usan
-        automáticamente en Estadísticas para comparar contra el objetivo del equipo.
-      </p>
+      <p className="text-xs text-gray-500 mb-4">{t('trackers.hint')}</p>
 
       {error && <div className="mb-4 p-3 bg-destructive/10 text-destructive rounded-lg text-sm">{error}</div>}
 
       <div className="grid lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1 space-y-3">
-          {isLoading && <p className="text-gray-500">Cargando trackers...</p>}
+          {isLoading && <p className="text-gray-500">{t('trackers.list.loading')}</p>}
           {tracks && tracks.length === 0 && (
             <Card>
               <div className="text-center py-8">
                 <MapIcon className="h-12 w-12 text-gray-300 mx-auto mb-3" />
-                <p className="text-gray-500 text-sm">Todavía no subiste ningún tracker GPS.</p>
+                <p className="text-gray-500 text-sm">{t('trackers.list.empty')}</p>
               </div>
             </Card>
           )}
@@ -141,7 +140,9 @@ export default function TrackersPage() {
               className={`cursor-pointer transition-colors ${selectedId === track.id ? 'ring-2 ring-red-500' : ''}`}
             >
               <div onClick={() => setSelectedId(track.id)}>
-                <p className="font-semibold mb-1">{track.originalFileName || track.source || 'Tracker'}</p>
+                <p className="font-semibold mb-1">
+                  {track.originalFileName || track.source || t('trackers.list.defaultName')}
+                </p>
                 <p className="text-xs text-gray-500 mb-3">
                   {track.startedAt ? new Date(track.startedAt).toLocaleString() : ''}
                 </p>
@@ -156,7 +157,9 @@ export default function TrackersPage() {
                   </div>
                   <div>
                     <Gauge className="h-4 w-4 text-red-600 mx-auto mb-1" />
-                    <p className="text-xs text-gray-500">{track.maxSpeed ?? '--'} kn max</p>
+                    <p className="text-xs text-gray-500">
+                      {track.maxSpeed ?? '--'} {t('trackers.list.maxSpeedSuffix')}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -170,7 +173,7 @@ export default function TrackersPage() {
               <TrackMap points={selectedTrack.points} />
             ) : (
               <div className="h-full flex items-center justify-center text-gray-400 text-sm">
-                Seleccioná un tracker para ver el recorrido en el mapa
+                {t('trackers.map.placeholder')}
               </div>
             )}
           </Card>

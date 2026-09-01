@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/Button'
 import { sessionsApi } from '@/lib/api'
 import { Plus, Calendar, MapPin, Wind, Waves, Clock, UserCheck, Video as VideoIcon, Pencil } from 'lucide-react'
 import { formatDateTime } from '@/lib/utils'
+import { useT } from '@/lib/i18n/useT'
 
 function formatWindRange(min?: number | null, max?: number | null) {
   if (min == null && max == null) return null
@@ -33,18 +34,19 @@ const statusColors: Record<string, string> = {
   CANCELLED: 'bg-red-100 text-red-800',
 }
 
-const statusLabels: Record<string, string> = {
-  DRAFT: 'Borrador',
-  SCHEDULED: 'Planificada',
-  IN_PROGRESS: 'En curso',
-  COMPLETED: 'Completada',
-  CANCELLED: 'Cancelada',
-}
-
 export default function SessionsPage() {
+  const t = useT()
   const [showModal, setShowModal] = useState(false)
   const [editingSession, setEditingSession] = useState<any | null>(null)
   const queryClient = useQueryClient()
+
+  const statusLabels: Record<string, string> = {
+    DRAFT: t('sessions.status.draft'),
+    SCHEDULED: t('sessions.status.scheduled'),
+    IN_PROGRESS: t('sessions.status.inProgress'),
+    COMPLETED: t('sessions.status.completed'),
+    CANCELLED: t('sessions.status.cancelled'),
+  }
 
   const { data: sessions, isLoading } = useQuery({
     queryKey: ['sessions'],
@@ -144,18 +146,18 @@ export default function SessionsPage() {
     <DashboardLayout>
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Sesiones</h1>
-          <p className="text-gray-600">Planifica y gestiona tus sesiones de entrenamiento</p>
+          <h1 className="text-3xl font-bold mb-2">{t('sessions.title')}</h1>
+          <p className="text-gray-600">{t('sessions.subtitle')}</p>
         </div>
         <Button onClick={() => setShowModal(true)}>
           <Plus className="h-4 w-4 mr-2" />
-          Nueva Sesión
+          {t('sessions.newSession')}
         </Button>
       </div>
 
       {isLoading ? (
         <div className="text-center py-12">
-          <p className="text-gray-500">Cargando sesiones...</p>
+          <p className="text-gray-500">{t('sessions.loading')}</p>
         </div>
       ) : sessions && sessions.length > 0 ? (
         <div className="grid gap-4">
@@ -187,7 +189,7 @@ export default function SessionsPage() {
                       {windRange && (
                         <div className="flex items-center gap-2">
                           <Wind className="h-4 w-4" />
-                          {windRange} nudos {session.windDirection}
+                          {windRange} {t('sessions.windUnit')} {session.windDirection}
                         </div>
                       )}
                       {session.waveHeight != null && (
@@ -205,7 +207,7 @@ export default function SessionsPage() {
                       {session.coachOnWater && (
                         <div className="flex items-center gap-2 text-red-700">
                           <UserCheck className="h-4 w-4" />
-                          Soporte coach en agua
+                          {t('sessions.coachOnWaterBadge')}
                         </div>
                       )}
                       <Link
@@ -214,7 +216,7 @@ export default function SessionsPage() {
                         className={`flex items-center gap-2 ${mediaCount > 0 ? 'text-red-600 hover:underline' : 'text-gray-400'}`}
                       >
                         <VideoIcon className="h-4 w-4" />
-                        {mediaCount > 0 ? `${mediaCount} video(s)/informe(s)` : 'Sin video/informe'}
+                        {mediaCount > 0 ? `${mediaCount} ${t('sessions.mediaCount')}` : t('sessions.noMedia')}
                       </Link>
                     </div>
                   </div>
@@ -226,13 +228,13 @@ export default function SessionsPage() {
                       <button
                         onClick={() => setEditingSession(session)}
                         className="p-2 text-gray-500 hover:bg-gray-100 rounded-lg"
-                        title="Editar sesión"
+                        title={t('sessions.editSessionTitle')}
                       >
                         <Pencil className="h-4 w-4" />
                       </button>
                       {session.status !== 'COMPLETED' && session.status !== 'CANCELLED' && (
                         <Button size="sm" variant="outline" onClick={() => markCompleted(session)}>
-                          Marcar completada
+                          {t('sessions.markCompleted')}
                         </Button>
                       )}
                     </div>
@@ -246,10 +248,10 @@ export default function SessionsPage() {
         <Card>
           <div className="text-center py-12">
             <Calendar className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 mb-4">No hay sesiones programadas</p>
+            <p className="text-gray-500 mb-4">{t('sessions.empty.title')}</p>
             <Button onClick={() => setShowModal(true)}>
               <Plus className="h-4 w-4 mr-2" />
-              Crear tu primera sesión
+              {t('sessions.empty.cta')}
             </Button>
           </div>
         </Card>
@@ -258,46 +260,46 @@ export default function SessionsPage() {
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-card text-card-foreground rounded-lg p-6 max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
-            <h2 className="text-2xl font-bold mb-4">Nueva Sesión</h2>
-            <p className="text-sm text-gray-500 mb-4">Planificá lo que tenés pensado hacer. Después vas a poder editarla con lo que realmente se hizo.</p>
+            <h2 className="text-2xl font-bold mb-4">{t('sessions.modal.createTitle')}</h2>
+            <p className="text-sm text-gray-500 mb-4">{t('sessions.modal.createSubtitle')}</p>
             <form onSubmit={handleCreateSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Título
+                  {t('sessions.form.titleLabel')}
                 </label>
                 <input
                   name="title"
                   type="text"
                   required
-                  placeholder="Ej: Entrenamiento de tacking"
+                  placeholder={t('sessions.form.titlePlaceholder')}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Descripción
+                  {t('sessions.form.descriptionLabel')}
                 </label>
                 <textarea
                   name="description"
                   rows={3}
-                  placeholder="Describe los objetivos de la sesión..."
+                  placeholder={t('sessions.form.descriptionPlaceholder')}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Ubicación
+                  {t('sessions.form.locationLabel')}
                 </label>
                 <input
                   name="location"
                   type="text"
-                  placeholder="Ej: Bahía de Santander"
+                  placeholder={t('sessions.form.locationPlaceholder')}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Fecha y hora
+                  {t('sessions.form.scheduledAtLabel')}
                 </label>
                 <input
                   name="scheduledAt"
@@ -306,14 +308,14 @@ export default function SessionsPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Viento (nudos)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t('sessions.form.windLabel')}</label>
                 <div className="grid grid-cols-2 gap-3">
                   <input
                     name="windSpeedMin"
                     type="number"
                     step="0.1"
                     min="0"
-                    placeholder="Mín. ej. 10"
+                    placeholder={t('sessions.form.windMinPlaceholder')}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   />
                   <input
@@ -321,14 +323,14 @@ export default function SessionsPage() {
                     type="number"
                     step="0.1"
                     min="0"
-                    placeholder="Máx. ej. 13"
+                    placeholder={t('sessions.form.windMaxPlaceholder')}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Dirección</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">{t('sessions.form.windDirectionLabel')}</label>
                   <input
                     name="windDirection"
                     type="text"
@@ -337,7 +339,7 @@ export default function SessionsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Olas (m)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">{t('sessions.form.waveHeightLabel')}</label>
                   <input
                     name="waveHeight"
                     type="number"
@@ -350,14 +352,14 @@ export default function SessionsPage() {
               </div>
               <div className="flex gap-3">
                 <Button type="submit" disabled={createMutation.isPending}>
-                  {createMutation.isPending ? 'Creando...' : 'Crear Sesión'}
+                  {createMutation.isPending ? t('sessions.form.creating') : t('sessions.form.create')}
                 </Button>
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => setShowModal(false)}
                 >
-                  Cancelar
+                  {t('common.cancel')}
                 </Button>
               </div>
             </form>
@@ -368,11 +370,11 @@ export default function SessionsPage() {
       {editingSession && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-card text-card-foreground rounded-lg p-6 max-w-md w-full mx-4 max-h-[90vh] overflow-y-auto">
-            <h2 className="text-2xl font-bold mb-1">Editar Sesión</h2>
-            <p className="text-sm text-gray-500 mb-4">Actualizá con lo que realmente pasó en el agua y marcá el estado.</p>
+            <h2 className="text-2xl font-bold mb-1">{t('sessions.modal.editTitle')}</h2>
+            <p className="text-sm text-gray-500 mb-4">{t('sessions.modal.editSubtitle')}</p>
             <form onSubmit={handleEditSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Título</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t('sessions.form.titleLabel')}</label>
                 <input
                   name="title"
                   type="text"
@@ -382,7 +384,7 @@ export default function SessionsPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Descripción</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t('sessions.form.descriptionLabel')}</label>
                 <textarea
                   name="description"
                   rows={2}
@@ -391,7 +393,7 @@ export default function SessionsPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Ubicación</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t('sessions.form.locationLabel')}</label>
                 <input
                   name="location"
                   type="text"
@@ -400,7 +402,7 @@ export default function SessionsPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Estado</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t('sessions.form.statusLabel')}</label>
                 <select
                   name="status"
                   defaultValue={editingSession.status}
@@ -412,7 +414,7 @@ export default function SessionsPage() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Fecha planificada</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t('sessions.form.scheduledAtPlannedLabel')}</label>
                 <input
                   name="scheduledAt"
                   type="datetime-local"
@@ -422,7 +424,7 @@ export default function SessionsPage() {
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Salida al agua</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">{t('sessions.form.startedAtLabel')}</label>
                   <input
                     name="startedAt"
                     type="datetime-local"
@@ -431,7 +433,7 @@ export default function SessionsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Vuelta</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">{t('sessions.form.completedAtLabel')}</label>
                   <input
                     name="completedAt"
                     type="datetime-local"
@@ -441,14 +443,14 @@ export default function SessionsPage() {
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Viento real (nudos)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t('sessions.form.windRealLabel')}</label>
                 <div className="grid grid-cols-2 gap-3">
                   <input
                     name="windSpeedMin"
                     type="number"
                     step="0.1"
                     min="0"
-                    placeholder="Mín."
+                    placeholder={t('sessions.form.windRealMinPlaceholder')}
                     defaultValue={editingSession.windSpeedMin ?? ''}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   />
@@ -457,7 +459,7 @@ export default function SessionsPage() {
                     type="number"
                     step="0.1"
                     min="0"
-                    placeholder="Máx."
+                    placeholder={t('sessions.form.windRealMaxPlaceholder')}
                     defaultValue={editingSession.windSpeedMax ?? ''}
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   />
@@ -465,7 +467,7 @@ export default function SessionsPage() {
               </div>
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Dirección</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">{t('sessions.form.windDirectionLabel')}</label>
                   <input
                     name="windDirection"
                     type="text"
@@ -474,7 +476,7 @@ export default function SessionsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Olas (m)</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">{t('sessions.form.waveHeightLabel')}</label>
                   <input
                     name="waveHeight"
                     type="number"
@@ -485,7 +487,7 @@ export default function SessionsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Horas</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">{t('sessions.form.durationHoursLabel')}</label>
                   <input
                     name="durationHours"
                     type="number"
@@ -504,15 +506,15 @@ export default function SessionsPage() {
                   defaultChecked={!!editingSession.coachOnWater}
                   className="rounded border-gray-300"
                 />
-                Hubo soporte de coach en el agua
+                {t('sessions.form.coachOnWaterLabel')}
               </label>
 
               <div className="flex gap-3">
                 <Button type="submit" disabled={updateMutation.isPending}>
-                  {updateMutation.isPending ? 'Guardando...' : 'Guardar cambios'}
+                  {updateMutation.isPending ? t('sessions.form.saving') : t('sessions.form.save')}
                 </Button>
                 <Button type="button" variant="outline" onClick={() => setEditingSession(null)}>
-                  Cancelar
+                  {t('common.cancel')}
                 </Button>
               </div>
             </form>

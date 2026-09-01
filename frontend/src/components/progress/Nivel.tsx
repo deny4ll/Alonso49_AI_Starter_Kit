@@ -1,3 +1,7 @@
+'use client'
+
+import { useT } from '@/lib/i18n/useT'
+
 export function nivelBandClasses(nivel: number) {
   if (nivel >= 7.5) return { bar: 'bg-emerald-500', text: 'text-emerald-700' }
   if (nivel >= 4) return { bar: 'bg-amber-500', text: 'text-amber-700' }
@@ -12,8 +16,9 @@ export function DeltaTag({ delta }: { delta: number | null }) {
 }
 
 export function NivelReadout({ nivel, delta }: { nivel: number | null; delta: number | null }) {
+  const t = useT()
   if (nivel == null) {
-    return <span className="text-xs text-gray-400">Sin datos aún</span>
+    return <span className="text-xs text-gray-400">{t('progress.nivel.noData')}</span>
   }
   return (
     <span className="inline-flex items-center gap-1.5">

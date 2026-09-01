@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/Button'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { usersApi } from '@/lib/api'
 import { useAuthStore } from '@/stores/auth'
+import { useT } from '@/lib/i18n/useT'
 
 const inputClass =
   'w-full px-3 py-2 border border-border bg-background text-foreground rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent'
@@ -31,6 +32,7 @@ const emptyAthleteProfile = {
 }
 
 export default function SettingsPage() {
+  const t = useT()
   const { user, token, setAuth } = useAuthStore()
 
   const [profile, setProfile] = useState({
@@ -91,7 +93,7 @@ export default function SettingsPage() {
       try {
         kpis = JSON.parse(athleteProfile.kpis)
       } catch {
-        setAthleteProfileError('Los KPIs deben ser un JSON válido, ej: {"vmg": 6.2}')
+        setAthleteProfileError(t('settings.athlete.kpisInvalid'))
         setAthleteProfileStatus('error')
         return
       }
@@ -117,7 +119,7 @@ export default function SettingsPage() {
       })
       setAthleteProfileStatus('saved')
     } catch (err: any) {
-      setAthleteProfileError(err.response?.data?.message || 'No se pudo actualizar el perfil de atleta')
+      setAthleteProfileError(err.response?.data?.message || t('settings.athlete.error'))
       setAthleteProfileStatus('error')
     }
   }
@@ -133,7 +135,7 @@ export default function SettingsPage() {
       }
       setProfileStatus('saved')
     } catch (err: any) {
-      setProfileError(err.response?.data?.message || 'No se pudo actualizar el perfil')
+      setProfileError(err.response?.data?.message || t('settings.profile.error'))
       setProfileStatus('error')
     }
   }
@@ -143,7 +145,7 @@ export default function SettingsPage() {
     setPasswordError('')
 
     if (passwords.next !== passwords.confirm) {
-      setPasswordError('Las contraseñas nuevas no coinciden')
+      setPasswordError(t('settings.password.mismatch'))
       setPasswordStatus('error')
       return
     }
@@ -154,7 +156,7 @@ export default function SettingsPage() {
       setPasswords({ current: '', next: '', confirm: '' })
       setPasswordStatus('saved')
     } catch (err: any) {
-      setPasswordError(err.response?.data?.message || 'No se pudo cambiar la contraseña')
+      setPasswordError(err.response?.data?.message || t('settings.password.error'))
       setPasswordStatus('error')
     }
   }
@@ -162,16 +164,16 @@ export default function SettingsPage() {
   return (
     <DashboardLayout>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground mb-2">Configuración</h1>
-        <p className="text-muted-foreground">Editá tu perfil y preferencias de la cuenta</p>
+        <h1 className="text-3xl font-bold text-foreground mb-2">{t('settings.title')}</h1>
+        <p className="text-muted-foreground">{t('settings.subtitle')}</p>
       </div>
 
       <div className="max-w-2xl space-y-6">
-        <Card title="Perfil">
+        <Card title={t('settings.profile.cardTitle')}>
           <form onSubmit={handleProfileSubmit} className="space-y-4">
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-muted-foreground mb-2">Nombre</label>
+                <label className="block text-sm font-medium text-muted-foreground mb-2">{t('settings.profile.firstName')}</label>
                 <input
                   type="text"
                   value={profile.firstName}
@@ -181,7 +183,7 @@ export default function SettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-muted-foreground mb-2">Apellido</label>
+                <label className="block text-sm font-medium text-muted-foreground mb-2">{t('settings.profile.lastName')}</label>
                 <input
                   type="text"
                   value={profile.lastName}
@@ -194,31 +196,31 @@ export default function SettingsPage() {
 
             <div>
               <label className="block text-sm font-medium text-muted-foreground mb-2">
-                Correo electrónico
+                {t('settings.profile.email')}
               </label>
               <input type="email" value={user?.email || ''} disabled className={`${inputClass} opacity-60`} />
             </div>
 
             {profileError && <p className="text-sm text-destructive">{profileError}</p>}
-            {profileStatus === 'saved' && <p className="text-sm text-green-600">Perfil actualizado.</p>}
+            {profileStatus === 'saved' && <p className="text-sm text-green-600">{t('settings.profile.saved')}</p>}
 
             <Button type="submit" disabled={profileStatus === 'saving'}>
-              {profileStatus === 'saving' ? 'Guardando...' : 'Guardar cambios'}
+              {profileStatus === 'saving' ? t('settings.profile.saving') : t('settings.profile.save')}
             </Button>
           </form>
         </Card>
 
         {user?.role === 'ATHLETE' && (
-          <Card title="Datos de Atleta">
+          <Card title={t('settings.athlete.cardTitle')}>
             {athleteProfileStatus === 'loading' ? (
-              <p className="text-sm text-muted-foreground">Cargando...</p>
+              <p className="text-sm text-muted-foreground">{t('settings.athlete.loading')}</p>
             ) : (
               <form onSubmit={handleAthleteProfileSubmit} className="space-y-6">
                 <div>
-                  <h3 className="text-sm font-semibold text-foreground mb-3">Físico</h3>
+                  <h3 className="text-sm font-semibold text-foreground mb-3">{t('settings.athlete.physical')}</h3>
                   <div className="grid sm:grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-muted-foreground mb-2">Peso (kg)</label>
+                      <label className="block text-sm font-medium text-muted-foreground mb-2">{t('settings.athlete.weight')}</label>
                       <input
                         type="number"
                         step="0.1"
@@ -228,7 +230,7 @@ export default function SettingsPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-muted-foreground mb-2">Altura (cm)</label>
+                      <label className="block text-sm font-medium text-muted-foreground mb-2">{t('settings.athlete.height')}</label>
                       <input
                         type="number"
                         step="0.1"
@@ -239,7 +241,7 @@ export default function SettingsPage() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-muted-foreground mb-2">
-                        Fecha de nacimiento
+                        {t('settings.athlete.birthDate')}
                       </label>
                       <input
                         type="date"
@@ -252,40 +254,40 @@ export default function SettingsPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-semibold text-foreground mb-3">Deportivo</h3>
+                  <h3 className="text-sm font-semibold text-foreground mb-3">{t('settings.athlete.sportive')}</h3>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-muted-foreground mb-2">
-                        Número de vela
+                        {t('settings.athlete.sailNumber')}
                       </label>
                       <input
                         type="text"
                         value={athleteProfile.sailNumber}
                         onChange={(e) => setAthleteProfile({ ...athleteProfile, sailNumber: e.target.value })}
                         className={inputClass}
-                        placeholder="Ej: ARG-49"
+                        placeholder={t('settings.athlete.sailNumberPlaceholder')}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-muted-foreground mb-2">Posición</label>
+                      <label className="block text-sm font-medium text-muted-foreground mb-2">{t('settings.athlete.position')}</label>
                       <input
                         type="text"
                         value={athleteProfile.position}
                         onChange={(e) => setAthleteProfile({ ...athleteProfile, position: e.target.value })}
                         className={inputClass}
-                        placeholder="Ej: Helm, Crew"
+                        placeholder={t('settings.athlete.positionPlaceholder')}
                       />
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-muted-foreground mb-2">
-                        Nivel de experiencia
+                        {t('settings.athlete.experienceLevel')}
                       </label>
                       <select
                         value={athleteProfile.experienceLevel}
                         onChange={(e) => setAthleteProfile({ ...athleteProfile, experienceLevel: e.target.value })}
                         className={inputClass}
                       >
-                        <option value="">Sin definir</option>
+                        <option value="">{t('settings.athlete.experienceUndefined')}</option>
                         {EXPERIENCE_LEVELS.map((level) => (
                           <option key={level} value={level}>
                             {level}
@@ -294,7 +296,7 @@ export default function SettingsPage() {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-muted-foreground mb-2">Nacionalidad</label>
+                      <label className="block text-sm font-medium text-muted-foreground mb-2">{t('settings.athlete.nationality')}</label>
                       <input
                         type="text"
                         value={athleteProfile.nationality}
@@ -306,11 +308,11 @@ export default function SettingsPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-semibold text-foreground mb-3">Planificación</h3>
+                  <h3 className="text-sm font-semibold text-foreground mb-3">{t('settings.athlete.planning')}</h3>
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-muted-foreground mb-2">
-                        Objetivo de temporada
+                        {t('settings.athlete.seasonGoal')}
                       </label>
                       <input
                         type="text"
@@ -322,7 +324,7 @@ export default function SettingsPage() {
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-medium text-muted-foreground mb-2">
-                          Microciclo actual
+                          {t('settings.athlete.currentMicrocycle')}
                         </label>
                         <input
                           type="text"
@@ -335,7 +337,7 @@ export default function SettingsPage() {
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-muted-foreground mb-2">
-                          Foco de hoy
+                          {t('settings.athlete.todayObjective')}
                         </label>
                         <input
                           type="text"
@@ -347,7 +349,7 @@ export default function SettingsPage() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-muted-foreground mb-2">
-                        Objetivos de la semana
+                        {t('settings.athlete.weeklyObjectives')}
                       </label>
                       <textarea
                         value={athleteProfile.weeklyObjectives}
@@ -358,25 +360,25 @@ export default function SettingsPage() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-muted-foreground mb-2">
-                        KPIs (formato JSON)
+                        {t('settings.athlete.kpisLabel')}
                       </label>
                       <textarea
                         value={athleteProfile.kpis}
                         onChange={(e) => setAthleteProfile({ ...athleteProfile, kpis: e.target.value })}
                         className={`${inputClass} font-mono text-sm`}
                         rows={3}
-                        placeholder='{"vmg": 6.2, "tackingEfficiency": 0.85}'
+                        placeholder={t('settings.athlete.kpisPlaceholder')}
                       />
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="text-sm font-semibold text-foreground mb-3">Competición y Equipo</h3>
+                  <h3 className="text-sm font-semibold text-foreground mb-3">{t('settings.athlete.competitionTeam')}</h3>
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-muted-foreground mb-2">
-                        Próximo evento
+                        {t('settings.athlete.nextEvent')}
                       </label>
                       <input
                         type="text"
@@ -387,7 +389,7 @@ export default function SettingsPage() {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-muted-foreground mb-2">
-                        Setup del barco
+                        {t('settings.athlete.boatSetup')}
                       </label>
                       <input
                         type="text"
@@ -401,22 +403,22 @@ export default function SettingsPage() {
 
                 {athleteProfileError && <p className="text-sm text-destructive">{athleteProfileError}</p>}
                 {athleteProfileStatus === 'saved' && (
-                  <p className="text-sm text-green-600">Perfil de atleta actualizado.</p>
+                  <p className="text-sm text-green-600">{t('settings.athlete.saved')}</p>
                 )}
 
                 <Button type="submit" disabled={athleteProfileStatus === 'saving'}>
-                  {athleteProfileStatus === 'saving' ? 'Guardando...' : 'Guardar datos de atleta'}
+                  {athleteProfileStatus === 'saving' ? t('settings.athlete.saving') : t('settings.athlete.save')}
                 </Button>
               </form>
             )}
           </Card>
         )}
 
-        <Card title="Contraseña">
+        <Card title={t('settings.password.cardTitle')}>
           <form onSubmit={handlePasswordSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-muted-foreground mb-2">
-                Contraseña actual
+                {t('settings.password.current')}
               </label>
               <input
                 type="password"
@@ -429,7 +431,7 @@ export default function SettingsPage() {
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-muted-foreground mb-2">
-                  Nueva contraseña
+                  {t('settings.password.new')}
                 </label>
                 <input
                   type="password"
@@ -442,7 +444,7 @@ export default function SettingsPage() {
               </div>
               <div>
                 <label className="block text-sm font-medium text-muted-foreground mb-2">
-                  Confirmar contraseña
+                  {t('settings.password.confirm')}
                 </label>
                 <input
                   type="password"
@@ -456,17 +458,17 @@ export default function SettingsPage() {
             </div>
 
             {passwordError && <p className="text-sm text-destructive">{passwordError}</p>}
-            {passwordStatus === 'saved' && <p className="text-sm text-green-600">Contraseña actualizada.</p>}
+            {passwordStatus === 'saved' && <p className="text-sm text-green-600">{t('settings.password.saved')}</p>}
 
             <Button type="submit" disabled={passwordStatus === 'saving'}>
-              {passwordStatus === 'saving' ? 'Guardando...' : 'Cambiar contraseña'}
+              {passwordStatus === 'saving' ? t('settings.password.saving') : t('settings.password.save')}
             </Button>
           </form>
         </Card>
 
-        <Card title="Tema">
+        <Card title={t('settings.theme.cardTitle')}>
           <p className="text-sm text-muted-foreground mb-4">
-            Elegí cómo se ve la app. &quot;Sistema&quot; sigue la preferencia de tu computadora.
+            {t('settings.theme.description')}
           </p>
           <ThemeToggle />
         </Card>

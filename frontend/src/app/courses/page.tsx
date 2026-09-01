@@ -6,8 +6,10 @@ import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { coursesApi } from '@/lib/api'
 import { BookOpen, Clock, DollarSign } from 'lucide-react'
+import { useT } from '@/lib/i18n/useT'
 
 export default function CoursesPage() {
+  const t = useT()
   const { data: courses, isLoading } = useQuery({
     queryKey: ['courses'],
     queryFn: async () => {
@@ -19,13 +21,13 @@ export default function CoursesPage() {
   return (
     <DashboardLayout>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Cursos</h1>
-        <p className="text-gray-600">Explora y accede a cursos de alto rendimiento</p>
+        <h1 className="text-3xl font-bold mb-2">{t('courses.header.title')}</h1>
+        <p className="text-gray-600">{t('courses.header.subtitle')}</p>
       </div>
 
       {isLoading ? (
         <div className="text-center py-12">
-          <p className="text-gray-500">Cargando cursos...</p>
+          <p className="text-gray-500">{t('courses.loading')}</p>
         </div>
       ) : courses && courses.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -39,15 +41,15 @@ export default function CoursesPage() {
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2 text-sm text-gray-500">
                   <Clock className="h-4 w-4" />
-                  <span>{course.modules?.length || 0} módulos</span>
+                  <span>{course.modules?.length || 0} {t('courses.modulesLabel')}</span>
                 </div>
                 <div className="flex items-center gap-1 text-lg font-bold text-red-600">
                   <DollarSign className="h-5 w-5" />
-                  {course.price === 0 ? 'Gratis' : course.price}
+                  {course.price === 0 ? t('courses.free') : course.price}
                 </div>
               </div>
               <Button className="w-full">
-                {course.price === 0 ? 'Acceder' : 'Inscribirse'}
+                {course.price === 0 ? t('courses.access') : t('courses.enroll')}
               </Button>
             </Card>
           ))}
@@ -56,8 +58,8 @@ export default function CoursesPage() {
         <Card>
           <div className="text-center py-12">
             <BookOpen className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 mb-4">No hay cursos disponibles en este momento</p>
-            <p className="text-sm text-gray-400">Pronto habrá contenido educativo disponible</p>
+            <p className="text-gray-500 mb-4">{t('courses.empty.title')}</p>
+            <p className="text-sm text-gray-400">{t('courses.empty.subtitle')}</p>
           </div>
         </Card>
       )}

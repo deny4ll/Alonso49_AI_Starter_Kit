@@ -5,8 +5,11 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { authApi } from '@/lib/api'
 import { useAuthStore } from '@/stores/auth'
+import { useT } from '@/lib/i18n/useT'
+import { LanguageToggle } from '@/components/ui/LanguageToggle'
 
 export default function LoginPage() {
+  const t = useT()
   const router = useRouter()
   const setAuth = useAuthStore((state) => state.setAuth)
   const [email, setEmail] = useState('')
@@ -29,7 +32,7 @@ export default function LoginPage() {
       
       router.push('/dashboard')
     } catch (err: any) {
-      setError(err.response?.data?.message || 'Error al iniciar sesión')
+      setError(err.response?.data?.message || t('login.defaultError'))
       setLoading(false)
     }
   }
@@ -37,12 +40,15 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-red-50 to-white flex items-center justify-center px-4">
       <div className="max-w-md w-full">
+        <div className="flex justify-end mb-4">
+          <LanguageToggle />
+        </div>
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <img src="/logo-mark-512.png" alt="SAILVEX" className="h-16 w-16 rounded-lg" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-900">SAILVEX</h1>
-          <p className="text-gray-600 mt-2">Inicia sesión en tu cuenta</p>
+          <h1 className="text-3xl font-bold text-gray-900">{t('login.title')}</h1>
+          <p className="text-gray-600 mt-2">{t('login.subtitle')}</p>
         </div>
 
         <form onSubmit={handleSubmit} className="bg-white shadow-lg rounded-lg p-8">
@@ -54,7 +60,7 @@ export default function LoginPage() {
 
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-              Correo electrónico
+              {t('login.email')}
             </label>
             <input
               id="email"
@@ -68,7 +74,7 @@ export default function LoginPage() {
 
           <div className="mb-6">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-              Contraseña
+              {t('login.password')}
             </label>
             <input
               id="password"
@@ -85,13 +91,13 @@ export default function LoginPage() {
             disabled={loading}
             className="w-full bg-red-600 text-white py-2 rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+            {loading ? t('login.submitting') : t('login.submit')}
           </button>
 
           <p className="mt-4 text-center text-sm text-gray-600">
-            ¿No tienes cuenta?{' '}
+            {t('login.noAccount')}{' '}
             <Link href="/register" className="text-red-600 hover:underline">
-              Regístrate
+              {t('login.registerLink')}
             </Link>
           </p>
         </form>

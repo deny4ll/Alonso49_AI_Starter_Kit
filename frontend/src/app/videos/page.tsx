@@ -8,6 +8,7 @@ import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { videosApi, tagsApi, sessionsApi } from '@/lib/api'
 import { Plus, Play, Trash2, FileText, Search, X } from 'lucide-react'
+import { useT } from '@/lib/i18n/useT'
 
 interface Tag {
   id: string
@@ -25,6 +26,7 @@ export default function VideosPage() {
 }
 
 function VideosPageContent() {
+  const t = useT()
   const [showModal, setShowModal] = useState(false)
   const [contentType, setContentType] = useState<'VIDEO' | 'REPORT'>('VIDEO')
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([])
@@ -98,7 +100,7 @@ function VideosPageContent() {
     },
     onSuccess: onUploadSuccess,
     onError: (err: any) => {
-      setUploadError(err.response?.data?.message || 'No se pudo subir el video. Probá con un archivo más liviano.')
+      setUploadError(err.response?.data?.message || t('videos.errors.uploadFailed'))
     },
   })
 
@@ -117,7 +119,7 @@ function VideosPageContent() {
     setUploadError('')
 
     if (selectedTagIds.length === 0) {
-      setUploadError('Elegí al menos un área de trabajo que hayas entrenado en esta sesión.')
+      setUploadError(t('videos.errors.tagsRequired'))
       return
     }
 
@@ -126,7 +128,7 @@ function VideosPageContent() {
     if (contentType === 'VIDEO') {
       const file = formData.get('file') as File
       if (!file || file.size === 0) {
-        setUploadError('Elegí un archivo de video')
+        setUploadError(t('videos.errors.fileRequired'))
         return
       }
       uploadMutation.mutate({
@@ -161,32 +163,32 @@ function VideosPageContent() {
     <DashboardLayout>
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Videos e Informes</h1>
-          <p className="text-gray-600">Organizados por área de trabajo (Metodología SAILVEX)</p>
+          <h1 className="text-3xl font-bold mb-2">{t('videos.header.title')}</h1>
+          <p className="text-gray-600">{t('videos.header.subtitle')}</p>
         </div>
         <Button onClick={() => setShowModal(true)}>
           <Plus className="h-4 w-4 mr-2" />
-          Subir Video / Informe
+          {t('videos.header.uploadButton')}
         </Button>
       </div>
 
       {sessionIdFilter && (
         <Card className="mb-6 flex items-center justify-between">
           <p className="text-sm text-gray-700">
-            Mostrando videos/informes de la sesión{' '}
+            {t('videos.filter.sessionPrefix')}{' '}
             <span className="font-semibold">{filteredSession?.title || '...'}</span>
           </p>
           <button
             onClick={() => router.push('/videos')}
             className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700"
           >
-            <X className="h-4 w-4" /> Quitar filtro
+            <X className="h-4 w-4" /> {t('videos.filter.removeFilter')}
           </button>
         </Card>
       )}
 
       {loadDistribution && loadDistribution.total > 0 && (
-        <Card className="mb-6" title="Distribución de carga por área">
+        <Card className="mb-6" title={t('videos.loadDistribution.title')}>
           <div className="space-y-2">
             {loadDistribution.sections
               .filter((s) => s.percentage > 0)
@@ -200,7 +202,7 @@ function VideosPageContent() {
                 </div>
               ))}
             {loadDistribution.sections.every((s) => s.percentage === 0) && (
-              <p className="text-sm text-gray-500">Todavía no hay contenido etiquetado por área.</p>
+              <p className="text-sm text-gray-500">{t('videos.loadDistribution.empty')}</p>
             )}
           </div>
         </Card>
@@ -212,7 +214,7 @@ function VideosPageContent() {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
             <input
               type="text"
-              placeholder="Buscar por título, descripción o feedback..."
+              placeholder={t('videos.search.placeholder')}
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
@@ -223,10 +225,12 @@ function VideosPageContent() {
             onChange={(e) => setAreaFilter(e.target.value)}
             className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent sm:w-64"
           >
-            <option value="">Todas las áreas</option>
+            <option value="">{t('videos.search.allAreas')}</option>
             {sections?.map((section) => (
               <optgroup key={section.id} label={section.label}>
-                <option value={section.key}>{section.label} (toda la sección)</option>
+                <option value={section.key}>
+                  {section.label} ({t('videos.search.wholeSection')})
+                </option>
                 {section.children?.map((child) => (
                   <option key={child.id} value={child.key}>
                     {child.label}
@@ -240,7 +244,7 @@ function VideosPageContent() {
 
       {isLoading ? (
         <div className="text-center py-12">
-          <p className="text-gray-500">Cargando...</p>
+          <p className="text-gray-500">{t('videos.loading')}</p>
         </div>
       ) : videos && videos.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -257,7 +261,7 @@ function VideosPageContent() {
               </div>
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-xs px-2 py-0.5 bg-gray-100 text-gray-700 rounded">
-                  {video.type === 'REPORT' ? 'Informe' : 'Video'}
+                  {video.type === 'REPORT' ? t('videos.type.report') : t('videos.type.video')}
                 </span>
               </div>
               <h3 className="font-semibold mb-2">{video.title}</h3>
@@ -275,7 +279,9 @@ function VideosPageContent() {
                 </div>
               )}
               <div className="flex items-center justify-between">
-                <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded">{video.status}</span>
+                <span className="text-xs px-2 py-1 bg-green-100 text-green-800 rounded">
+                  {t(`videos.status.${video.status}`)}
+                </span>
                 <button
                   onClick={() => deleteMutation.mutate(video.id)}
                   className="p-2 text-destructive hover:bg-destructive/10 rounded"
@@ -290,10 +296,10 @@ function VideosPageContent() {
         <Card>
           <div className="text-center py-12">
             <Play className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 mb-4">No hay videos ni informes que coincidan</p>
+            <p className="text-gray-500 mb-4">{t('videos.empty.message')}</p>
             <Button onClick={() => setShowModal(true)}>
               <Plus className="h-4 w-4 mr-2" />
-              Subir contenido
+              {t('videos.empty.uploadButton')}
             </Button>
           </div>
         </Card>
@@ -302,30 +308,30 @@ function VideosPageContent() {
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-card text-card-foreground rounded-lg p-6 max-w-lg w-full max-h-[90vh] overflow-y-auto">
-            <h2 className="text-2xl font-bold mb-4">Subir Video o Informe</h2>
+            <h2 className="text-2xl font-bold mb-4">{t('videos.modal.title')}</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Tipo</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t('videos.modal.typeLabel')}</label>
                 <div className="flex gap-2">
                   <button
                     type="button"
                     onClick={() => setContentType('VIDEO')}
                     className={`flex-1 px-3 py-2 rounded-lg border ${contentType === 'VIDEO' ? 'border-red-600 bg-red-50 text-red-700' : 'border-gray-300 text-gray-600'}`}
                   >
-                    Video
+                    {t('videos.modal.typeVideo')}
                   </button>
                   <button
                     type="button"
                     onClick={() => setContentType('REPORT')}
                     className={`flex-1 px-3 py-2 rounded-lg border ${contentType === 'REPORT' ? 'border-red-600 bg-red-50 text-red-700' : 'border-gray-300 text-gray-600'}`}
                   >
-                    Informe (sin video)
+                    {t('videos.modal.typeReport')}
                   </button>
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Título</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t('videos.modal.titleLabel')}</label>
                 <input
                   name="title"
                   type="text"
@@ -334,7 +340,7 @@ function VideosPageContent() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Descripción</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">{t('videos.modal.descriptionLabel')}</label>
                 <textarea
                   name="description"
                   rows={2}
@@ -343,7 +349,7 @@ function VideosPageContent() {
               </div>
               {contentType === 'VIDEO' && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Archivo de video</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">{t('videos.modal.fileLabel')}</label>
                   <input
                     name="file"
                     type="file"
@@ -351,12 +357,12 @@ function VideosPageContent() {
                     required
                     className="w-full text-sm text-gray-600 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-red-600 file:text-white file:cursor-pointer"
                   />
-                  <p className="text-xs text-gray-500 mt-1">Máximo 200MB.</p>
+                  <p className="text-xs text-gray-500 mt-1">{t('videos.modal.maxSize')}</p>
                 </div>
               )}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Feedback (qué estuvo bien / qué mejorar)
+                  {t('videos.modal.feedbackLabel')}
                 </label>
                 <textarea
                   name="feedback"
@@ -367,11 +373,10 @@ function VideosPageContent() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Áreas de trabajo (Metodología SAILVEX) <span className="text-red-600">*</span>
+                  {t('videos.modal.areasLabel')} <span className="text-red-600">*</span>
                 </label>
                 <p className="text-xs text-gray-500 mb-2">
-                  Elegí 1, 2 o todas las áreas que trabajaste en esta sesión — así se calcula tu distribución de
-                  carga de trabajo en el Dashboard.
+                  {t('videos.modal.areasHint')}
                 </p>
                 <div className="max-h-56 overflow-y-auto border border-gray-200 rounded-lg p-3 space-y-3">
                   {sections?.map((section) => (
@@ -402,10 +407,10 @@ function VideosPageContent() {
 
               <div className="flex gap-3">
                 <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? 'Subiendo...' : 'Subir'}
+                  {isSubmitting ? t('videos.modal.submitting') : t('videos.modal.submit')}
                 </Button>
                 <Button type="button" variant="outline" onClick={() => setShowModal(false)}>
-                  Cancelar
+                  {t('videos.modal.cancel')}
                 </Button>
               </div>
             </form>
