@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { analyticsApi, progressApi } from '@/lib/api'
 import { TrendingUp, Activity, Target, Bot, Waves, Moon, Gauge } from 'lucide-react'
+import { useT } from '@/lib/i18n/useT'
 
 interface BenchmarkDraft {
   averageSpeed: string
@@ -25,6 +26,7 @@ const EMPTY_BENCHMARK_DRAFT: BenchmarkDraft = {
 }
 
 export default function AnalyticsPage() {
+  const t = useT()
   const queryClient = useQueryClient()
   const [bigPictureDraft, setBigPictureDraft] = useState('')
   const [editingBigPicture, setEditingBigPicture] = useState(false)
@@ -110,10 +112,15 @@ export default function AnalyticsPage() {
   })
 
   const metrics = [
-    { name: 'Días de agua', value: stats?.daysOnWater ?? 0, icon: Waves, color: 'blue' },
-    { name: 'Promedio mensual', value: stats?.monthlyAvgDaysOnWater ?? 0, icon: TrendingUp, color: 'green' },
-    { name: 'Días de descanso', value: stats?.restDays ?? 0, icon: Moon, color: 'purple' },
-    { name: 'Horas con AI Coach', value: stats?.aiCoachHours ?? 0, icon: Bot, color: 'orange' },
+    { name: t('analytics.metrics.daysOnWater'), value: stats?.daysOnWater ?? 0, icon: Waves, color: 'blue' },
+    {
+      name: t('analytics.metrics.monthlyAvg'),
+      value: stats?.monthlyAvgDaysOnWater ?? 0,
+      icon: TrendingUp,
+      color: 'green',
+    },
+    { name: t('analytics.metrics.restDays'), value: stats?.restDays ?? 0, icon: Moon, color: 'purple' },
+    { name: t('analytics.metrics.aiCoachHours'), value: stats?.aiCoachHours ?? 0, icon: Bot, color: 'orange' },
   ]
 
   const colors: Record<string, string> = {
@@ -125,15 +132,23 @@ export default function AnalyticsPage() {
 
   const comparisonRows = comparison
     ? [
-        { label: 'Velocidad media (nudos)', actual: comparison.actual.averageSpeed, target: comparison.benchmark?.averageSpeed },
-        { label: 'Velocidad máxima (nudos)', actual: comparison.actual.maxSpeed, target: comparison.benchmark?.maxSpeed },
         {
-          label: 'Eficiencia de viradas (%)',
+          label: t('analytics.benchmark.rows.averageSpeed'),
+          actual: comparison.actual.averageSpeed,
+          target: comparison.benchmark?.averageSpeed,
+        },
+        {
+          label: t('analytics.benchmark.rows.maxSpeed'),
+          actual: comparison.actual.maxSpeed,
+          target: comparison.benchmark?.maxSpeed,
+        },
+        {
+          label: t('analytics.benchmark.rows.tackingEfficiency'),
           actual: comparison.actual.tackingEfficiency,
           target: comparison.benchmark?.tackingEfficiency,
         },
         {
-          label: 'Score de rendimiento',
+          label: t('analytics.benchmark.rows.performanceScore'),
           actual: comparison.actual.performanceScore,
           target: comparison.benchmark?.performanceScore,
         },
@@ -143,8 +158,8 @@ export default function AnalyticsPage() {
   return (
     <DashboardLayout>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Estadísticas</h1>
-        <p className="text-gray-600">Analiza tu rendimiento y progreso</p>
+        <h1 className="text-3xl font-bold mb-2">{t('analytics.header.title')}</h1>
+        <p className="text-gray-600">{t('analytics.header.subtitle')}</p>
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
@@ -155,7 +170,7 @@ export default function AnalyticsPage() {
             </div>
           </div>
           <div className="text-3xl font-bold mb-1">{stats?.sessions ?? 0}</div>
-          <div className="text-sm text-gray-600">Total Sesiones</div>
+          <div className="text-sm text-gray-600">{t('analytics.cards.totalSessions')}</div>
         </Card>
         <Card>
           <div className="flex items-center justify-between mb-4">
@@ -164,7 +179,7 @@ export default function AnalyticsPage() {
             </div>
           </div>
           <div className="text-3xl font-bold mb-1">{stats?.videos ?? 0}</div>
-          <div className="text-sm text-gray-600">Total Videos</div>
+          <div className="text-sm text-gray-600">{t('analytics.cards.totalVideos')}</div>
         </Card>
         {metrics.slice(0, 2).map((metric) => {
           const Icon = metric.icon
@@ -201,7 +216,7 @@ export default function AnalyticsPage() {
         })}
       </div>
 
-      <Card className="mb-6" title="Tus mejores marcas de velocidad (GPS)">
+      <Card className="mb-6" title={t('analytics.gps.title')}>
         {stats?.gpsTracksCount ? (
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="flex items-center gap-4">
@@ -210,7 +225,7 @@ export default function AnalyticsPage() {
               </div>
               <div>
                 <div className="text-2xl font-bold">{stats.bestMaxSpeed ?? '--'} kn</div>
-                <div className="text-sm text-gray-600">Velocidad máxima registrada</div>
+                <div className="text-sm text-gray-600">{t('analytics.gps.maxSpeed')}</div>
               </div>
             </div>
             <div className="flex items-center gap-4">
@@ -219,28 +234,30 @@ export default function AnalyticsPage() {
               </div>
               <div>
                 <div className="text-2xl font-bold">{stats.bestAverageSpeed ?? '--'} kn</div>
-                <div className="text-sm text-gray-600">Mejor velocidad media de una salida</div>
+                <div className="text-sm text-gray-600">{t('analytics.gps.bestAverageSpeed')}</div>
               </div>
             </div>
           </div>
         ) : (
           <p className="text-sm text-gray-500">
-            Todavía no hay velocidades calculadas. Subí un tracker GPS en{' '}
+            {t('analytics.gps.emptyPrefix')}{' '}
             <a href="/trackers" className="text-red-600 hover:underline">
-              Trackers
+              {t('analytics.gps.emptyLinkText')}
             </a>{' '}
-            (idealmente vinculado a una sesión) para ver tus marcas reales acá.
+            {t('analytics.gps.emptySuffix')}
           </p>
         )}
       </Card>
 
       {teamId ? (
-        <Card className="mb-6" title="Progreso del equipo vs. Equipo Target AI">
+        <Card className="mb-6" title={t('analytics.benchmark.title')}>
           {editingBenchmark ? (
             <div className="space-y-3">
               <div className="grid sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Velocidad media objetivo (nudos)</label>
+                  <label className="block text-xs text-gray-500 mb-1">
+                    {t('analytics.benchmark.fields.averageSpeed')}
+                  </label>
                   <input
                     type="number"
                     step="0.1"
@@ -250,7 +267,9 @@ export default function AnalyticsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Velocidad máxima objetivo (nudos)</label>
+                  <label className="block text-xs text-gray-500 mb-1">
+                    {t('analytics.benchmark.fields.maxSpeed')}
+                  </label>
                   <input
                     type="number"
                     step="0.1"
@@ -260,7 +279,9 @@ export default function AnalyticsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Eficiencia de viradas objetivo (%)</label>
+                  <label className="block text-xs text-gray-500 mb-1">
+                    {t('analytics.benchmark.fields.tackingEfficiency')}
+                  </label>
                   <input
                     type="number"
                     step="0.1"
@@ -270,7 +291,9 @@ export default function AnalyticsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Score de rendimiento objetivo</label>
+                  <label className="block text-xs text-gray-500 mb-1">
+                    {t('analytics.benchmark.fields.performanceScore')}
+                  </label>
                   <input
                     type="number"
                     step="0.1"
@@ -280,7 +303,9 @@ export default function AnalyticsPage() {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Días de agua/mes objetivo</label>
+                  <label className="block text-xs text-gray-500 mb-1">
+                    {t('analytics.benchmark.fields.daysOnWaterPerMonth')}
+                  </label>
                   <input
                     type="number"
                     step="0.1"
@@ -292,10 +317,10 @@ export default function AnalyticsPage() {
               </div>
               <div className="flex gap-2">
                 <Button size="sm" onClick={() => saveBenchmarkMutation.mutate()} disabled={saveBenchmarkMutation.isPending}>
-                  Guardar
+                  {t('analytics.benchmark.save')}
                 </Button>
                 <Button size="sm" variant="outline" onClick={() => setEditingBenchmark(false)}>
-                  Cancelar
+                  {t('analytics.benchmark.cancel')}
                 </Button>
               </div>
             </div>
@@ -306,19 +331,22 @@ export default function AnalyticsPage() {
                   <span className="text-sm text-gray-700">{row.label}</span>
                   <span className="text-sm">
                     <span className="font-semibold">{row.actual ?? '--'}</span>
-                    <span className="text-gray-400"> / objetivo {row.target ?? '--'}</span>
+                    <span className="text-gray-400">
+                      {' '}
+                      / {t('analytics.benchmark.targetLabel')} {row.target ?? '--'}
+                    </span>
                   </span>
                 </div>
               ))}
               <Button size="sm" variant="outline" onClick={() => setEditingBenchmark(true)}>
-                Editar benchmark
+                {t('analytics.benchmark.edit')}
               </Button>
             </div>
           ) : (
             <div>
-              <p className="text-sm text-gray-500 mb-3">Todavía no hay un benchmark configurado para este equipo.</p>
+              <p className="text-sm text-gray-500 mb-3">{t('analytics.benchmark.empty')}</p>
               <Button size="sm" variant="outline" onClick={() => setEditingBenchmark(true)}>
-                Configurar benchmark
+                {t('analytics.benchmark.configure')}
               </Button>
             </div>
           )}
@@ -326,7 +354,7 @@ export default function AnalyticsPage() {
       ) : null}
 
       {teamId ? (
-        <Card title="Big Picture: resumen del progreso del equipo">
+        <Card title={t('analytics.bigPicture.title')}>
           {editingBigPicture ? (
             <div className="space-y-3">
               <textarea
@@ -334,34 +362,31 @@ export default function AnalyticsPage() {
                 onChange={(e) => setBigPictureDraft(e.target.value)}
                 rows={5}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                placeholder="Resumen cualitativo del progreso del equipo a la fecha..."
+                placeholder={t('analytics.bigPicture.placeholder')}
               />
               <div className="flex gap-2">
                 <Button onClick={() => saveBigPictureMutation.mutate()} disabled={saveBigPictureMutation.isPending}>
-                  Guardar
+                  {t('analytics.bigPicture.save')}
                 </Button>
                 <Button variant="outline" onClick={() => setEditingBigPicture(false)}>
-                  Cancelar
+                  {t('analytics.bigPicture.cancel')}
                 </Button>
               </div>
             </div>
           ) : (
             <div>
               <p className="text-gray-700 whitespace-pre-wrap mb-4">
-                {bigPicture?.content || 'Todavía no hay un resumen. Agregá el análisis "Big Picture" del equipo.'}
+                {bigPicture?.content || t('analytics.bigPicture.empty')}
               </p>
               <Button variant="outline" onClick={() => setEditingBigPicture(true)}>
-                {bigPicture?.content ? 'Editar' : 'Escribir resumen'}
+                {bigPicture?.content ? t('analytics.bigPicture.edit') : t('analytics.bigPicture.write')}
               </Button>
             </div>
           )}
         </Card>
       ) : (
         <Card>
-          <p className="text-sm text-gray-500">
-            El benchmark de equipo y el resumen &quot;Big Picture&quot; están disponibles cuando el atleta pertenece a un
-            equipo.
-          </p>
+          <p className="text-sm text-gray-500">{t('analytics.bigPicture.noTeam')}</p>
         </Card>
       )}
     </DashboardLayout>

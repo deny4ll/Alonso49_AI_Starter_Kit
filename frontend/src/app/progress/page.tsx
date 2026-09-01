@@ -7,6 +7,7 @@ import { Card } from '@/components/ui/Card'
 import { progressApi } from '@/lib/api'
 import { ChevronDown, ChevronRight, Target } from 'lucide-react'
 import { nivelBandClasses, NivelReadout } from '@/components/progress/Nivel'
+import { useT } from '@/lib/i18n/useT'
 
 interface RecentEntry {
   title: string
@@ -36,6 +37,7 @@ interface Section {
 }
 
 export default function ProgressPage() {
+  const t = useT()
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
 
   const { data, isLoading } = useQuery({
@@ -60,10 +62,10 @@ export default function ProgressPage() {
   return (
     <DashboardLayout>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Área de Progreso</h1>
+        <h1 className="text-3xl font-bold mb-2">{t('progress.header.title')}</h1>
         <p className="text-gray-600">
-          Progreso acumulado según la Metodología SAILVEX
-          {data?.scope === 'team' ? ' — vista de equipo' : ' — vista individual'}
+          {t('progress.header.subtitleBase')}
+          {data?.scope === 'team' ? t('progress.header.subtitleTeam') : t('progress.header.subtitleIndividual')}
         </p>
       </div>
 
@@ -74,17 +76,17 @@ export default function ProgressPage() {
           </div>
           <div>
             <div className="text-3xl font-bold">{data?.totalEntries ?? 0}</div>
-            <div className="text-sm text-gray-600">Videos e informes etiquetados en total</div>
+            <div className="text-sm text-gray-600">{t('progress.summaryCard.label')}</div>
           </div>
         </div>
       </Card>
 
       <div className="flex items-center gap-4 mb-4 text-xs text-gray-500">
-        <span className="flex items-center gap-1.5"><span className="w-2.5 h-2 rounded-full bg-red-600" />Carga de trabajo</span>
-        <span className="flex items-center gap-1.5"><span className="w-2.5 h-2 rounded-full bg-emerald-500" />Nivel (AI Coach)</span>
+        <span className="flex items-center gap-1.5"><span className="w-2.5 h-2 rounded-full bg-red-600" />{t('progress.legend.workload')}</span>
+        <span className="flex items-center gap-1.5"><span className="w-2.5 h-2 rounded-full bg-emerald-500" />{t('progress.legend.nivel')}</span>
       </div>
 
-      {isLoading && <p className="text-gray-500">Cargando progreso...</p>}
+      {isLoading && <p className="text-gray-500">{t('progress.loading')}</p>}
 
       <div className="space-y-3">
         {data?.sections.map((section) => {
@@ -107,7 +109,7 @@ export default function ProgressPage() {
                 </div>
                 <div className="flex items-center gap-5 shrink-0">
                   <NivelReadout nivel={section.nivel} delta={section.nivelDelta} />
-                  <span className="text-sm text-gray-600">{section.entries} entradas</span>
+                  <span className="text-sm text-gray-600">{section.entries} {t('progress.entriesLabel')}</span>
                 </div>
               </button>
 
@@ -135,7 +137,7 @@ export default function ProgressPage() {
                           <span className="text-sm text-gray-700">{sub.label}</span>
                           <div className="flex items-center gap-4 shrink-0">
                             <NivelReadout nivel={sub.nivel} delta={sub.nivelDelta} />
-                            <span className="text-xs text-gray-500 w-14 text-right">{sub.entries} ent.</span>
+                            <span className="text-xs text-gray-500 w-14 text-right">{sub.entries} {t('progress.entriesShortLabel')}</span>
                           </div>
                         </div>
                         <div className="mt-1.5 flex items-center gap-2 max-w-[280px]">

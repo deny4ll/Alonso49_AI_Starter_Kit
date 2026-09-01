@@ -10,6 +10,7 @@ import { Card } from '@/components/ui/Card'
 import { teamsApi, progressApi, videosApi, sessionsApi, trackersApi } from '@/lib/api'
 import { nivelBandClasses, NivelReadout } from '@/components/progress/Nivel'
 import { formatDateTime } from '@/lib/utils'
+import { useT } from '@/lib/i18n/useT'
 import {
   ArrowLeft,
   Users as UsersIcon,
@@ -42,6 +43,7 @@ const statusColors: Record<string, string> = {
 }
 
 export default function TeamDetailPage() {
+  const t = useT()
   const params = useParams()
   const teamId = params.id as string
   const [expandedSection, setExpandedSection] = useState<Set<string>>(new Set())
@@ -121,13 +123,13 @@ export default function TeamDetailPage() {
     <DashboardLayout>
       <Link href="/teams" className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 mb-4">
         <ArrowLeft className="h-4 w-4" />
-        Equipos
+        {t('teamDetail.backLink')}
       </Link>
 
       {teamLoading ? (
-        <p className="text-gray-500">Cargando equipo...</p>
+        <p className="text-gray-500">{t('teamDetail.loading')}</p>
       ) : !team ? (
-        <p className="text-gray-500">No se encontró el equipo.</p>
+        <p className="text-gray-500">{t('teamDetail.notFound')}</p>
       ) : (
         <>
           <div className="mb-8 flex items-start justify-between flex-wrap gap-4">
@@ -138,7 +140,7 @@ export default function TeamDetailPage() {
                 </div>
                 <h1 className="text-3xl font-bold">{team.name}</h1>
                 {team.isActive && (
-                  <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">Activo</span>
+                  <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">{t('teamDetail.activeBadge')}</span>
                 )}
               </div>
               {team.description && <p className="text-gray-600">{team.description}</p>}
@@ -158,7 +160,7 @@ export default function TeamDetailPage() {
                 </span>
               ))}
               {!team.members?.length && (
-                <span className="text-sm text-gray-500">Todavía no tiene miembros</span>
+                <span className="text-sm text-gray-500">{t('teamDetail.noMembers')}</span>
               )}
             </div>
           </div>
@@ -171,7 +173,7 @@ export default function TeamDetailPage() {
                 </div>
               </div>
               <div className="text-3xl font-bold mb-1">{videos?.length ?? 0}</div>
-              <div className="text-sm text-gray-600">Videos e informes</div>
+              <div className="text-sm text-gray-600">{t('teamDetail.stats.videosReports')}</div>
             </Card>
             <Card>
               <div className="flex items-center justify-between mb-4">
@@ -180,7 +182,7 @@ export default function TeamDetailPage() {
                 </div>
               </div>
               <div className="text-3xl font-bold mb-1">{sessions?.length ?? 0}</div>
-              <div className="text-sm text-gray-600">Sesiones</div>
+              <div className="text-sm text-gray-600">{t('teamDetail.stats.sessions')}</div>
             </Card>
             <Card>
               <div className="flex items-center justify-between mb-4">
@@ -189,7 +191,7 @@ export default function TeamDetailPage() {
                 </div>
               </div>
               <div className="text-3xl font-bold mb-1">{tracks?.length ?? 0}</div>
-              <div className="text-sm text-gray-600">Trackers GPS</div>
+              <div className="text-sm text-gray-600">{t('teamDetail.stats.trackers')}</div>
             </Card>
             <Card>
               <div className="flex items-center justify-between mb-4">
@@ -198,13 +200,13 @@ export default function TeamDetailPage() {
                 </div>
               </div>
               <div className="text-3xl font-bold mb-1">{progress?.totalEntries ?? 0}</div>
-              <div className="text-sm text-gray-600">Entradas de progreso</div>
+              <div className="text-sm text-gray-600">{t('teamDetail.stats.progressEntries')}</div>
             </Card>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-6 mb-8">
             <div>
-              <h2 className="text-lg font-semibold mb-3">Sesiones recientes</h2>
+              <h2 className="text-lg font-semibold mb-3">{t('teamDetail.recentSessions.title')}</h2>
               <div className="space-y-3">
                 {sessions && sessions.length > 0 ? (
                   sessions.slice(0, 5).map((session: any) => (
@@ -217,21 +219,21 @@ export default function TeamDetailPage() {
                           )}
                         </div>
                         <span className={`px-2 py-1 text-xs rounded shrink-0 ${statusColors[session.status] || 'bg-gray-100 text-gray-800'}`}>
-                          {session.status}
+                          {t(`teamDetail.sessionStatus.${session.status}`)}
                         </span>
                       </div>
                     </Card>
                   ))
                 ) : (
                   <Card>
-                    <p className="text-sm text-gray-500 text-center py-6">No hay sesiones todavía.</p>
+                    <p className="text-sm text-gray-500 text-center py-6">{t('teamDetail.recentSessions.empty')}</p>
                   </Card>
                 )}
               </div>
             </div>
 
             <div>
-              <h2 className="text-lg font-semibold mb-3">Videos recientes</h2>
+              <h2 className="text-lg font-semibold mb-3">{t('teamDetail.recentVideos.title')}</h2>
               <div className="space-y-3">
                 {videos && videos.length > 0 ? (
                   videos.slice(0, 5).map((video: any) => (
@@ -249,7 +251,7 @@ export default function TeamDetailPage() {
                   ))
                 ) : (
                   <Card>
-                    <p className="text-sm text-gray-500 text-center py-6">No hay videos todavía.</p>
+                    <p className="text-sm text-gray-500 text-center py-6">{t('teamDetail.recentVideos.empty')}</p>
                   </Card>
                 )}
               </div>
@@ -257,12 +259,12 @@ export default function TeamDetailPage() {
           </div>
 
           <div className="mb-8">
-            <h2 className="text-lg font-semibold mb-3">Trackers GPS</h2>
+            <h2 className="text-lg font-semibold mb-3">{t('teamDetail.trackersSection.title')}</h2>
             <div className="grid lg:grid-cols-3 gap-6">
               <div className="lg:col-span-1 space-y-3">
                 {tracks && tracks.length === 0 && (
                   <Card>
-                    <p className="text-sm text-gray-500 text-center py-6">Todavía no hay trackers subidos.</p>
+                    <p className="text-sm text-gray-500 text-center py-6">{t('teamDetail.trackersSection.empty')}</p>
                   </Card>
                 )}
                 {tracks?.map((track: any) => (
@@ -271,7 +273,7 @@ export default function TeamDetailPage() {
                     className={`cursor-pointer transition-colors ${selectedTrackId === track.id ? 'ring-2 ring-red-500' : ''}`}
                   >
                     <div onClick={() => setSelectedTrackId(track.id)}>
-                      <p className="font-semibold mb-1 truncate">{track.originalFileName || track.source || 'Tracker'}</p>
+                      <p className="font-semibold mb-1 truncate">{track.originalFileName || track.source || t('teamDetail.trackersSection.fallbackName')}</p>
                       <p className="text-xs text-gray-500 mb-3">
                         {track.uploadedBy?.firstName} {track.uploadedBy?.lastName}
                         {track.startedAt ? ` · ${new Date(track.startedAt).toLocaleDateString()}` : ''}
@@ -287,7 +289,7 @@ export default function TeamDetailPage() {
                         </div>
                         <div>
                           <Gauge className="h-4 w-4 text-red-600 mx-auto mb-1" />
-                          <p className="text-xs text-gray-500">{track.maxSpeed ?? '--'} kn max</p>
+                          <p className="text-xs text-gray-500">{track.maxSpeed ?? '--'} {t('teamDetail.trackersSection.maxSpeedSuffix')}</p>
                         </div>
                       </div>
                     </div>
@@ -300,7 +302,7 @@ export default function TeamDetailPage() {
                     <TrackMap points={selectedTrack.points} />
                   ) : (
                     <div className="h-full flex items-center justify-center text-gray-400 text-sm">
-                      Seleccioná un tracker para ver el recorrido en el mapa
+                      {t('teamDetail.trackersSection.mapPlaceholder')}
                     </div>
                   )}
                 </Card>
@@ -309,7 +311,7 @@ export default function TeamDetailPage() {
           </div>
 
           <div>
-            <h2 className="text-lg font-semibold mb-3">Progreso por área</h2>
+            <h2 className="text-lg font-semibold mb-3">{t('teamDetail.progressByArea.title')}</h2>
             <div className="space-y-3">
               {progress?.sections.map((section) => {
                 const isOpen = expandedSection.has(section.id)
@@ -330,7 +332,7 @@ export default function TeamDetailPage() {
                       </div>
                       <div className="flex items-center gap-5 shrink-0">
                         <NivelReadout nivel={section.nivel} delta={section.nivelDelta} />
-                        <span className="text-sm text-gray-600">{section.entries} entradas</span>
+                        <span className="text-sm text-gray-600">{section.entries} {t('teamDetail.progressByArea.entriesSuffix')}</span>
                       </div>
                     </button>
                     <div className="mt-3 space-y-1.5">

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/Button'
 import { api, aiCoachApi, tagsApi } from '@/lib/api'
 import { Send, Loader2, Bot, User, Search, Video as VideoIcon, Calendar } from 'lucide-react'
 import { MarkdownLite } from '@/components/ui/MarkdownLite'
+import { useT } from '@/lib/i18n/useT'
 
 interface Message {
   role: 'user' | 'assistant'
@@ -16,16 +17,11 @@ interface Message {
 }
 
 export default function AiCoachPage() {
+  const t = useT()
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: `Bienvenido al AI High Performance Coach de SAILVEX.
-
-Soy tu entrenador especializado en la clase olímpica 49er.
-
-Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
-
-¿En qué puedo ayudarte hoy?`,
+      content: t('aiCoach.welcomeMessage'),
       timestamp: new Date(),
     },
   ])
@@ -91,10 +87,10 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
   }
 
   const quickQuestions = [
-    '¿Cómo mejorar mi técnica de tacking?',
-    'Análisis de mi última sesión',
-    'Plan de entrenamiento semanal',
-    '¿Qué ejercicios para aumentar velocidad?',
+    t('aiCoach.quickQuestions.items.0'),
+    t('aiCoach.quickQuestions.items.1'),
+    t('aiCoach.quickQuestions.items.2'),
+    t('aiCoach.quickQuestions.items.3'),
   ]
 
   const handleQuickQuestion = (question: string) => {
@@ -110,13 +106,13 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
               <Bot className="h-8 w-8 text-red-600" />
             </div>
             <div>
-              <h1 className="text-3xl font-bold">AI High Performance Coach</h1>
-              <p className="text-gray-600">Metodología SAILVEX · Clase Olímpica 49er</p>
+              <h1 className="text-3xl font-bold">{t('aiCoach.header.title')}</h1>
+              <p className="text-gray-600">{t('aiCoach.header.subtitle')}</p>
             </div>
             <button
               onClick={() => setShowSearch((prev) => !prev)}
               className="ml-auto p-3 text-gray-500 hover:text-red-600 hover:bg-red-50 rounded-full"
-              title="Buscador"
+              title={t('aiCoach.header.searchTitle')}
             >
               <Search className="h-5 w-5" />
             </button>
@@ -124,11 +120,11 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
         </div>
 
         {showSearch && (
-          <Card className="mb-6" title="Buscador">
+          <Card className="mb-6" title={t('aiCoach.search.title')}>
             <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-4">
               <input
                 type="text"
-                placeholder="Texto libre..."
+                placeholder={t('aiCoach.search.textPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="px-3 py-2 border border-gray-300 rounded-lg text-sm lg:col-span-2"
@@ -138,7 +134,7 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
                 onChange={(e) => setSearchTagKey(e.target.value)}
                 className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
               >
-                <option value="">Maniobra / área</option>
+                <option value="">{t('aiCoach.search.maneuverPlaceholder')}</option>
                 {sections?.map((section: any) => (
                   <optgroup key={section.id} label={section.label}>
                     {section.children?.map((child: any) => (
@@ -151,7 +147,7 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
               </select>
               <input
                 type="text"
-                placeholder="Sitio..."
+                placeholder={t('aiCoach.search.locationPlaceholder')}
                 value={searchLocation}
                 onChange={(e) => setSearchLocation(e.target.value)}
                 className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
@@ -159,14 +155,14 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
               <div className="flex gap-2">
                 <input
                   type="number"
-                  placeholder="Viento kn mín"
+                  placeholder={t('aiCoach.search.windMinPlaceholder')}
                   value={searchWindMin}
                   onChange={(e) => setSearchWindMin(e.target.value)}
                   className="w-full min-w-0 px-2 py-2 border border-gray-300 rounded-lg text-sm"
                 />
                 <input
                   type="number"
-                  placeholder="Viento kn máx"
+                  placeholder={t('aiCoach.search.windMaxPlaceholder')}
                   value={searchWindMax}
                   onChange={(e) => setSearchWindMax(e.target.value)}
                   className="w-full min-w-0 px-2 py-2 border border-gray-300 rounded-lg text-sm"
@@ -174,14 +170,14 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
               </div>
             </div>
             <Button size="sm" onClick={() => searchMutation.mutate()} disabled={searchMutation.isPending}>
-              {searchMutation.isPending ? 'Buscando...' : 'Buscar'}
+              {searchMutation.isPending ? t('aiCoach.search.searching') : t('aiCoach.search.search')}
             </Button>
 
             {searchMutation.data && (
               <div className="mt-4 grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-semibold text-gray-500 uppercase mb-2">
-                    Videos/Informes ({searchMutation.data.videos.length})
+                    {t('aiCoach.search.videosLabel')} ({searchMutation.data.videos.length})
                   </p>
                   <div className="space-y-2 max-h-56 overflow-y-auto">
                     {searchMutation.data.videos.map((v) => (
@@ -191,13 +187,13 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
                       </div>
                     ))}
                     {searchMutation.data.videos.length === 0 && (
-                      <p className="text-sm text-gray-400">Sin resultados</p>
+                      <p className="text-sm text-gray-400">{t('aiCoach.search.noResults')}</p>
                     )}
                   </div>
                 </div>
                 <div>
                   <p className="text-xs font-semibold text-gray-500 uppercase mb-2">
-                    Sesiones ({searchMutation.data.sessions.length})
+                    {t('aiCoach.search.sessionsLabel')} ({searchMutation.data.sessions.length})
                   </p>
                   <div className="space-y-2 max-h-56 overflow-y-auto">
                     {searchMutation.data.sessions.map((s) => (
@@ -207,7 +203,7 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
                       </div>
                     ))}
                     {searchMutation.data.sessions.length === 0 && (
-                      <p className="text-sm text-gray-400">Sin resultados</p>
+                      <p className="text-sm text-gray-400">{t('aiCoach.search.noResults')}</p>
                     )}
                   </div>
                 </div>
@@ -269,7 +265,7 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
                   <div className="bg-gray-100 rounded-lg p-4">
                     <div className="flex items-center gap-2">
                       <Loader2 className="h-4 w-4 animate-spin" />
-                      <span className="text-gray-600">Analizando...</span>
+                      <span className="text-gray-600">{t('aiCoach.chat.analyzing')}</span>
                     </div>
                   </div>
                 </div>
@@ -282,7 +278,7 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
                   type="text"
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Pregunta al coach..."
+                  placeholder={t('aiCoach.chat.inputPlaceholder')}
                   className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                   disabled={chatMutation.isPending}
                 />
@@ -301,7 +297,7 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
           </div>
         </Card>
 
-        <Card title="Preguntas Rápidas">
+        <Card title={t('aiCoach.quickQuestions.title')}>
           <div className="grid grid-cols-2 gap-3">
             {quickQuestions.map((question, index) => (
               <button
@@ -316,11 +312,9 @@ Mi objetivo es ayudarte a alcanzar el más alto nivel de rendimiento.
         </Card>
 
         <div className="mt-6 p-4 bg-red-50 rounded-lg border border-red-200">
-          <h3 className="font-semibold text-red-900 mb-2">💡 Sobre el AI Coach</h3>
+          <h3 className="font-semibold text-red-900 mb-2">{t('aiCoach.about.title')}</h3>
           <p className="text-sm text-red-800">
-            Este coach utiliza la metodología SAILVEX y análisis de datos para proporcionar
-            feedback personalizado. Puede analizar videos, sesiones de entrenamiento, 
-            condiciones meteorológicas y crear planes de entrenamiento específicos.
+            {t('aiCoach.about.description')}
           </p>
         </div>
       </div>

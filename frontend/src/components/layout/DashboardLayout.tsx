@@ -22,13 +22,15 @@ import {
 import { cn } from '@/lib/utils'
 import { UserMenu } from './UserMenu'
 import { useAuthStore } from '@/stores/auth'
+import { useT } from '@/lib/i18n/useT'
+import { LanguageToggle } from '@/components/ui/LanguageToggle'
 
 interface DashboardLayoutProps {
   children: ReactNode
 }
 
 interface NavItem {
-  name: string
+  nameKey: string
   href: string
   icon: typeof LayoutDashboard
   roles?: string[]
@@ -36,24 +38,24 @@ interface NavItem {
 }
 
 const navigation: NavItem[] = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'AI Coach', href: '/ai-coach', icon: Bot },
-  { name: 'Progreso', href: '/progress', icon: Target },
-  { name: 'Videos', href: '/videos', icon: Video },
-  { name: 'Sesiones', href: '/sessions', icon: Calendar },
-  { name: 'Trackers', href: '/trackers', icon: Map },
-  { name: 'Equipos', href: '/teams', icon: Users },
-  { name: 'Cursos', href: '/courses', icon: BookOpen },
-  { name: 'Estadísticas', href: '/analytics', icon: TrendingUp },
+  { nameKey: 'nav.dashboard', href: '/dashboard', icon: LayoutDashboard },
+  { nameKey: 'nav.aiCoach', href: '/ai-coach', icon: Bot },
+  { nameKey: 'nav.progress', href: '/progress', icon: Target },
+  { nameKey: 'nav.videos', href: '/videos', icon: Video },
+  { nameKey: 'nav.sessions', href: '/sessions', icon: Calendar },
+  { nameKey: 'nav.trackers', href: '/trackers', icon: Map },
+  { nameKey: 'nav.teams', href: '/teams', icon: Users },
+  { nameKey: 'nav.courses', href: '/courses', icon: BookOpen },
+  { nameKey: 'nav.analytics', href: '/analytics', icon: TrendingUp },
 ]
 
 const adminNavigation: NavItem[] = [
-  { name: 'Knowledge Base', href: '/knowledge-base', icon: Library, roles: ['ADMIN', 'COACH'] },
+  { nameKey: 'nav.knowledgeBase', href: '/knowledge-base', icon: Library, roles: ['ADMIN', 'COACH'] },
   // App independiente (login y base de datos propios) donde los
   // entrenadores curan el conocimiento del AI Coach. Es solo un enlace de
   // salida — nunca hay una llamada API en runtime entre ambos frontends.
   {
-    name: 'Training Studio',
+    nameKey: 'nav.trainingStudio',
     href: process.env.NEXT_PUBLIC_TRAINING_STUDIO_URL || 'http://localhost:3003',
     icon: GraduationCap,
     roles: ['ADMIN', 'COACH'],
@@ -62,6 +64,7 @@ const adminNavigation: NavItem[] = [
 ]
 
 function SidebarNav({ items, pathname, onNavigate }: { items: NavItem[]; pathname: string; onNavigate?: () => void }) {
+  const t = useT()
   return (
     <nav className="p-4 space-y-1">
       {items.map((item) => {
@@ -76,7 +79,7 @@ function SidebarNav({ items, pathname, onNavigate }: { items: NavItem[]; pathnam
             >
               <item.icon className="h-4 w-4" />
             </span>
-            <span className="font-medium">{item.name}</span>
+            <span className="font-medium">{t(item.nameKey)}</span>
             {item.external && <ExternalLink className="h-3.5 w-3.5 ml-auto text-gray-500" />}
           </>
         )
@@ -88,14 +91,14 @@ function SidebarNav({ items, pathname, onNavigate }: { items: NavItem[]; pathnam
 
         if (item.external) {
           return (
-            <a key={item.name} href={item.href} target="_blank" rel="noopener noreferrer" className={className}>
+            <a key={item.nameKey} href={item.href} target="_blank" rel="noopener noreferrer" className={className}>
               {content}
             </a>
           )
         }
 
         return (
-          <Link key={item.name} href={item.href} onClick={onNavigate} className={className}>
+          <Link key={item.nameKey} href={item.href} onClick={onNavigate} className={className}>
             {content}
           </Link>
         )
@@ -105,6 +108,7 @@ function SidebarNav({ items, pathname, onNavigate }: { items: NavItem[]; pathnam
 }
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
+  const t = useT()
   const pathname = usePathname()
   const { user } = useAuthStore()
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
@@ -126,11 +130,14 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
             <button
               onClick={() => setMobileNavOpen(true)}
               className="md:hidden p-2 -ml-2 text-foreground"
-              aria-label="Abrir menú"
+              aria-label={t('nav.openMenu')}
             >
               <Menu className="h-6 w-6" />
             </button>
-            <UserMenu />
+            <div className="flex items-center gap-3">
+              <LanguageToggle />
+              <UserMenu />
+            </div>
           </div>
         </div>
       </nav>
@@ -160,7 +167,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
                 <button
                   onClick={() => setMobileNavOpen(false)}
                   className="p-2 text-gray-400 hover:text-white"
-                  aria-label="Cerrar menú"
+                  aria-label={t('nav.closeMenu')}
                 >
                   <X className="h-5 w-5" />
                 </button>

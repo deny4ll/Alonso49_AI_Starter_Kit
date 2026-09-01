@@ -9,29 +9,31 @@ import { Button } from '@/components/ui/Button'
 import { knowledgeBaseApi } from '@/lib/api'
 import { useAuthStore } from '@/stores/auth'
 import { Trash2, Upload } from 'lucide-react'
+import { useT } from '@/lib/i18n/useT'
 
 const inputClass =
   'w-full px-3 py-2 border border-border bg-background text-foreground rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent'
 
 const CATEGORY_OPTIONS = [
-  { value: 'methodology', label: 'Metodología' },
-  { value: 'technique', label: 'Técnica' },
-  { value: 'tactics', label: 'Táctica' },
-  { value: 'boat_setup', label: 'Puesta a punto' },
-  { value: 'physical_prep', label: 'Preparación física' },
-  { value: 'mental_prep', label: 'Preparación mental' },
+  { value: 'methodology', labelKey: 'knowledgeBase.categories.methodology' },
+  { value: 'technique', labelKey: 'knowledgeBase.categories.technique' },
+  { value: 'tactics', labelKey: 'knowledgeBase.categories.tactics' },
+  { value: 'boat_setup', labelKey: 'knowledgeBase.categories.boatSetup' },
+  { value: 'physical_prep', labelKey: 'knowledgeBase.categories.physicalPrep' },
+  { value: 'mental_prep', labelKey: 'knowledgeBase.categories.mentalPrep' },
 ]
 
-const STATUS_LABELS: Record<string, string> = {
-  PROCESSING: 'Procesando...',
-  READY: 'Listo',
-  FAILED: 'Error',
-}
-
 export default function KnowledgeBasePage() {
+  const t = useT()
   const router = useRouter()
   const { user, isHydrated } = useAuthStore()
   const queryClient = useQueryClient()
+
+  const STATUS_LABELS: Record<string, string> = {
+    PROCESSING: t('knowledgeBase.status.processing'),
+    READY: t('knowledgeBase.status.ready'),
+    FAILED: t('knowledgeBase.status.failed'),
+  }
 
   const [title, setTitle] = useState('')
   const [category, setCategory] = useState(CATEGORY_OPTIONS[0].value)
@@ -59,7 +61,7 @@ export default function KnowledgeBasePage() {
 
   const uploadMutation = useMutation({
     mutationFn: async () => {
-      if (!file) throw new Error('Falta el archivo')
+      if (!file) throw new Error(t('knowledgeBase.upload.missingFile'))
       const res = await knowledgeBaseApi.uploadDocument(file, { title, category })
       return res.data
     },
@@ -69,7 +71,7 @@ export default function KnowledgeBasePage() {
       setFile(null)
     },
     onError: (err: any) => {
-      setUploadError(err.response?.data?.message || 'No se pudo subir el documento')
+      setUploadError(err.response?.data?.message || t('knowledgeBase.upload.genericError'))
     },
   })
 
@@ -95,41 +97,44 @@ export default function KnowledgeBasePage() {
   return (
     <DashboardLayout>
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-foreground mb-2">Knowledge Base</h1>
-        <p className="text-muted-foreground">
-          Subí documentos (PDF o Word) con la metodología SAILVEX para que el AI Coach los use como fuente de
-          respuestas
-        </p>
+        <h1 className="text-3xl font-bold text-foreground mb-2">{t('knowledgeBase.header.title')}</h1>
+        <p className="text-muted-foreground">{t('knowledgeBase.header.subtitle')}</p>
       </div>
 
       <div className="max-w-3xl space-y-6">
-        <Card title="Subir documento">
+        <Card title={t('knowledgeBase.upload.cardTitle')}>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-muted-foreground mb-2">Título</label>
+              <label className="block text-sm font-medium text-muted-foreground mb-2">
+                {t('knowledgeBase.upload.titleLabel')}
+              </label>
               <input
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 className={inputClass}
-                placeholder="Ej: Estándar técnico de puesta a punto (SOP & Rigging)"
+                placeholder={t('knowledgeBase.upload.titlePlaceholder')}
                 required
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-muted-foreground mb-2">Categoría</label>
+              <label className="block text-sm font-medium text-muted-foreground mb-2">
+                {t('knowledgeBase.upload.categoryLabel')}
+              </label>
               <select value={category} onChange={(e) => setCategory(e.target.value)} className={inputClass}>
                 {CATEGORY_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>
-                    {opt.label}
+                    {t(opt.labelKey)}
                   </option>
                 ))}
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-muted-foreground mb-2">Archivo (PDF o .docx)</label>
+              <label className="block text-sm font-medium text-muted-foreground mb-2">
+                {t('knowledgeBase.upload.fileLabel')}
+              </label>
               <input
                 type="file"
                 accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
@@ -143,16 +148,16 @@ export default function KnowledgeBasePage() {
 
             <Button type="submit" disabled={uploadMutation.isPending}>
               <Upload className="h-4 w-4 mr-2 inline" />
-              {uploadMutation.isPending ? 'Subiendo...' : 'Subir documento'}
+              {uploadMutation.isPending ? t('knowledgeBase.upload.buttonLoading') : t('knowledgeBase.upload.button')}
             </Button>
           </form>
         </Card>
 
-        <Card title="Documentos">
+        <Card title={t('knowledgeBase.documents.cardTitle')}>
           {isLoading ? (
-            <p className="text-sm text-muted-foreground">Cargando...</p>
+            <p className="text-sm text-muted-foreground">{t('knowledgeBase.documents.loading')}</p>
           ) : !documents || documents.length === 0 ? (
-            <p className="text-sm text-muted-foreground">Todavía no subiste ningún documento.</p>
+            <p className="text-sm text-muted-foreground">{t('knowledgeBase.documents.empty')}</p>
           ) : (
             <div className="divide-y divide-border">
               {documents.map((doc: any) => (
@@ -160,8 +165,11 @@ export default function KnowledgeBasePage() {
                   <div className="min-w-0">
                     <p className="font-medium text-foreground truncate">{doc.title}</p>
                     <p className="text-sm text-muted-foreground">
-                      {CATEGORY_OPTIONS.find((c) => c.value === doc.category)?.label || doc.category} ·{' '}
-                      {doc._count?.chunks ?? 0} fragmentos ·{' '}
+                      {(() => {
+                        const opt = CATEGORY_OPTIONS.find((c) => c.value === doc.category)
+                        return opt ? t(opt.labelKey) : doc.category
+                      })()} ·{' '}
+                      {doc._count?.chunks ?? 0} {t('knowledgeBase.documents.fragments')} ·{' '}
                       <span
                         className={
                           doc.status === 'FAILED'

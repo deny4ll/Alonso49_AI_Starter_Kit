@@ -8,8 +8,10 @@ import { DashboardLayout } from '@/components/layout/DashboardLayout'
 import { Card } from '@/components/ui/Card'
 import { Video, Calendar, BookOpen, TrendingUp } from 'lucide-react'
 import { api, videosApi } from '@/lib/api'
+import { useT } from '@/lib/i18n/useT'
 
 export default function DashboardPage() {
+  const t = useT()
   const router = useRouter()
   const { user, token, isHydrated, initAuth } = useAuthStore()
 
@@ -66,7 +68,7 @@ export default function DashboardPage() {
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Cargando...</p>
+          <p className="text-gray-600">{t('common.loading')}</p>
         </div>
       </div>
     )
@@ -80,42 +82,42 @@ export default function DashboardPage() {
     <DashboardLayout>
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">
-          Bienvenido, {user.firstName}
+          {t('dashboard.welcome')}, {user.firstName}
         </h1>
         <p className="text-gray-600">
-          Panel de control - Rol: {user.role}
+          {t('dashboard.roleLabel')}: {user.role}
         </p>
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard
           icon={<Video className="h-8 w-8 text-red-600" />}
-          title="Videos"
+          title={t('dashboard.stats.videos.title')}
           value={stats?.videos || 0}
-          description="Videos subidos"
+          description={t('dashboard.stats.videos.description')}
         />
         <StatCard
           icon={<Calendar className="h-8 w-8 text-red-500" />}
-          title="Sesiones"
+          title={t('dashboard.stats.sessions.title')}
           value={stats?.sessions || 0}
-          description="Sesiones completadas"
+          description={t('dashboard.stats.sessions.description')}
         />
         <StatCard
           icon={<BookOpen className="h-8 w-8 text-red-800" />}
-          title="Cursos"
+          title={t('dashboard.stats.courses.title')}
           value="0"
-          description="Cursos activos"
+          description={t('dashboard.stats.courses.description')}
         />
         <StatCard
           icon={<TrendingUp className="h-8 w-8 text-red-400" />}
-          title="Rendimiento"
+          title={t('dashboard.stats.performance.title')}
           value="--"
-          description="Score promedio"
+          description={t('dashboard.stats.performance.description')}
         />
       </div>
 
       {loadDistribution && loadDistribution.total > 0 && (
-        <Card className="mb-8" title="Carga de trabajo por área (Metodología SAILVEX)">
+        <Card className="mb-8" title={t('dashboard.loadDistribution.title')}>
           <div className="space-y-2">
             {loadDistribution.sections
               .filter((s) => s.percentage > 0)
@@ -133,7 +135,7 @@ export default function DashboardPage() {
       )}
 
       <div className="grid md:grid-cols-2 gap-6">
-        <Card title="Sesiones Recientes">
+        <Card title={t('dashboard.recentSessions.title')}>
           {sessions && sessions.length > 0 ? (
             <div className="space-y-3">
               {sessions.slice(0, 5).map((session: any) => (
@@ -145,12 +147,12 @@ export default function DashboardPage() {
             </div>
           ) : (
             <p className="text-gray-500 text-center py-8">
-              No hay sesiones recientes
+              {t('dashboard.recentSessions.empty')}
             </p>
           )}
         </Card>
 
-        <Card title="Videos Recientes">
+        <Card title={t('dashboard.recentVideos.title')}>
           {videos && videos.length > 0 ? (
             <div className="space-y-3">
               {videos.slice(0, 5).map((video: any) => (
@@ -162,7 +164,7 @@ export default function DashboardPage() {
             </div>
           ) : (
             <p className="text-gray-500 text-center py-8">
-              No hay videos recientes
+              {t('dashboard.recentVideos.empty')}
             </p>
           )}
         </Card>

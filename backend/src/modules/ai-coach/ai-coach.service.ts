@@ -139,42 +139,6 @@ export class AiCoachService {
     const analysisPrompt = specificQuestion || 
       'Analiza este video de entrenamiento y proporciona feedback técnico detallado según la metodología SAILVEX.';
 
-    const videoContext = `
-# VIDEO ANALYSIS REQUEST
-
-Video ID: ${video.id}
-Title: ${video.title}
-Description: ${video.description || 'No description'}
-
-${video.session ? `
-Session Details:
-- Title: ${video.session.title}
-- Location: ${video.session.location || 'Unknown'}
-- Wind Speed: ${formatWindRange(video.session.windSpeedMin, video.session.windSpeedMax)} knots
-- Wind Direction: ${video.session.windDirection || 'Not recorded'}
-- Wave Height: ${video.session.waveHeight || 'Not recorded'} m
-- Status: ${video.session.status}
-
-${video.session.analytics ? `
-Performance Metrics:
-- Total Distance: ${video.session.analytics.totalDistance || 'N/A'} nm
-- Average Speed: ${video.session.analytics.averageSpeed || 'N/A'} knots
-- Max Speed: ${video.session.analytics.maxSpeed || 'N/A'} knots
-- Tacking Efficiency: ${video.session.analytics.tackingEfficiency || 'N/A'}%
-- Gybe Count: ${video.session.analytics.gybeCount || 'N/A'}
-- Tack Count: ${video.session.analytics.tackCount || 'N/A'}
-- Performance Score: ${video.session.analytics.performanceScore || 'N/A'}
-` : ''}
-` : ''}
-
-IMPORTANT: Since you cannot actually watch the video, focus your analysis on:
-1. The session data and metrics provided
-2. General coaching recommendations based on the conditions
-3. What to look for when the athlete reviews the video
-4. Specific drills to improve the metrics shown
-5. Questions to ask the athlete about what happened
-`;
-
     return this.chat(userId, analysisPrompt, {
       userId,
       videoId,
@@ -570,9 +534,7 @@ ${profile?.todayObjective || 'Not defined'}
     return toolFunction(args, userId);
   }
 
-  private getMockResponse(messages: Message[]): string {
-    const userMessage = messages.find(m => m.role === 'user')?.content || '';
-
+  private getMockResponse(_messages: Message[]): string {
     return `## Assessment
 
 Based on your query, I need more specific information to provide accurate coaching.

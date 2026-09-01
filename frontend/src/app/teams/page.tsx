@@ -8,17 +8,20 @@ import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import { teamsApi, analyticsApi } from '@/lib/api'
 import { Plus, Users as UsersIcon, User, Scale } from 'lucide-react'
-
-const METRIC_ROWS: { key: string; label: string; format: (v: any) => string }[] = [
-  { key: 'sessionsTotal', label: 'Sesiones subidas', format: (v) => `${v ?? 0}` },
-  { key: 'sessionsCompleted', label: 'Sesiones completadas', format: (v) => `${v ?? 0}` },
-  { key: 'videos', label: 'Videos / informes subidos', format: (v) => `${v ?? 0}` },
-  { key: 'trainingDays', label: 'Días entrenados', format: (v) => `${v ?? 0}` },
-  { key: 'restDays', label: 'Días de descanso', format: (v) => `${v ?? 0}` },
-  { key: 'aiCoachHours', label: 'Horas con AI Coach', format: (v) => `${v ?? 0} h` },
-]
+import { useT } from '@/lib/i18n/useT'
 
 export default function TeamsPage() {
+  const t = useT()
+
+  const METRIC_ROWS: { key: string; label: string; format: (v: any) => string }[] = [
+    { key: 'sessionsTotal', label: t('teams.metrics.sessionsTotal'), format: (v) => `${v ?? 0}` },
+    { key: 'sessionsCompleted', label: t('teams.metrics.sessionsCompleted'), format: (v) => `${v ?? 0}` },
+    { key: 'videos', label: t('teams.metrics.videos'), format: (v) => `${v ?? 0}` },
+    { key: 'trainingDays', label: t('teams.metrics.trainingDays'), format: (v) => `${v ?? 0}` },
+    { key: 'restDays', label: t('teams.metrics.restDays'), format: (v) => `${v ?? 0}` },
+    { key: 'aiCoachHours', label: t('teams.metrics.aiCoachHours'), format: (v) => `${v ?? 0} h` },
+  ]
+
   const [showModal, setShowModal] = useState(false)
   const [compareMode, setCompareMode] = useState(false)
   const [selectedTeamIds, setSelectedTeamIds] = useState<string[]>([])
@@ -82,17 +85,17 @@ export default function TeamsPage() {
     <DashboardLayout>
       <div className="mb-8 flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold mb-2">Equipos</h1>
-          <p className="text-gray-600">Gestiona tus equipos y miembros</p>
+          <h1 className="text-3xl font-bold mb-2">{t('teams.title')}</h1>
+          <p className="text-gray-600">{t('teams.subtitle')}</p>
         </div>
         <div className="flex gap-2">
           <Button variant={compareMode ? 'secondary' : 'outline'} onClick={() => (compareMode ? exitCompareMode() : setCompareMode(true))}>
             <Scale className="h-4 w-4 mr-2" />
-            {compareMode ? 'Salir de comparar' : 'Comparar equipos'}
+            {compareMode ? t('teams.compare.exit') : t('teams.compare.enter')}
           </Button>
           <Button onClick={() => setShowModal(true)}>
             <Plus className="h-4 w-4 mr-2" />
-            Nuevo Equipo
+            {t('teams.newTeam')}
           </Button>
         </div>
       </div>
@@ -100,10 +103,9 @@ export default function TeamsPage() {
       {compareMode && (
         <Card className="mb-6">
           <p className="text-sm text-gray-600">
-            Elegí 2 o más equipos para comparar su carga de trabajo, días entrenados/descanso, contenido subido y
-            horas de AI Coach.{' '}
+            {t('teams.compare.banner')}{' '}
             {selectedTeamIds.length > 0 && (
-              <span className="font-medium text-gray-800">{selectedTeamIds.length} equipo(s) seleccionado(s)</span>
+              <span className="font-medium text-gray-800">{selectedTeamIds.length} {t('teams.compare.selectedSuffix')}</span>
             )}
           </p>
         </Card>
@@ -111,7 +113,7 @@ export default function TeamsPage() {
 
       {isLoading ? (
         <div className="text-center py-12">
-          <p className="text-gray-500">Cargando equipos...</p>
+          <p className="text-gray-500">{t('teams.loading')}</p>
         </div>
       ) : teams && teams.length > 0 ? (
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -136,7 +138,7 @@ export default function TeamsPage() {
                   ) : (
                     team.isActive && (
                       <span className="px-2 py-1 bg-green-100 text-green-800 text-xs rounded">
-                        Activo
+                        {t('teams.active')}
                       </span>
                     )
                   )}
@@ -145,7 +147,7 @@ export default function TeamsPage() {
                 <p className="text-sm text-gray-600 mb-4">{team.description}</p>
                 <div className="flex items-center gap-2 text-sm text-gray-500">
                   <User className="h-4 w-4" />
-                  <span>{team.members?.length || 0} miembros</span>
+                  <span>{team.members?.length || 0} {t('teams.membersCount')}</span>
                 </div>
               </Card>
             )
@@ -164,25 +166,25 @@ export default function TeamsPage() {
         <Card>
           <div className="text-center py-12">
             <UsersIcon className="h-16 w-16 text-gray-300 mx-auto mb-4" />
-            <p className="text-gray-500 mb-4">No hay equipos creados</p>
+            <p className="text-gray-500 mb-4">{t('teams.empty')}</p>
             <Button onClick={() => setShowModal(true)}>
               <Plus className="h-4 w-4 mr-2" />
-              Crear tu primer equipo
+              {t('teams.createFirst')}
             </Button>
           </div>
         </Card>
       )}
 
       {compareMode && selectedTeamIds.length >= 2 && (
-        <Card className="mt-8" title="Comparativa de equipos">
+        <Card className="mt-8" title={t('teams.compare.cardTitle')}>
           {isComparing ? (
-            <p className="text-gray-500 text-center py-6">Calculando comparativa...</p>
+            <p className="text-gray-500 text-center py-6">{t('teams.compare.calculating')}</p>
           ) : comparison && comparison.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-gray-200">
-                    <th className="text-left py-2 pr-4 font-medium text-gray-500">Métrica</th>
+                    <th className="text-left py-2 pr-4 font-medium text-gray-500">{t('teams.compare.metric')}</th>
                     {comparison.map((c) => (
                       <th key={c.team.id} className="text-left py-2 px-4 font-semibold">{c.team.name}</th>
                     ))}
@@ -198,7 +200,7 @@ export default function TeamsPage() {
                     </tr>
                   ))}
                   <tr>
-                    <td className="py-3 pr-4 text-gray-600 font-medium align-top">% por área de trabajo</td>
+                    <td className="py-3 pr-4 text-gray-600 font-medium align-top">{t('teams.compare.workAreaPercentage')}</td>
                     {comparison.map((c) => (
                       <td key={c.team.id} className="py-3 px-4 align-top">
                         <div className="space-y-1.5 min-w-[160px]">
@@ -225,7 +227,7 @@ export default function TeamsPage() {
               </table>
             </div>
           ) : (
-            <p className="text-gray-500 text-center py-6">No se pudo calcular la comparativa.</p>
+            <p className="text-gray-500 text-center py-6">{t('teams.compare.failed')}</p>
           )}
         </Card>
       )}
@@ -233,41 +235,41 @@ export default function TeamsPage() {
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-card text-card-foreground rounded-lg p-6 max-w-md w-full mx-4">
-            <h2 className="text-2xl font-bold mb-4">Nuevo Equipo</h2>
+            <h2 className="text-2xl font-bold mb-4">{t('teams.modal.title')}</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Nombre del equipo
+                  {t('teams.modal.nameLabel')}
                 </label>
                 <input
                   name="name"
                   type="text"
                   required
-                  placeholder="Ej: Team Alpha"
+                  placeholder={t('teams.modal.namePlaceholder')}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Descripción
+                  {t('teams.modal.descriptionLabel')}
                 </label>
                 <textarea
                   name="description"
                   rows={3}
-                  placeholder="Describe el equipo..."
+                  placeholder={t('teams.modal.descriptionPlaceholder')}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
               </div>
               <div className="flex gap-3">
                 <Button type="submit" disabled={createMutation.isPending}>
-                  {createMutation.isPending ? 'Creando...' : 'Crear Equipo'}
+                  {createMutation.isPending ? t('teams.modal.creating') : t('teams.modal.create')}
                 </Button>
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => setShowModal(false)}
                 >
-                  Cancelar
+                  {t('teams.modal.cancel')}
                 </Button>
               </div>
             </form>
