@@ -36,7 +36,7 @@ No hace falta crear la extensión `vector` a mano: la migración de Prisma la cr
    - `SUPABASE_URL` = la Project URL de tu proyecto de Supabase (para subir videos reales; sin esto, subir un video da error 500)
    - `SUPABASE_SERVICE_ROLE_KEY` = la clave `secret` (no la `publishable`) de Settings → API en Supabase
    - `SUPABASE_STORAGE_BUCKET` = `videos` (el bucket público creado en Supabase Storage)
-5. Deploy. Anota la URL que te da Render, ej. `https://alonso49-backend.onrender.com`.
+5. Deploy. Anota la URL que te da Render, ej. `https://alonso49-ai-starter-kit.onrender.com`.
 
 ⚠️ En el free tier, el servicio "duerme" tras ~15 min sin tráfico y la primera petición tras eso tarda 20-30s. Para la demo, entra tú primero unos minutos antes para "despertarlo".
 
@@ -45,15 +45,15 @@ No hace falta crear la extensión `vector` a mano: la migración de Prisma la cr
 1. En Vercel: **Add New > Project**, importa el repo.
 2. **Root Directory:** `frontend`
 3. Variable de entorno:
-   - `NEXT_PUBLIC_API_URL` = `https://alonso49-backend.onrender.com/api` (la URL de Render + `/api`)
-4. Deploy. Vercel te da una URL tipo `https://alonso49.vercel.app`.
+   - `NEXT_PUBLIC_API_URL` = `https://alonso49-ai-starter-kit.onrender.com/api` (la URL de Render + `/api`)
+4. Deploy. Vercel te da una URL tipo `https://alonso49-ai-starter-kit.vercel.app`.
 5. Vuelve a Render y actualiza `FRONTEND_URL` con esa URL exacta de Vercel, luego redeploy del backend (para que el CORS la acepte).
 
 ## 4. Gate de acceso (MVP, no público)
 
 Mientras esté en fase de demo, la plataforma queda cerrada detrás de un usuario/contraseña compartido: al abrir el sitio, el navegador pide login (HTTP Basic Auth) antes de mostrar nada, y la misma credencial protege la API del backend contra quien la encuentre directo.
 
-1. **Render** (`alonso49-backend`) → Environment, agregá:
+1. **Render** (`alonso49-ai-starter-kit`) → Environment, agregá:
    - `GATE_USER` = el usuario que elijas
    - `GATE_PASSWORD` = una contraseña random larga (generá una con `openssl rand -base64 18`, por ejemplo)
 2. **Vercel** → Settings > Environment Variables, agregá las **cuatro** con el mismo par de valores del paso anterior:
@@ -78,9 +78,9 @@ DATABASE_URL="postgresql://...neon..." npm --prefix backend run seed:youth-pro
 
 ## Resumen de URLs finales
 
-- App (cliente entra acá): `https://alonso49.vercel.app`
-- API: `https://alonso49-backend.onrender.com/api`
-- Docs Swagger: `https://alonso49-backend.onrender.com/api/docs`
+- App (cliente entra acá): `https://alonso49-ai-starter-kit.vercel.app`
+- API: `https://alonso49-ai-starter-kit.onrender.com/api`
+- Docs Swagger: `https://alonso49-ai-starter-kit.onrender.com/api/docs`
 
 ## Training Studio (módulo de entrenamiento del AI Coach)
 
