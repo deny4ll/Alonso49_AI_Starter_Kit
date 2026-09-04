@@ -30,6 +30,13 @@ api.interceptors.response.use(
 export const authApi = {
   login: (email: string, password: string) => api.post('/auth/login', { email, password }),
   me: () => api.get('/auth/me'),
+  register: (data: { email: string; password: string; firstName: string; lastName: string; role?: string }) =>
+    api.post('/auth/register', data),
+}
+
+export const trainersApi = {
+  list: () => api.get('/trainers'),
+  updateAccess: (id: string, data: { role?: string; isActive?: boolean }) => api.patch(`/trainers/${id}`, data),
 }
 
 export const documentsApi = {
