@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useAuthStore } from '@/stores/auth'
 import { Button } from '@/components/ui/Button'
-import { GraduationCap, LayoutGrid, Upload, PenLine, MessagesSquare, ListChecks, UploadCloud, LogOut } from 'lucide-react'
+import { GraduationCap, LayoutGrid, Upload, PenLine, MessagesSquare, ListChecks, UploadCloud, Users, LogOut } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const NAV_ITEMS = [
@@ -35,7 +35,14 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
     return <div className="min-h-screen flex items-center justify-center text-muted-foreground">Cargando…</div>
   }
 
-  const navItems = user?.role === 'ADMIN' ? [...NAV_ITEMS, { href: '/export', label: 'Exportar', icon: UploadCloud }] : NAV_ITEMS
+  const navItems =
+    user?.role === 'ADMIN'
+      ? [
+          ...NAV_ITEMS,
+          { href: '/export', label: 'Exportar', icon: UploadCloud },
+          { href: '/admin/trainers', label: 'Administración', icon: Users },
+        ]
+      : NAV_ITEMS
 
   return (
     <div className="min-h-screen bg-background">

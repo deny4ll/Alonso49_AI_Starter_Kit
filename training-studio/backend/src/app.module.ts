@@ -7,6 +7,7 @@ import { IngestionModule } from './modules/ingestion/ingestion.module';
 import { DocumentsModule } from './modules/documents/documents.module';
 import { EntriesModule } from './modules/entries/entries.module';
 import { TestChatModule } from './modules/test-chat/test-chat.module';
+import { TrainersModule } from './modules/trainers/trainers.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { TestChatModule } from './modules/test-chat/test-chat.module';
     DocumentsModule,
     EntriesModule,
     TestChatModule,
+    TrainersModule,
   ],
 })
 export class AppModule {}
